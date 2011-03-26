@@ -19,6 +19,58 @@
 </table>
 
 
+<form action="mailto:example@example.com" method="post">
+  <table align="center">
+    <thead>
+      <tr>
+	<th></th>
+	<th></th>
+    </thead>
+    <tbody>
+      <tr>
+	<td>Nombre:</td>
+	<td><input type="text" name="nombre"/></td>
+      </tr>
+      <tr>
+	<td>Apellidos:</td>
+	<td><input type="text" name="apellidos"/></td>
+      </tr>
+      <tr>
+	<td>E-mail:</td>
+	<td><input type="text" name="email"></td>
+      </tr>
+      <tr>
+	<td>Comentario:</td>
+	<td><textarea name="comentario" rows="5"></textarea></td>
+      </tr>
+      <tr>
+	<td>Notificar</td>
+	<td><input type="checkbox" name="notificar"></td>
+      </tr>
+      <tr>
+	<td>
+	  ¿Cuál es su lenguaje favorito?
+	</td>
+	<td>
+	  <input type="radio" name="language" value="python" checked="true">Python</input><br/>
+	  <input type="radio" name="language" value="ruby">Ruby</input><br/>
+	  <input type="radio" name="language" value="java">Java</input><br/>
+	  <input type="radio" name="language" value="otro">Otro</input><br/>
+	</td>
+    </tbody>
+    <tfoot>
+      <tr>
+	<td>
+	  <input type="reset" value="Limpiar"/>
+	</td>
+	<td>
+	  <input type="submit" value="Enviar"/>
+	</td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
 <hr width="80%"/>
 <address>
 <a href="mailto:miguelangel.garcia@gmail.com">Miguel Ángel García Martínez</a>
