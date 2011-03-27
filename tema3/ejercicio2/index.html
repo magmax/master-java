@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>El juego del Ahorcado</title>
+
+    <script language="JavaScript">
+      function completado(palabra)
+      {
+      for (i=0; i<palabra.length; ++i)
+	if (palabra[i] == null)
+	  return false;
+	return true;
+      }
+
+      function ahorcado()
+      {
+      var fallos = 0;
+      var palabra = new Array('m','a','g','m','a','x');
+      var adivinado = new Array(6);
+
+      while (fallos < 5 && !completado(adivinado))
+	{
+	  input = prompt ("Su palabra actual es:" + adivinado);
+	  if (input.length>1)
+	    continue;
+	  for (var i=0; i<input.length; ++i)
+	  {
+	    for (j=0; j<palabra.length; ++j)
+	    {
+	      if (input[i] == palabra[j])
+		adivinado[j] = palabra[j];
+	    }
+	  }
+	  fallos ++;
+	}
+	if (completado(adivinado))
+	  document.write("Enhorabuena!!!");
+	else
+	  document.write("Sigue intentándolo.");
+      }
+    </script>
+
+
+  </head>
+  <body>
+    <h1>El juego del Ahorcado</h1>
+
+    <script language="JavaScript">
+      <!--
+      ahorcado();
+      -->
+    </script>
+
+  </body>
+</html>
