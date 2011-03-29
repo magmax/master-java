@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>El juego del Ahorcado</title>
+
+    <STYLE TYPE="text/css">
+      .letter {width:24pt;}
+    </STYLE>
+
+
+    <script language="JavaScript">
+      var palabra = "";
+      var adivinado = "";
+      var intentos = 0;
+
+      function comenzar () {
+      palabra = null;
+      while (palabra == null || palabra == ''){
+      palabra = prompt("Introduzca la palabra a adivinar");
+      }
+      intentos = 5;
+      // fixme: pintar la imagen inicial
+      // fixme: dibujar las rayas de la palabra.
+      }
+
+      function pressed($letter) {
+      var found = false;
+      for (var i = 0; i < palabra.length; ++i)
+			  {
+			  if (palabra[i] == letter)
+			    adivinado[i] = letter;
+			    found = true;
+			  }
+      if (!found)
+			  {
+			  intentos ++;
+			  // fixme: pintar siguiente imagen en el ahorcado
+			  }
+      }
+
+
+    </script>
+
+
+  </head>
+  <body>
+    <h1>El juego del Ahorcado</h1>
+
+    <form name="datos" id="datos">
+      <input type="button" value="Comenzar" onClick="comenzar()"/>
+
+      <table>
+	<tr>
+	  <td>
+	    <table>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="A" onClick="pressed('A')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="B" onClick="pressed('B')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="C" onClick="pressed('C')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="D" onClick="pressed('D')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="E" onClick="pressed('E')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="F" onClick="pressed('F')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="G" onClick="pressed('G')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="H" onClick="pressed('H')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="I" onClick="pressed('I')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="J" onClick="pressed('J')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="K" onClick="pressed('K')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="L" onClick="pressed('L')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="M" onClick="pressed('M')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="N" onClick="pressed('N')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="Ñ" onClick="pressed('Ñ')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="O" onClick="pressed('O')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="P" onClick="pressed('P')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="Q" onClick="pressed('Q')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="R" onClick="pressed('R')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="S" onClick="pressed('S')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="T" onClick="pressed('T')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="U" onClick="pressed('U')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="V" onClick="pressed('V')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="W" onClick="pressed('W')"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input class="letter" type="button" value="X" onClick="pressed('X')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="Y" onClick="pressed('Y')"/>
+		</td>
+		<td>
+		  <input class="letter" type="button" value="Z" onClick="pressed('Z')"/>
+		</td>
+	      </tr>
+	    </table>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	  </td>
+	</tr>
+      </table>
+    </form>
+
+  </body>
+</html>
