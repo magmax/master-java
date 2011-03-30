@@ -10,34 +10,75 @@
 
     <script language="JavaScript">
       var palabra = "";
-      var adivinado = "";
+      var adivinado = new Array();
       var intentos = 0;
+      var adivinadas = 0;
 
       function comenzar () {
-      palabra = null;
-      while (palabra == null || palabra == ''){
-      palabra = prompt("Introduzca la palabra a adivinar");
-      }
-      intentos = 5;
-      // fixme: pintar la imagen inicial
-      // fixme: dibujar las rayas de la palabra.
-      }
-
-      function pressed($letter) {
-      var found = false;
-      for (var i = 0; i < palabra.length; ++i)
-			  {
-			  if (palabra[i] == letter)
-			    adivinado[i] = letter;
-			    found = true;
-			  }
-      if (!found)
-			  {
-			  intentos ++;
-			  // fixme: pintar siguiente imagen en el ahorcado
-			  }
+	palabra = null;
+	while (palabra == null || palabra == ''){
+	  palabra = prompt("Introduzca la palabra a adivinar");
+	}
+	intentos = 6;
+	adivinadas = 0;
+	adivinado = new Array(palabra.length);
+	for (i=0; i<palabra.length; ++i)
+	  adivinado[i] = '-';
+	setImage();
+	setWord();
       }
 
+      function pressed(letter) {
+	if (intentos == 0)
+	  return;
+
+	letter = letter.toUpperCase();
+	var found = false;
+	for (var i = 0; i < palabra.length; ++i)
+	{
+	  if (palabra[i].toUpperCase() == letter) {
+	    adivinado[i] = letter;
+	    found = true;
+	    adivinadas ++;
+	    setWord();
+	  }
+	}
+	if (!found)
+	{
+	  intentos --;
+	  setImage();
+	}
+	checkEnd();
+      }
+
+      function checkEnd() {
+	if (adivinadas == palabra.length ) {
+	  alert("Lo conseguiste");
+	  intentos = 0;
+	}
+      }
+
+      function setImage () {
+	var image="vacio";
+	switch(intentos)
+	{
+	  case 6: image = "vacio"; break;
+	  case 5: image = "cabeza"; break;
+	  case 4: image = "cuerpo"; break;
+	  case 3: image = "brazo_izdo"; break;
+	  case 2: image = "brazo_dcho"; break;
+	  case 1: image = "pierna_izda"; break;
+	  case 0: image = "pierna_dcha"; break;
+	}
+	document.datos.image.src = "images/" + image + ".jpg";
+      }
+
+      function setWord () {
+	word = "";
+	for (i=0; i<adivinado.length; ++i)
+	  word += adivinado[i] + ' ';
+	document.datos.word.value = word;
+      }
 
     </script>
 
@@ -154,9 +195,19 @@
 	      </tr>
 	    </table>
 	  </td>
-	</tr>
-	<tr>
 	  <td>
+	    <table>
+	      <tr>
+		<td>
+		  <img src="images/vacio.jpg" name="image"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <input type="text" readonly="true" style="width:100%" name="word"/>
+		</td>
+	      </tr>
+	    </table>
 	  </td>
 	</tr>
       </table>

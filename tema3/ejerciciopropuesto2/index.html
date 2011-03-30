@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Verificar Campos</title>
+
+    <script type="text/javascript">
+      function isEmpty(v) {
+        return v == null || v == "";
+      }
+
+      function verificarYenviar() {
+        if (isEmpty(document.datos.nombre.value)) {
+          alert("Debe introducir el nombre");
+          return;
+        }
+        if (isEmpty(document.datos.apel1.value)) {
+          alert("Debe introducir el primer apellido");
+          return;
+        }
+        if (isEmpty(document.datos.apel2.value)) {
+          alert("Debe introducir el segundo apellido");
+          return;
+        }
+        document.datos.submit();
+      }
+    </script>
+
+  </head>
+<body>
+<h1>Verificar Campos</h1>
+
+
+<form method="post" name="datos">
+  <table>
+    <tr>
+      <td>Nombre:</td>
+      <td><input type="text" name="nombre"/></td>
+    </tr>
+    <tr>
+      <td>Apellido1:</td>
+      <td><input type="text" name="apel1"/></td>
+    </tr>
+    <tr>
+      <td>Apellido2:</td>
+      <td><input type="text" name="apel2"/></td>
+    </tr>
+    <tr>
+      <td>Dirección:</td>
+      <td><input type="text" name="direccion"/></td>
+    </tr>
+    <tr>
+      <td>Código postal:</td>
+      <td><input type="text" name="cp"/></td>
+    </tr>
+    <tr>
+      <td>Localidad:</td>
+      <td><input type="text" name="localidad"/></td>
+    </tr>
+    <tr>
+      <td>Provincia:</td>
+      <td><input type="text" name="provincia"/></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="button" value="Enviar" onClick="verificarYenviar()"/></td>
+    </tr>
+  </table>
+
+</form>
+
+
+</body>
+</html>

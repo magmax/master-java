@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Comprobar dirección de correo</title>
+
+    <script type="text/javascript" src="checkmail.js">
+    </script>
+
+  </head>
+  <body>
+    <h1>Comprobar dirección de correo</h1>
+
+    <form name="datos">
+      <input type="text" name="texto"/>
+      <input type="button" value="check" onClick="document.datos.resultado.value = check(document.datos.texto.value)"/>
+      <br/>
+      <input type="text" name="resultado"/>
+    </form>
+
+  </body>
+</html>

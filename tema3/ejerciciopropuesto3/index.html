@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Calculadora</title>
+    <style>
+      input { width:100%;}
+    </style>
+
+    <script type="text/javascript" src="calculadora.js">
+    </script>
+
+</head>
+<body>
+<h1>Calculadora</h1>
+
+
+<form name="datos">
+<table>
+  <tr>
+    <td colspan="5"><input type="text" readonly="true" name="pantalla" value="0"/></td>
+  </tr>
+  <tr>
+    <td><input type="button" value="1" onClick="addNumber(1)"/></td>
+    <td><input type="button" value="2" onClick="addNumber(2)"/></td>
+    <td><input type="button" value="3" onClick="addNumber(3)"/></td>
+    <td/>
+    <td><input type="button" value="+" onClick="sum()"/></td>
+  </tr>
+  <tr>
+    <td><input type="button" value="4" onClick="addNumber(4)"/></td>
+    <td><input type="button" value="5" onClick="addNumber(5)"/></td>
+    <td><input type="button" value="6" onClick="addNumber(6)"/></td>
+    <td/>
+    <td><input type="button" value="-" onClick="substract()"/></td>
+  </tr>
+  <tr>
+    <td><input type="button" value="7" onClick="addNumber(7)"/></td>
+    <td><input type="button" value="8" onClick="addNumber(8)"/></td>
+    <td><input type="button" value="9" onClick="addNumber(9)"/></td>
+    <td/>
+    <td><input type="button" value="*" onClick="multiply()"/></td>
+  </tr>
+  <tr>
+    <td colspan="3"><input type="button" value="0" onClick="addNumber(0)"/></td>
+    <td/>
+    <td><input type="button" value="/" onClick="divide()"/></td>
+  </tr>
+  <tr>
+    <td colspan="5"><input type="button" value="=" onClick="equal()"/></td>
+  </tr>
+</table>
+</form>
+
+<address>
+<a href="mailto:miguelangel.garcia@gmail.com">Miguel Ángel García</a>
+</address>
+</body>
+</html>
