@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Ejemplo DHTML</title>
+
+    <script>
+      function change (item) {
+      document.datos.portatil.style.visibility = (item.value=="portatil") ? "visible" : "hidden";
+      document.datos.sobremesa.style.visibility = (item.value=="sobremesa") ? "visible" : "hidden";
+      document.datos.notebook.style.visibility = (item.value=="notebook") ? "visible" : "hidden";
+      document.datos.portatil.options += "Quijote";
+      }
+    </script>
+
+  </head>
+<body>
+<h1>Ejemplo DHTML</h1>
+
+<form name="datos" id="datos">
+
+<select onChange="change(this)">
+<option>--</option>
+<option value="portatil">Portátil</option>
+<option value="sobremesa">Sobremesa</option>
+<option value="notebook">Notebook</option>
+</select>
+
+<div style="position:relative; top:0px; left:0px;">
+<div style="position:absolute; top:0px; left:0px;">
+<select style="visibility:hidden" id="portatil" name="portatil">
+<option>Vaio</option>
+<option>Acer</option>
+</select>
+</div>
+
+<div style="position:absolute; top:0px; left:0px;">
+<select style="visibility:hidden" id="sobremesa" name="sobremesa">
+<option>HP</option>
+<option>Acer</option>
+<option>Clónico</option>
+</select>
+</div>
+
+<div style="position:absolute; top:0px; left:0px;">
+<select style="visibility:hidden" id="notebook" name="notebook">
+<option>Acer</option>
+<option>Asus</option>
+</select>
+</div>
+
+</div>
+
+</form>
+
+<br/>
+
+<address>
+<a href="mailto:miguelangel.garcia@gmail.com">Miguel Ángel García</a>
+</address>
+</body>
+</html>
