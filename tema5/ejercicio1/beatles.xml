@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="beatles.xsl" type="text/xsl"?>
+
+<!DOCTYPE beatles [
+<!ELEMENT beatles (canciones, discos) >
+<!ELEMENT canciones (cancion)*>
+<!ELEMENT discos (#PCDATA)>
+<!ELEMENT cancion (#PCDATA)>
+<!ATTLIST cancion
+id ID #IMPLIED
+titulo CDATA #REQUIRED
+agno CDATA #IMPLIED
+autor (Lennon | Mcartney | Harrison | Star) "Lennon">
+]>
+<beatles>
+  <canciones>
+    <cancion id= "a1" titulo="Two of us" agno="1970"
+	     autor="Lennon"/>
+    <cancion id= "a2" titulo="Dig a pony" agno="1970"
+	     autor="Mcartney"/>
+    <cancion id= "a3" titulo="Across the Universe" agno="1970"
+	     autor="Lennon"/>
+    <cancion id= "a4"
+	     autor="Harrison"
+	     titulo="I Me Mine"
+	     agno="1970"/>
+    <cancion id= "a5" titulo="Dig It" agno="1970"
+	     autor="Lennon"/>
+    <cancion id= "a6" titulo="Let it Be" agno="1970"
+	     autor="Lennon"/>
+    <cancion id= "a7" titulo="Maggie Mae" agno="1970"
+	     autor="Lennon"/>
+    <cancion id= "a8" titulo="I've got a feeling" agno="1970"
+	     autor="Mcartney"/>
+    <cancion id= "a9" titulo="The long and widing road"
+	     agno="1970" autor="Lennon"/>
+  </canciones>
+  <discos>LET IT BE</discos>
+</beatles>
