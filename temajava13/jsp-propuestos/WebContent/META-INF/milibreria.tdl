@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE taglib
+ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+      "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>ejemplo</short-name>
+  <uri>http://www.milibreria.tld</uri>
+  <description>Ejemplo de librería</description>
+  <tag>
+    <name>viewbooks</name>
+    <tag-class>ej5.ViewBooks</tag-class>
+    <body-content>empty</body-content>
+    <description>Pinta una tabla con libros</description>
+    <attribute>
+      <name>libros</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
