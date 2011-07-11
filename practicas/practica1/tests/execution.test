@@ -3,4 +3,7 @@
 EXEC='java -jar $testdir/../dist/practica1.jar'
 
 t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution001.in'), shell=True)
-t.post += FileContains('10')
+t.post += FileContains('2.5')
+
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution002.in'), shell=True)
+t.post += FileContains('3.')
