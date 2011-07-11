@@ -1,0 +1,6 @@
+# -*- coding:utf-8; tab-width:4; mode:python -*-
+
+EXEC='java -jar $testdir/../dist/practica1.jar'
+
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution001.in'), shell=True)
+t.post += FileContains('10')

@@ -1,0 +1,5 @@
+# -*- coding:utf-8; tab-width:4; mode:python -*-
+
+classpath = ['/usr/share/java/junit4.jar', '$testdir/../dist/practica1.jar']
+
+t = JUnit('$testdir/../test/org/magmax/masterj2ee/practica1/LectorTest.java', classpath=classpath)
