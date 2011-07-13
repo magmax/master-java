@@ -1,0 +1,30 @@
+# -*- coding:utf-8; tab-width:4; mode:python -*-
+
+EXEC='java -jar $testdir/../dist/practica2.jar'
+
+# t = Test('{0}'.format(EXEC), shell=True, expected=143)
+# t.post += FileContains(['1.- Alta de libro',
+#                         '2.- Buscar libro por ISBN',
+#                         '3.- Buscar libro por título',
+#                         '4.- Baja de libro',
+#                         '5.- Mostrar todos los libros',
+#                         '6.- Salir',
+#                         ] )
+
+# Check Exit.
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution001.in'), shell=True)
+t.post += FileContains(['1.- Alta de libro',
+                        '2.- Buscar libro por ISBN',
+                        '3.- Buscar libro por título',
+                        '4.- Baja de libro',
+                        '5.- Mostrar todos los libros',
+                        '6.- Salir',
+                        ] )
+
+# Check AddBook
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution002.in'), shell=True)
+t.post += FileContains(['Libro añadido'])
+
+# Check FindBook
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution003.in'), shell=True)
+t.post += FileContains(['Libro encontrado'])

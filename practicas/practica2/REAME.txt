@@ -1,0 +1,59 @@
+Máster en Java-J2EE-XML-AJAX
+Grupo Syncrom
+http://www.syncrom.com/
+
+
+PRÁCTICA 2. GESTIÓN DE LIBRERÍA
+-------------------------------
+
+TEMARIO TRATADO
+
+* Colecciones.
+* Clases JavaBeans.
+
+DESCRIPCIÓN
+
+En esta práctica se trata de crear una aplicación basada en la consola para la 
+gestión de una librería. Cada libro dispondrá de cuatro campos: isbn, titulo, 
+autor y precio, que serán encapsulados en un objeto de tipo JavaBean. Los libros
+serán almacenados en una colección, dejándose al alumno libertad para elegir el 
+tipo de ésta que más le convenga, procurando utilizar colecciones de tipos 
+genéricos.
+Al iniciarse la aplicación se mostrará un menú para que el usuario elija la 
+opción correspondiente. El aspecto del menú será el siguiente:
+    1.- Alta de libro
+    2.- Buscar libro por ISBN
+    3.- Buscar libro por título
+    4.- Baja de libro
+    5.- Mostrar todos los libros
+    6.- Salir
+Las funciones a realizar por cada una de las opciones son las siguientes:
+    1. Alta de libro. Se solicitará al usuario la introducción de los cuatro 
+       campos correspondientes al nuevo libro que quiere agregar. Después de 
+       introducidos los datos, el sistema comprobará si ya existe un libro con 
+       el ISBN indicado; si es así, se mostrará un mensaje de advertencia al 
+       usuario, si no se procederá a almacenar el nuevo libro en la colección.
+    2. Buscar por ISBN. Se solicitará al usuario la introducción del ISBN del 
+       libro. En caso de que exista dicho libro en la colección, se mostrarán 
+       todos los datos del mismo, si no, se indicará un mensaje indicando dicha 
+       circunstancia.
+    3. Buscar por título. Esta opción permitirá localizar libros en la colección
+       a partir del título o parte del mismo, es decir, el usuario podrá 
+       introducir el título completo o alguna palabra contenida en el mismo. En 
+       este último caso, la búsqueda se realizará por palabras completas, por 
+       ejemplo, si tenemos dos libros con los títulos “La casa azul” y “El viaje
+       de casandra”, y el usuario introduce como palabra de búsqueda “casa”, 
+       únicamente se localizará el primero de los libros. Si existen varios 
+       libros que cumplen con el criterio de búsqueda se mostrarán los datos de
+       todos ellos. Si no se localiza ningún libro con el criterio indicado, se
+       mostrará un mensaje al usuario indicando esta circunstancia.
+    4. Baja del libro. Se pedirá al usuario la introducción de ISBN cuyo libro 
+       quiere dar de baja y se procederá a eliminarlo de la colección. Si no 
+       existiera ningún libro con ese ISBN, se mostrará un mensaje al usuario
+       indicando esta circunstancia.
+    5. Mostrar todos los libros. Se mostrará un listado con los datos de todos 
+       los libros almacenados en la colección.
+    6. Salir. El programa finalizará.
+Después de la ejecución de cualquiera de las opciones de la 1 a la 5, el 
+programa volverá a mostrar el menú para la elección de la siguiente acción a 
+realizar. Así indefinidamente hasta que el usuario elija “Salir”.
