@@ -1,0 +1,15 @@
+*~
+*.class
+private
+\#*#
+.classpath
+.project
+.settings
+.metadata
+tema5/ejercicio1/beatles.html
+tema5/ejercicio2/beatles.html
+*.log
+derbyDB
+build
+dist
+target
