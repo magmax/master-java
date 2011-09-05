@@ -34,6 +34,7 @@ public class Practica2 {
     private boolean end;
     private Library library;
     private Scanner scanner;
+    private String lastmsg = "";
 
     private void run() {
         scanner = new Scanner(System.in);
@@ -65,6 +66,15 @@ public class Practica2 {
             case 2:
                 searchBookByISBN();
                 break;
+            case 3:
+                searchBookByTitle();
+                break;
+            case 4:
+                deleteBook();
+                break;
+            case 5:
+                showAllBooks();
+                break;
             case 6:
                 end = true;
                 break;
@@ -81,17 +91,17 @@ public class Practica2 {
     private Book readBookArguments() {
         Book result = new Book();
         result.setIsbn(readData("Introduzca el ISBN:"));
-        result.setTitle(readData("Introduzca el título del libro"));
+        result.setTitle(readData("Introduzca el título del libro:"));
         result.setAuthor(readData("Introduzca el autor del libro:"));
-        result.setPrice(readData("Introduzca el precio del libro"));
+        result.setPrice(readData("Introduzca el precio del libro:"));
         return result;
     }
 
     private String readData(String msg) {
         String result = "";
-        while ("".equals(result))
-        {
-            System.out.println(msg);
+        scanner.reset();
+        while ("".equals(result)) {
+            writeMessage(msg);
             result = scanner.nextLine().trim();
         }
         return result;
@@ -99,7 +109,33 @@ public class Practica2 {
 
     private void searchBookByISBN() throws BookNotFoundException {
         Book book = library.searchByIsbn(readData("ISBN del libro a buscar:"));
-        System.out.println("Libro encontrado:");
-        System.out.println(book);
+        writeMessage("Libro encontrado:");
+        writeMessage(book.toString());
+    }
+
+    private void searchBookByTitle() throws BookNotFoundException {
+        Book[] books = library.searchByTitle(readData("Título del libro a buscar:"));
+        writeMessage("Encontrados " + books.length + " libros:");
+        for (Book book : books) {
+            writeMessage(book.toString());
+        }
+    }
+
+    private void deleteBook() throws BookNotFoundException {
+        library.removeBook(readData("ISBN del libro a eliminar:"));
+        writeMessage("Libro borrado");
+    }
+
+    private void writeMessage(String msg) {
+        if (lastmsg.equals(msg)) {
+            return;
+        }
+        lastmsg = msg;
+        System.out.println(msg);
+    }
+
+    private void showAllBooks() {
+        for (Book book : library.getBooks())
+            System.out.println(book.toString());
     }
 }

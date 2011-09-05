@@ -42,8 +42,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-    
-
     public String getTitle() {
         return title;
     }
@@ -64,6 +62,16 @@ public class Book {
         this.price = Float.valueOf(price);
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("Book:");
+        
+        result.append("\n\tisbn: ").append(isbn);
+        result.append("\n\ttitle: ").append(title);
+        result.append("\n\tauthor: ").append(author);
+        result.append("\n\tprice: ").append(price);
+        
+        return result.toString();
+    }
 
 }

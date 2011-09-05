@@ -2,18 +2,11 @@
 
 EXEC='java -jar $testdir/../dist/practica2.jar'
 
-# t = Test('{0}'.format(EXEC), shell=True, expected=143)
-# t.post += FileContains(['1.- Alta de libro',
-#                         '2.- Buscar libro por ISBN',
-#                         '3.- Buscar libro por título',
-#                         '4.- Baja de libro',
-#                         '5.- Mostrar todos los libros',
-#                         '6.- Salir',
-#                         ] )
 
-# Check Exit.
+desc = "Check Exit"
 t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution001.in'), shell=True)
-t.post += FileContains(['1.- Alta de libro',
+t.desc = desc
+t.post += StdOutContains(['1.- Alta de libro',
                         '2.- Buscar libro por ISBN',
                         '3.- Buscar libro por título',
                         '4.- Baja de libro',
@@ -21,10 +14,60 @@ t.post += FileContains(['1.- Alta de libro',
                         '6.- Salir',
                         ] )
 
-# Check AddBook
-t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution002.in'), shell=True)
-t.post += FileContains(['Libro añadido'])
+# **************************************************
 
-# Check FindBook
+desc = 'Add Book'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution002.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['Libro añadido'])
+
+desc = 'Adding a book twice, a message is shown'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution002b.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['El libro ya se encuentra en el sistema'])
+
+# **************************************************
+desc = 'Find Book by ISBN'
 t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution003.in'), shell=True)
-t.post += FileContains(['Libro encontrado'])
+t.desc = desc
+t.post += StdOutContains(['Libro encontrado', 'As Hard As A Rock'])
+t.post += StdOutContains('ISBN del libro a buscar')
+t.post += Not(StdOutContains('ISBN del libro a buscar\nISBN del libro a buscar'))
+t.post += Not(StdOutContains('ISBN del libro a buscar\r\nISBN del libro a buscar'))
+
+desc = 'Find Book by ISBN that do not exist'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution003b.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains('El libro no se ha encontrado')
+
+# **************************************************
+desc = 'FindBook by title'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution004.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['Encontrados 1 libros', 'Baby, Please don\'t go'])
+t.post += StdOutContains('Título del libro a buscar')
+t.post += Not(StdOutContains('ISBN del libro a buscar\nISBN del libro a buscar'))
+t.post += Not(StdOutContains('ISBN del libro a buscar\r\nISBN del libro a buscar'))
+
+desc = 'FindBook by one word in title'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution004b.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['Encontrados 1 libros', 'La casa azúl'])
+t.post += Not(StdOutContains(['El viaje de casandra']))
+
+# **************************************************
+desc = 'Delete book'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution005.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['Libro borrado'])
+
+desc = 'Delete that do not exist'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution005b.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains('El libro no se ha encontrado')
+
+# **************************************************
+desc = 'Show all books'
+t = Test('cat  $testdir/{1} | {0}'.format(EXEC,'execution006.in'), shell=True)
+t.desc = desc
+t.post += StdOutContains(['Black Ice', 'Louder than Hell', 'Toxicity'])

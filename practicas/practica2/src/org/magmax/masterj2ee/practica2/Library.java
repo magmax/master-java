@@ -42,7 +42,7 @@ public class Library {
     }
     
     Book[] searchByTitle(String title) {
-        List<Book> result = new ArrayList<Book>();
+        ArrayList<Book> result = new ArrayList<Book>();
         
         for (Book each : books.values()) {
             if (bookTitleContainsWord(each, title))
