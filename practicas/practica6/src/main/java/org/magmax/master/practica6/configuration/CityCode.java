@@ -89,4 +89,11 @@ public enum CityCode {
         }
         throw new Exception("Provincia no encontrada");
     }
+
+    @Override
+    public String toString() {
+        return description;
+    }
+    
+    
 }

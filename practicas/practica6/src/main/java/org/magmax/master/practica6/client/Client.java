@@ -53,8 +53,13 @@ public class Client {
     }
 
     public Float[] getTemperature(String city) throws UnknownHostException, IOException, Exception {
+        CityCode citycode = CityCode.valueOf(city);
+        return getTemperature(citycode);
+    }
+
+    public Float[] getTemperature(CityCode citycode) throws UnknownHostException, IOException, Exception {
         Request request = new Request();
-        request.setCitycode(CityCode.valueOf(city));
+        request.setCitycode(citycode);
         Float[] result = getTemperature(request).getTemperatures();
         showFinalMessage(result);
         return result;
