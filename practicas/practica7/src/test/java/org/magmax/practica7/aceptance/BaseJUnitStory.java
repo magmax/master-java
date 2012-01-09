@@ -16,19 +16,29 @@
  */
 package org.magmax.practica7.aceptance;
 
-import java.util.List;
-import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.junit.JUnitStory;
+import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.StoryReporterBuilder;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PersonAgregation extends BaseJUnitStory {
+public class BaseJUnitStory extends JUnitStory {
 
-    @Override
-    public List<CandidateSteps> candidateSteps() {
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), new PersonAgregationSteps());
-        return stepsFactory.createCandidateSteps();
+    public BaseJUnitStory() {
+        Configuration config = configuration();
+        useConfiguration(config);
     }
+    
+    @Override
+    public Configuration configuration() {
+        Configuration result = super.configuration();
+        result.useStoryReporterBuilder(new StoryReporterBuilder()
+                    .withDefaultFormats()
+                    .withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+        return result;
+    }
+    
 }

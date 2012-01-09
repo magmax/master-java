@@ -26,33 +26,45 @@ import static org.junit.Assert.*;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PersonAgregationSteps extends BaseSteps {
+public class PersonSearchSteps extends BaseSteps{
 
-    @Given("added the user $name/$phone/$dni")
-    public void givenAddedUser(String name, String phone, String dni) throws Exception {
+    private String searchbox = "";
+  
+    @Given("a database with user $name/$phone/$dni")
+    public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
         Person person = new Person();
         person.setName(name);
         person.setPhone(phone);
         person.setDni(dni);
-
         persistence.create(person);
     }
 
-    @When("somebody press on agregate button")
-    public void whenSomebodyPressOnAgregateButton() {
-        this.exception = null;
+    @When("somebody writes '$dni' in the search box")
+    public void whenSomebodyWritesADniInTheSearchBox(String dni) {
+        searchbox = dni;
+    }
+
+    @When("press on Search button")
+    public void whenPressOnSearchButton() {
         try {
-            persistence.create(person);
+            person = persistence.retrievePerson(searchbox);
         } catch (Exception ex) {
             this.exception = ex;
         }
     }
 
-    @Then("the person $name/$phone/$dni is added")
-    public void thenThePersonMiguelIsAdded(String name, String phone, String dni) throws Exception {
-        person = persistence.retrievePerson(dni);
+    @Then("person $name/$phone/$dni is returned")
+    public void thenPersonIsReturned(String name, String phone, String dni) {
+        assertNull("There was an unexpected exception", exception);
+        assertNotNull("No person to compare with!");
         assertEquals(name, person.getName());
         assertEquals(phone, person.getPhone());
         assertEquals(dni, person.getDni());
+    }
+
+    @Then("the exception '$message' is launched")
+    public void thenTheExceptionDNIAbcdefWasNotFoundIsLaunched(String message) {
+        assertNotNull(exception);
+        assertEquals(message, exception.getMessage());
     }
 }

@@ -24,11 +24,11 @@ import org.jbehave.core.steps.InstanceStepsFactory;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PersonAgregation extends BaseJUnitStory {
+public class PersonSearch extends BaseJUnitStory{
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), new PersonAgregationSteps());
+        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), new PersonSearchSteps());
         return stepsFactory.createCandidateSteps();
     }
 }

@@ -14,21 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.practica7.aceptance;
-
-import java.util.List;
-import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.InstanceStepsFactory;
+package org.magmax.practica7.exceptions;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PersonAgregation extends BaseJUnitStory {
+public class PersonAlreadyExists {
 
     @Override
-    public List<CandidateSteps> candidateSteps() {
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), new PersonAgregationSteps());
-        return stepsFactory.createCandidateSteps();
+    public String toString() {
+        return "Person already exists";
     }
+    
 }
