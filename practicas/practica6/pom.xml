@@ -13,7 +13,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!--<netbeans.hint.useExternalMaven>true</netbeans.hint.useExternalMaven>-->
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
 
@@ -33,37 +32,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.jbehave</groupId>
-                <artifactId>jbehave-maven-plugin</artifactId>
-                <version>3.5.4</version>
-                <executions>
-                    <execution>
-                        <id>run-stories-as-embeddables</id>
-                        <phase>integration-test</phase>
-                        <configuration>
-                            <includes>
-                                <include>**/aceptance/Aceptance.java</include>
-                            </includes>
-                            <metaFilters>
-                                <metaFilter>+author *</metaFilter>
-                                <metaFilter>-skip</metaFilter>
-                            </metaFilters>
-                            <systemProperties>
-                                <property>
-                                    <name>java.awt.headless</name>
-                                    <value>true</value>
-                                </property>
-                            </systemProperties>
-                            <ignoreFailureInStories>true</ignoreFailureInStories>
-                            <ignoreFailureInView>false</ignoreFailureInView>
-                        </configuration>
-                        <goals>
-                            <goal>run-stories-as-embeddables</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>

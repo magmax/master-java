@@ -16,13 +16,11 @@
  */
 package practica5;
 
-import java.awt.AWTEventMulticaster;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -32,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,6 +42,8 @@ public class TableroDibujo extends JApplet {
 
     private TableroDibujo me;
     private Color currentColor;
+    private int currentSize = 1;
+    private Point lastpoint = null;
 
     public void init() {
         me = this;
@@ -76,6 +77,7 @@ public class TableroDibujo extends JApplet {
 
         JSpinner trazo = new JSpinner();
         trazo.setBounds(190, 30, 50, 26);
+        trazo.setModel(new SpinnerNumberModel(currentSize, 1, 50, 1));
 
         getContentPane().add(label1);
         getContentPane().add(label2);
@@ -95,23 +97,48 @@ public class TableroDibujo extends JApplet {
         limpiar.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent ae) {
+            public void actionPerformed(ActionEvent event) {
+                me.repaint();
             }
         });
 
+        getContentPane().addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                Point point = event.getPoint();
+                Graphics g = me.getGraphics();
+                g.setColor(currentColor);
+                lastpoint = point;
+                g.drawRect(point.x, point.y, currentSize, currentSize);
+                g.fillRect(point.x, point.y, currentSize, currentSize);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+            }
+        });
 
         getContentPane().addMouseMotionListener(new MouseMotionListener() {
-
-            private Point lastpoint = null;
 
             @Override
             public void mouseDragged(MouseEvent event) {
                 Point point = event.getPoint();
                 Graphics g = me.getGraphics();
                 g.setColor(currentColor);
-                if (lastpoint == null) {
-                    g.drawRect(point.x, point.y, 1, 1);
-                } else {
+                for (int i = 0; i < currentSize; ++i) {
                     g.drawLine(lastpoint.x, lastpoint.y, point.x, point.y);
                 }
                 lastpoint = point;
@@ -119,16 +146,15 @@ public class TableroDibujo extends JApplet {
 
             @Override
             public void mouseMoved(MouseEvent me) {
-                lastpoint = null;
             }
         });
-        
+
         trazo.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent ce) {
                 JSpinner source = (JSpinner) ce.getSource();
-                System.out.println("Ha cambiado " + source.getValue());
+                setCurrentSize((Integer) source.getValue());
             }
         });
     }
@@ -149,5 +175,9 @@ public class TableroDibujo extends JApplet {
 
     private void setColor(Color c) {
         currentColor = c;
+    }
+
+    protected void setCurrentSize(int size) {
+        this.currentSize = size;
     }
 }
