@@ -17,6 +17,7 @@
 package org.magmax.practica7.persistence;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,6 +88,19 @@ public class Persistence {
         statement.executeUpdate();
         statement.close();
         connection.close();
+    }
+
+    public String[] showNames() throws SQLException, DatabaseNotDefinedException {
+        Connection connection = getValidConnection();
+        PreparedStatement statement = connection.prepareStatement("select name from person");
+        ResultSet resultset = statement.executeQuery();
+        ArrayList<String> result = new ArrayList<String>();
+        while (resultset.next()) {
+            result.add(resultset.getString("name"));
+        }
+        resultset.close();
+        connection.close();
+        return result.toArray(new String[0]);
     }
 
     private boolean personAlreadyExists(Person person) {

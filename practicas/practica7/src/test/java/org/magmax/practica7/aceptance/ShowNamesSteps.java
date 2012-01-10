@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,24 @@
  */
 package org.magmax.practica7.aceptance;
 
+import java.sql.SQLException;
+import java.util.Arrays;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
 import org.magmax.practica7.pojo.Person;
 import static org.junit.Assert.*;
-import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class PersonSearchSteps extends BaseSteps {
+public class ShowNamesSteps extends BaseSteps {
 
-    private String searchbox = "";
+    private String[] names = null;
 
-    @Given("a database with user '$name/$phone/$dni'")
+    @Given("added the user $name/$phone/$dni")
     public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
         Person thePerson = new Person();
         thePerson.setName(name);
@@ -40,26 +42,16 @@ public class PersonSearchSteps extends BaseSteps {
         persistence.create(thePerson);
     }
 
-    @When("somebody writes '$dni' in the search box")
-    public void whenSomebodyWritesADniInTheSearchBox(String dni) {
-        searchbox = dni;
+    @When("somebody press on show names button")
+    public void whenSomebodyPressOnShowNamesButton() throws SQLException, DatabaseNotDefinedException {
+        names = persistence.showNames();
     }
 
-    @When("press on Search button")
-    public void whenPressOnSearchButton() {
-        try {
-            person = persistence.retrievePerson(searchbox);
-        } catch (Exception ex) {
-            this.exception = ex;
-        }
-    }
-
-    @Then("person $name/$phone/$dni is returned")
-    public void thenPersonIsReturned(String name, String phone, String dni) {
-        assertNull("There was an unexpected exception", exception);
-        assertNotNull("No person to compare with!");
-        assertEquals(name, person.getName());
-        assertEquals(phone, person.getPhone());
-        assertEquals(dni, person.getDni());
+    @Then("the list [$list] is returned")
+    public void thenTheListOfPeople(String list) {
+        String[] pattern = list.split(",");
+        Arrays.sort(pattern);
+        Arrays.sort(names);
+        assertArrayEquals(pattern, names);
     }
 }
