@@ -29,7 +29,7 @@ public class PersonNotFoundException extends Exception {
     }
 
     @Override
-    public String toString() {
-        return String.format("Person with dni '%s' was not found", dni);
+    public String getMessage() {
+        return String.format("DNI %s was not found.", dni);
     }
 }

@@ -40,6 +40,7 @@ public class BaseSteps {
         person = new Person();
         exception = null;
         persistence = new Persistence();
+        persistence.useInMemoryDatabase();
     }
 
     @AfterScenario
@@ -51,7 +52,7 @@ public class BaseSteps {
     @Given("no database file")
     @Alias("a clean datafile")
     public void givenNoDatabaseFile() throws DatabaseNotDefinedException {
-        persistence.useInMemoryDatabase();
+        // already done
     }
 
     @When("name is setted to '$name'")

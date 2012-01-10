@@ -21,24 +21,25 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.magmax.practica7.pojo.Person;
 import static org.junit.Assert.*;
+import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class PersonSearchSteps extends BaseSteps{
-
     private String searchbox = "";
-  
-    @Given("a database with user $name/$phone/$dni")
-    public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
-        Person person = new Person();
-        person.setName(name);
-        person.setPhone(phone);
-        person.setDni(dni);
-        persistence.create(person);
-    }
 
+    @Given("a database with user '$name/$phone/$dni'")
+    public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
+        System.out.println("Creating user");
+        Person thePerson = new Person();
+        thePerson.setName(name);
+        thePerson.setPhone(phone);
+        thePerson.setDni(dni);
+        persistence.create(thePerson);
+        System.out.println("created");
+    }
     @When("somebody writes '$dni' in the search box")
     public void whenSomebodyWritesADniInTheSearchBox(String dni) {
         searchbox = dni;
@@ -62,9 +63,4 @@ public class PersonSearchSteps extends BaseSteps{
         assertEquals(dni, person.getDni());
     }
 
-    @Then("the exception '$message' is launched")
-    public void thenTheExceptionDNIAbcdefWasNotFoundIsLaunched(String message) {
-        assertNotNull(exception);
-        assertEquals(message, exception.getMessage());
-    }
 }
