@@ -28,7 +28,8 @@ public class PersonSearch extends BaseJUnitStory{
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), new PersonSearchSteps());
+        PersonSearchSteps steps = new PersonSearchSteps();
+        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), steps);
         return stepsFactory.createCandidateSteps();
     }
 }

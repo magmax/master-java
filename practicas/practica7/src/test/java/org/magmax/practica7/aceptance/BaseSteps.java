@@ -17,15 +17,12 @@
 package org.magmax.practica7.aceptance;
 
 import java.sql.SQLException;
-import org.jbehave.core.annotations.AfterScenario;
-import org.jbehave.core.annotations.Alias;
-import org.jbehave.core.annotations.BeforeScenario;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
 import org.magmax.practica7.persistence.Persistence;
 import org.magmax.practica7.pojo.Person;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -39,22 +36,22 @@ public class BaseSteps {
     protected boolean inMemory = true;
 
     @BeforeScenario
-    public void setupStory() {
+    public void setupStory() throws DatabaseNotDefinedException {
         person = new Person();
         exception = null;
-        persistence = new Persistence(inMemory);
+        persistence = new Persistence();
     }
 
     @AfterScenario
-    public void tearDownStory() throws SQLException {
+    public void tearDownStory() throws SQLException, DatabaseNotDefinedException {
         persistence.clear();
         persistence.close();
     }
 
     @Given("no database file")
     @Alias("a clean datafile")
-    public void givenNoDatabaseFile() {
-        // Already done
+    public void givenNoDatabaseFile() throws DatabaseNotDefinedException {
+        persistence.useInMemoryDatabase();
     }
 
     @When("name is setted to '$name'")

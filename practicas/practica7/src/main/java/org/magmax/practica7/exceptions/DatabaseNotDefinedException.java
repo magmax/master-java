@@ -14,22 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.practica7.aceptance;
-
-import java.util.List;
-import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.InstanceStepsFactory;
+package org.magmax.practica7.exceptions;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class PersonAgregation extends BaseJUnitStory {
+public class DatabaseNotDefinedException extends Exception {
+
+    public DatabaseNotDefinedException() {
+    }
 
     @Override
-    public List<CandidateSteps> candidateSteps() {
-        PersonAgregationSteps steps = new PersonAgregationSteps();
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), steps);
-        return stepsFactory.createCandidateSteps();
+    public String toString() {
+        return "Database was not defined.";
     }
+    
+    
 }

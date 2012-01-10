@@ -16,16 +16,12 @@
  */
 package org.magmax.practica7.persistence;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
+import org.magmax.practica7.exceptions.PersonNotFoundException;
 import org.magmax.practica7.pojo.Person;
 
 /**
@@ -34,23 +30,32 @@ import org.magmax.practica7.pojo.Person;
  */
 public class Persistence {
 
-    public Persistence() {
-    }
+    private final String CONNECTION_STRING_TEMPLATE = "jdbc:derby:%s;create=true";
+    private String databaseName = null;
 
-    public Persistence(boolean inMemory) {
-        ConnectionRetriever.useInMemory(true);
+    public Persistence() {
+        loadDatabaseDriver();
     }
 
     public void close() {
-        ConnectionRetriever.close();
+    }
+
+    public void useInMemoryDatabase() throws DatabaseNotDefinedException {
+        selectInMemoryName();
+        buildDatabase();
+    }
+
+    public void useDatabase(String path) throws DatabaseNotDefinedException {
+        databaseName = path;
+        buildDatabase();
     }
 
     public void create(Person person) throws Exception {
         if (personAlreadyExists(person)) {
             throw new Exception(String.format("The DNI %s already exists.", person.getDni()));
         }
-        Connection connection = ConnectionRetriever.getValidConnection();
-        PreparedStatement statement = connection.prepareStatement("insert into Person(dni, name, phone) values (?,?,?)");
+        Connection connection = getValidConnection();
+        PreparedStatement statement = connection.prepareStatement("insert into person(dni, name, phone) values (?,?,?)");
         statement.setString(1, person.getDni());
         statement.setString(2, person.getName());
         statement.setString(3, person.getPhone());
@@ -59,10 +64,10 @@ public class Persistence {
         connection.close();
     }
 
-    public Person retrievePerson(String dni) throws Exception {
+    public Person retrievePerson(String dni) throws SQLException, DatabaseNotDefinedException, PersonNotFoundException {
         Person result = new Person();
-        Connection connection = ConnectionRetriever.getValidConnection();
-        PreparedStatement statement = connection.prepareStatement("select dni, name, phone from Person where dni = ? ");
+        Connection connection = getValidConnection();
+        PreparedStatement statement = connection.prepareStatement("select dni, name, phone from person where dni = ? ");
         statement.setString(1, dni);
         ResultSet resultset = statement.executeQuery();
         if (resultset.next()) {
@@ -71,11 +76,17 @@ public class Persistence {
             result.setPhone(resultset.getString("phone"));
             resultset.close();
         } else {
-            result.setName("");
-            result.setDni("");
-            result.setPhone("");
+            throw new PersonNotFoundException(dni);
         }
         return result;
+    }
+
+    public void clear() throws SQLException, DatabaseNotDefinedException {
+        Connection connection = getValidConnection();
+        PreparedStatement statement = connection.prepareStatement("delete from person");
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
     }
 
     private boolean personAlreadyExists(Person person) {
@@ -87,67 +98,41 @@ public class Persistence {
         }
     }
 
-    public void clear() throws SQLException {
-        Connection connection = ConnectionRetriever.getValidConnection();
-        PreparedStatement statement = connection.prepareStatement("delete from Person");
-        statement.executeUpdate();
-        statement.close();
-        connection.close();
-    }
-}
-
-class ConnectionRetriever {
-
-    public static final String DEFAULT_FILENAME = "database.dat";
-    public static final String IN_MEMORY = "memory:";
-    private static ConnectionRetriever instance = null;
-    private static final String CONNECTION_STRING_TEMPLATE = "jdbc:derby:%s;create=true";
-    private static Object[] database = new String[]{DEFAULT_FILENAME};
-
-    static void useInMemory(boolean inMemory) {
-        database[0] = inMemory ? getInMemoryName() : DEFAULT_FILENAME;
+    private void selectInMemoryName() {
+        databaseName = "memory:" + UUID.randomUUID();
     }
 
-    private static String getInMemoryName() {
-        return IN_MEMORY + UUID.randomUUID();
-    }
-
-    static void close() {
-        instance = null;
-    }
-
-    private ConnectionRetriever() {
+    private void loadDatabaseDriver() {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnectionRetriever.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static Connection getValidConnection() throws SQLException {
-        if (instance == null) {
-            instance = new ConnectionRetriever();
-            instance.buildDatabase();
-        }
+    private Connection getValidConnection() throws SQLException, DatabaseNotDefinedException {
         Connection result = getConnection();
         result.setAutoCommit(true);
         return result;
     }
 
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(instance.getConnectionString());
+    private Connection getConnection() throws SQLException, DatabaseNotDefinedException {
+        return DriverManager.getConnection(getConnectionString());
     }
 
-    private String getConnectionString() {
-        return String.format(CONNECTION_STRING_TEMPLATE, database);
+    private String getConnectionString() throws DatabaseNotDefinedException {
+        if (databaseName == null) {
+            throw new DatabaseNotDefinedException();
+        }
+        return String.format(CONNECTION_STRING_TEMPLATE, databaseName);
     }
 
-    private void buildDatabase() {
+    private void buildDatabase() throws DatabaseNotDefinedException {
         try {
             Connection connection = getConnection();
             buildPersonTable(connection);
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionRetriever.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger("").log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,7 +148,7 @@ class ConnectionRetriever {
 
     private boolean existsPersonTable(Connection connection) throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, "Person", null);
+        ResultSet tables = dbm.getTables(null, null, "person", null);
         boolean result = tables.next();
         tables.close();
         return result;

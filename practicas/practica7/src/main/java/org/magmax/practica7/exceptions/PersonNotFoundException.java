@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.practica7.aceptance;
-
-import java.util.List;
-import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.InstanceStepsFactory;
+package org.magmax.practica7.exceptions;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class PersonAgregation extends BaseJUnitStory {
+public class PersonNotFoundException extends Exception {
+
+    private final String dni;
+
+    public PersonNotFoundException(String dni) {
+        this.dni = dni;
+    }
 
     @Override
-    public List<CandidateSteps> candidateSteps() {
-        PersonAgregationSteps steps = new PersonAgregationSteps();
-        InstanceStepsFactory stepsFactory = new InstanceStepsFactory(configuration(), steps);
-        return stepsFactory.createCandidateSteps();
+    public String toString() {
+        return String.format("Person with dni '%s' was not found", dni);
     }
 }
