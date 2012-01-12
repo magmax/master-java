@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
  */
 public class ShowNamesSteps extends BaseSteps {
 
-    private String[] names = null;
+    private Person[] persons = null;
 
     @Given("added the user $name/$phone/$dni")
     public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
@@ -44,12 +44,15 @@ public class ShowNamesSteps extends BaseSteps {
 
     @When("somebody press on show names button")
     public void whenSomebodyPressOnShowNamesButton() throws SQLException, DatabaseNotDefinedException {
-        names = persistence.showNames();
+        persons = persistence.retrievePersons();
     }
 
     @Then("the list [$list] is returned")
     public void thenTheListOfPeople(String list) {
         String[] pattern = list.split(",");
+        String[] names = new String[persons.length];
+        for (int i = 0; i < persons.length; ++i)
+            names[i] = persons[i].getName();
         Arrays.sort(pattern);
         Arrays.sort(names);
         assertArrayEquals(pattern, names);

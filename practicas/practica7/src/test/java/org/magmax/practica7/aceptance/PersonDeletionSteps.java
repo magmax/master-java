@@ -17,7 +17,6 @@
 package org.magmax.practica7.aceptance;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -30,9 +29,8 @@ import static org.junit.Assert.*;
  * @author miguel
  */
 public class PersonDeletionSteps extends BaseSteps {
-    private String personName;
 
-    @Given("a database with user '$name/$phone/$dni'")
+    @Given("a person '$name/$phone/$dni'")
     public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
         Person thePerson = new Person();
         thePerson.setName(name);
@@ -46,18 +44,30 @@ public class PersonDeletionSteps extends BaseSteps {
         // Do nothing
     }
 
-    @When("somebody doubleclick on name '$name'")
-    public void whenThenSomebodyDoubleclickOnName(String name) throws SQLException, DatabaseNotDefinedException {
-        personName = name;
-        persistence.delete(name);
+    @When("somebody doubleclicks on '$name' with dni '$dni'")
+    public void whenThenSomebodyDoubleclickOnName(String name, String dni) throws SQLException, DatabaseNotDefinedException {
+        Person person = new Person();
+        person.setName(name);
+        person.setDni(dni);
+        persistence.delete(person);
     }
 
-    @Then("person 12345678Y is not in database.")
-    public void thenPerson12345678YIsNotInDatabase() throws SQLException, DatabaseNotDefinedException {
-        for (String each : persistence.showNames()) {
-            if (each.equals(personName)) {
-                fail(String.format("Person %s already exists", personName));
+    @Then("person $dni is not in database.")
+    public void thenPersonIsNotInDatabase(String dni) throws SQLException, DatabaseNotDefinedException {
+        for (Person each : persistence.retrievePersons()) {
+            if (each.getDni().equals(dni)) {
+                fail(String.format("Person %s already exists", dni));
             }
         }
+    }
+
+    @Then("person $dni is not in database.")
+    public void thenPersonIsInDatabase(String dni) throws SQLException, DatabaseNotDefinedException {
+        for (Person each : persistence.retrievePersons()) {
+            if (each.getDni().equals(dni)) {
+                return;
+            }
+        }
+        fail(String.format("Person %s not exists", dni));
     }
 }

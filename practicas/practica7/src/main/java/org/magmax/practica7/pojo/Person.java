@@ -21,10 +21,11 @@ package org.magmax.practica7.pojo;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class Person {
+
     String name = null;
     String phone = null;
     String dni = null;
-    
+
     public Person() {
     }
 
@@ -52,4 +53,8 @@ public class Person {
         this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

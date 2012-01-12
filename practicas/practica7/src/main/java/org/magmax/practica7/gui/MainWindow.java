@@ -141,7 +141,7 @@ public class MainWindow extends JFrame {
 
 class NameListModel implements ListModel {
 
-    String[] content = new String[0];
+    Person[] content = new Person[0];
     ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
 
     public int getSize() {
@@ -160,7 +160,7 @@ class NameListModel implements ListModel {
         listeners.remove(ll);
     }
 
-    public void setList(String[] names) {
+    public void setList(Person[] names) {
         content = names;
         fireContentChanged();
     }
@@ -254,22 +254,21 @@ class ShowNamesListener implements ActionListener {
     ShowNamesListener(Persistence persistence, NameListModel nameModel) {
         this.persistence = persistence;
         this.nameModel = nameModel;
-
     }
 
     public void actionPerformed(ActionEvent ae) {
         nameModel.setList(getNames());
     }
 
-    private String[] getNames() {
+    private Person[] getNames() {
         try {
-            return persistence.showNames();
+            return persistence.retrievePersons();
         } catch (SQLException ex) {
             Logger.getLogger(ShowNamesListener.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DatabaseNotDefinedException ex) {
             Logger.getLogger(ShowNamesListener.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new String[0];
+        return new Person[0];
     }
 }
 
@@ -286,10 +285,10 @@ class DeleteListener implements MouseListener {
             return;
         }
         JList list = (JList) me.getSource();
-        deletePerson((String)list.getSelectedValue());
+        deletePerson((Person)list.getSelectedValue());
     }
 
-    private void deletePerson(String personName) {
+    private void deletePerson(Person personName) {
         try {
             persistence.delete(personName);
         } catch (SQLException ex) {

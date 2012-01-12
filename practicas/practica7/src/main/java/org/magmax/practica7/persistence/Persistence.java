@@ -91,26 +91,31 @@ public class Persistence {
         connection.close();
     }
 
-    public void delete(String name) throws SQLException, DatabaseNotDefinedException {
+    public void delete(Person person) throws SQLException, DatabaseNotDefinedException {
         Connection connection = getValidConnection();
-        PreparedStatement statement = connection.prepareStatement("delete from person where name = ?");
-        statement.setString(1, name);
+        PreparedStatement statement = connection.prepareStatement("delete from person where dni = ?");
+        statement.setString(1, person.getDni());
         statement.executeUpdate();
         statement.close();
         connection.close();
     }
 
-    public String[] showNames() throws SQLException, DatabaseNotDefinedException {
+    public Person[] retrievePersons() throws SQLException, DatabaseNotDefinedException {
         Connection connection = getValidConnection();
-        PreparedStatement statement = connection.prepareStatement("select name from person");
+        PreparedStatement statement = connection.prepareStatement("select dni,name,phone from person");
         ResultSet resultset = statement.executeQuery();
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<Person> result = new ArrayList<Person>();
+        Person person;
         while (resultset.next()) {
-            result.add(resultset.getString("name"));
+            person = new Person();
+            person.setDni(resultset.getString("dni"));
+            person.setName(resultset.getString("name"));
+            person.setPhone(resultset.getString("phone"));
+            result.add(person);
         }
         resultset.close();
         connection.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new Person[0]);
     }
 
     private boolean personAlreadyExists(Person person) {
