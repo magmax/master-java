@@ -22,6 +22,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.magmax.practica7.exceptions.DatabaseNotDefinedException;
+import org.magmax.practica7.exceptions.PersonAlreadyExists;
 import org.magmax.practica7.exceptions.PersonNotFoundException;
 import org.magmax.practica7.pojo.Person;
 
@@ -51,9 +52,9 @@ public class Persistence {
         buildDatabase();
     }
 
-    public void create(Person person) throws Exception {
+    public void create(Person person) throws PersonAlreadyExists, SQLException, DatabaseNotDefinedException {
         if (personAlreadyExists(person)) {
-            throw new Exception(String.format("The DNI %s already exists.", person.getDni()));
+            throw new PersonAlreadyExists(person.getDni());
         }
         Connection connection = getValidConnection();
         PreparedStatement statement = connection.prepareStatement("insert into person(dni, name, phone) values (?,?,?)");
@@ -85,6 +86,15 @@ public class Persistence {
     public void clear() throws SQLException, DatabaseNotDefinedException {
         Connection connection = getValidConnection();
         PreparedStatement statement = connection.prepareStatement("delete from person");
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    public void delete(String name) throws SQLException, DatabaseNotDefinedException {
+        Connection connection = getValidConnection();
+        PreparedStatement statement = connection.prepareStatement("delete from person where name = ?");
+        statement.setString(1, name);
         statement.executeUpdate();
         statement.close();
         connection.close();

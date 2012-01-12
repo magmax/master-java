@@ -20,11 +20,17 @@ package org.magmax.practica7.exceptions;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PersonAlreadyExists {
+public class PersonAlreadyExists extends Exception {
+
+    private final String dni;
+
+    public PersonAlreadyExists(String dni) {
+        this.dni = dni;
+
+    }
 
     @Override
-    public String toString() {
-        return "Person already exists";
+    public String getMessage() {
+        return String.format("The DNI %s already exists.", dni);
     }
-    
 }

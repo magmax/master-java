@@ -29,11 +29,10 @@ import static org.junit.Assert.*;
  *
  * @author miguel
  */
-public class ShowNamesSteps extends BaseSteps {
+public class PersonDeletionSteps extends BaseSteps {
+    private String personName;
 
-    private String[] names = null;
-
-    @Given("added the user $name/$phone/$dni")
+    @Given("a database with user '$name/$phone/$dni'")
     public void givenADatabaseWithUser(String name, String phone, String dni) throws Exception {
         Person thePerson = new Person();
         thePerson.setName(name);
@@ -43,15 +42,22 @@ public class ShowNamesSteps extends BaseSteps {
     }
 
     @When("somebody press on show names button")
-    public void whenSomebodyPressOnShowNamesButton() throws SQLException, DatabaseNotDefinedException {
-        names = persistence.showNames();
+    public void whenSomebodyPressOnShowNamesButton() {
+        // Do nothing
     }
 
-    @Then("the list [$list] is returned")
-    public void thenTheListOfPeople(String list) {
-        String[] pattern = list.split(",");
-        Arrays.sort(pattern);
-        Arrays.sort(names);
-        assertArrayEquals(pattern, names);
+    @When("somebody doubleclick on name '$name'")
+    public void whenThenSomebodyDoubleclickOnName(String name) throws SQLException, DatabaseNotDefinedException {
+        personName = name;
+        persistence.delete(name);
+    }
+
+    @Then("person 12345678Y is not in database.")
+    public void thenPerson12345678YIsNotInDatabase() throws SQLException, DatabaseNotDefinedException {
+        for (String each : persistence.showNames()) {
+            if (each.equals(personName)) {
+                fail(String.format("Person %s already exists", personName));
+            }
+        }
     }
 }
