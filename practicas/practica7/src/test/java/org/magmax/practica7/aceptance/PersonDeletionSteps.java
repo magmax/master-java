@@ -52,7 +52,7 @@ public class PersonDeletionSteps extends BaseSteps {
         persistence.delete(person);
     }
 
-    @Then("person $dni is not in database.")
+    @Then("person '$dni' is not in database")
     public void thenPersonIsNotInDatabase(String dni) throws SQLException, DatabaseNotDefinedException {
         for (Person each : persistence.retrievePersons()) {
             if (each.getDni().equals(dni)) {
@@ -61,7 +61,7 @@ public class PersonDeletionSteps extends BaseSteps {
         }
     }
 
-    @Then("person $dni is not in database.")
+    @Then("person '$dni' is in database")
     public void thenPersonIsInDatabase(String dni) throws SQLException, DatabaseNotDefinedException {
         for (Person each : persistence.retrievePersons()) {
             if (each.getDni().equals(dni)) {
