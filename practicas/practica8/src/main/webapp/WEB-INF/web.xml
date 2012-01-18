@@ -2,7 +2,7 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>NewExam</servlet-name>
-        <servlet-class>org.magmax.master.practica8.practica8.NewExam</servlet-class>
+        <servlet-class>org.magmax.master.practica8.NewExam</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewExam</servlet-name>
@@ -13,4 +13,8 @@
             30
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>database2.dat</param-value>
+    </context-param>
 </web-app>

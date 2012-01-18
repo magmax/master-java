@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.magmax.master.practica8.practica8;
+package org.magmax.master.practica8;
 
 import java.io.IOException;
 import java.io.PrintWriter;
