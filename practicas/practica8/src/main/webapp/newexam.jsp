@@ -16,8 +16,8 @@
         response.sendRedirect("index.jsp");
     }
     
-    if (request.getParameter("issue").toString().equals(session.getAttribute("issue").toString()) 
-            && request.getParameter("difficulty").toString().equals(session.getAttribute("level").toString())) {
+    if (request.getParameter("issue").toString().equals(session.getAttribute("issue")) 
+            && request.getParameter("difficulty").toString().equals(session.getAttribute("level"))) {
         System.out.println("New Exam: issue and difficulty as stored");
         response.sendRedirect("showresult.jsp");
     }
@@ -25,7 +25,7 @@
     Integer issue = Integer.valueOf (request.getParameter("issue"));
     Integer level = Integer.valueOf (request.getParameter("difficulty"));
     
-    Question[] last_exam;// = (Question[]) session.getAttribute("last_exam");
+    Question[] last_exam;
     Domain domain = new Domain(application.getInitParameter("database"));
     last_exam = domain.generateExam(level, issue);
     
