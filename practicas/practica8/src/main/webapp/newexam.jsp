@@ -15,8 +15,9 @@
         session.setAttribute("level", null);
         response.sendRedirect("index.jsp");
     }
-    if (session.getAttribute("issue") == request.getParameter("issue") 
-            && session.getAttribute("level") == request.getParameter("difficulty")) {
+    
+    if (request.getParameter("issue").toString().equals(session.getAttribute("issue").toString()) 
+            && request.getParameter("difficulty").toString().equals(session.getAttribute("level").toString())) {
         System.out.println("New Exam: issue and difficulty as stored");
         response.sendRedirect("showresult.jsp");
     }
