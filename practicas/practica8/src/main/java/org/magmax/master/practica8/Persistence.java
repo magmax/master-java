@@ -87,7 +87,7 @@ public class Persistence {
             question = new Question();
             question.setId(resultset.getInt("id"));
             question.setDescription(resultset.getString("description"));
-            question.setSelected(resultset.getInt("correct"));
+            question.setCorrect(resultset.getInt("correct"));
             question.setLevel(resultset.getInt("difficulty"));
             String[] answers = new String[4];
             answers[0] = resultset.getString("answer1");

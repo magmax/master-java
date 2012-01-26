@@ -27,7 +27,6 @@ public class Question implements Serializable{
     private String description;
     private String[] answer = new String[4];
     private int correct=-1;
-    private int selected;
     private int level;
     
     public int getCorrect() {
@@ -60,14 +59,6 @@ public class Question implements Serializable{
 
     public void setAnswer(String[] answer) {
         this.answer = answer;
-    }
-
-    public int getSelected() {
-        return selected;
-    }
-
-    public void setSelected(int selected) {
-        this.selected = selected;
     }
 
     public int getLevel() {

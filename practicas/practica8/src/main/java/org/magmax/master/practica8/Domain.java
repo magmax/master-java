@@ -69,6 +69,8 @@ public class Domain {
         
        
         for (int i = 0; i < exam.length; ++i) {
+            System.out.println("Answer:");
+            System.out.println(answers[i] +" == " + exam[i].getCorrect());
             if (answers[i] != null && exam[i].getCorrect() == answers[i])
                 result.add(exam[i]);
         }
