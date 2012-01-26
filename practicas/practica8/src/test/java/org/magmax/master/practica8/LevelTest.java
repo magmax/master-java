@@ -14,32 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.practica8.pojo;
+package org.magmax.master.practica8;
 
-import java.io.Serializable;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author miguel
  */
-public class Issue implements Serializable{
-    private int id;
-    private String name;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+public class LevelTest {
+    
+    @Test 
+    public void canRetrieveTheEnumeratedFromDefinition() {
+        assertEquals(Level.Medium, Level.valueOf("Medium"));
     }
     
+    @Test
+    public void canRetrieveValueFromEnumerated() {
+        assertEquals(1, Level.Low.getValue());
+    }
 }

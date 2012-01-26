@@ -17,6 +17,12 @@
 package org.magmax.master.practica8;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Logger;
+import org.magmax.master.practica8.pojo.Issue;
+import org.magmax.master.practica8.pojo.Question;
 
 /**
  *
@@ -24,6 +30,7 @@ import java.sql.SQLException;
  */
 public class Domain {
 
+    public static final int NUMBER_OF_QUESTIONS_PER_EXAM = 5;
     private final String database;
 
     public Domain(String database) {
@@ -31,12 +38,47 @@ public class Domain {
     }
 
     public Issue[] getIssues() throws DatabaseNotDefinedException, SQLException {
-        return getPersistence().getAllIssues();
+        Persistence persistence = Persistence.createPersistenceForDatabase(database);
+        return persistence.getAllIssues();
     }
 
-    private Persistence getPersistence() throws DatabaseNotDefinedException {
-        Persistence result = new Persistence();
-        result.useDatabase(database);
-        return result;
+    public Question[] generateExam(Integer level, Integer issue_id)  {
+        try {
+            Persistence persistence = Persistence.createPersistenceForDatabase(database);
+
+            if (level == null)
+                level = Level.Low.getValue();
+            if (issue_id == null)
+                issue_id = 1;
+        
+               
+            List<Question> result = persistence.retrieveQuestions(issue_id, level);
+            Collections.sort(result, new QuestionRandomizer());
+
+            return result.subList(0, NUMBER_OF_QUESTIONS_PER_EXAM).toArray(new Question[0]);
+        } catch (SQLException ex) {
+            Logger.getLogger(Domain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (DatabaseNotDefinedException ex) {
+            Logger.getLogger(Domain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        return new Question[0];
+    }
+
+    public Question[] solve (Question[] exam, Integer[] answers) {
+        List<Question> result = new ArrayList<Question>();
+        
+       
+        for (int i = 0; i < exam.length; ++i) {
+            if (answers[i] != null && exam[i].getCorrect() == answers[i])
+                result.add(exam[i]);
+        }
+        return result.toArray(new Question[0]);
+    }
+    
+    public String getResultMessage(Level level, int punctuation) {
+        MessageGenerator result = new MessageGenerator();
+        result.setLevel(level);
+        result.setPunctuation(punctuation);
+        return result.getMessage();
     }
 }

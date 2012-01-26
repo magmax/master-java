@@ -16,15 +16,17 @@
  */
 package org.magmax.master.practica8.pojo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author miguel
  */
-public class Question {
+public class Question implements Serializable{
     private int id;
     private String description;
     private String[] answer = new String[4];
-    private int correct;
+    private int correct=-1;
     private int selected;
     private int level;
     

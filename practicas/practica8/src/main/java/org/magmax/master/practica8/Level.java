@@ -14,32 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.practica8.pojo;
-
-import java.io.Serializable;
+package org.magmax.master.practica8;
 
 /**
  *
  * @author miguel
  */
-public class Issue implements Serializable{
-    private int id;
-    private String name;
+public enum Level {
 
-    public int getId() {
-        return id;
+    High(3),
+    Medium(2),
+    Low(1);
+
+    private int value;
+
+    Level(int value) {
+        this.value = value;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getValue() {
+        return value;
     }
 
-    public String getName() {
-        return name;
+    public static Level resolve(int value) {
+        for (Level each : values()) {
+            if (each.value == value) {
+                return each;
+            }
+        }
+        return null;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
 }

@@ -4,10 +4,6 @@
         <servlet-name>NewExam</servlet-name>
         <servlet-class>org.magmax.master.practica8.NewExam</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>NewExam</servlet-name>
-        <url-pattern>/NewExam</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -15,6 +11,6 @@
     </session-config>
     <context-param>
         <param-name>database</param-name>
-        <param-value>database2.dat</param-value>
+        <param-value>database6.dat</param-value>
     </context-param>
 </web-app>
