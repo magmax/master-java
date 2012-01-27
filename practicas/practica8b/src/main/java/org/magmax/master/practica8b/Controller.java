@@ -27,16 +27,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author miguel
  */
 public class Controller extends HttpServlet {
+    public static final String DEFAULT_CHARSET = "text/html;charset=UTF-8";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType(DEFAULT_CHARSET);
         showIndex(response, request);
     }
 
     private void showIndex(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
         Domain domain = Configuration.getDomain(response, request);
-        domain.redirect(request, "/create_exam.jsp");
+        domain.getRedirector().redirect(JspPage.CREATE);
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

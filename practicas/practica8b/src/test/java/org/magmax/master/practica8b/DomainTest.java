@@ -16,58 +16,48 @@
  */
 package org.magmax.master.practica8b;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import org.magmax.master.practica8b.pojo.Issue;
 
 /**
  *
  * @author miguel
  */
-public class ControllerTest {
-    private Domain domain;
+public class DomainTest {
+    private Domain sut;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private Controller sut;
-    private Redirector redirector;
     
     @Before
     public void setUp() {
-        redirector = mock(Redirector.class);
-        domain = mock(Domain.class);
+        sut = new Domain();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        
-        Configuration.getInstance().setDomain(domain);
-        
-        when(domain.getRedirector()).thenReturn(redirector);
-        
-        sut = new Controller();
     }
     
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void testASimpleCallReturnsIndexUnderGet() throws ServletException, IOException {
-        sut.doGet(request, response);
-        verify(redirector).redirect(JspPage.CREATE);
-    }
-
     
     @Test
-    public void testASimpleCallReturnsIndexUnderPost() throws ServletException, IOException {
-        sut.doPost(request, response);
-        verify(redirector).redirect(JspPage.CREATE);
+    public void testRequestCanBeRetrieved() {
+        sut.setRequest(request);
+        assertEquals(request, sut.getRequest());
     }
     
     @Test
-    public void testASimpleCallSetsCharset() throws ServletException, IOException {
-        sut.doPost(request, response);
-        verify(response).setContentType("text/html;charset=UTF-8");
+    public void testResponseCanBeRetrieved() {
+        sut.setResponse(response);
+        assertEquals(response, sut.getResponse());
+    }
+    
+    @Test
+    public void testRedirectionObtain() {
+        Redirector redirector = sut.getRedirector();
+        assertNotNull(redirector);
     }
 }

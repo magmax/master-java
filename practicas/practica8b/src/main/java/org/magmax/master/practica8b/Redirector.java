@@ -16,43 +16,25 @@
  */
 package org.magmax.master.practica8b;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.magmax.master.practica8b.pojo.Issue;
 
 /**
  *
  * @author miguel
  */
-class Domain {
-    private HttpServletResponse response = null;
-    private HttpServletRequest request;
+public class Redirector {
+    private final HttpServletRequest request;
 
-    Issue[] getIssueList() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    
-
-    public HttpServletResponse getResponse() {
-        return response;
-    }
-
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
-    
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    public void setRequest(HttpServletRequest request) {
+    public Redirector(HttpServletRequest request) {
         this.request = request;
     }
-
-    public Redirector getRedirector() {
-        return new Redirector(request);
+    
+    void redirect(JspPage target) {
+        throw new UnsupportedOperationException("Not yet implemented");
+        /*
+         * RequestDispatcher rd = request.getRequestDispatcher("/create_exam.jsp");
+        request.setAttribute("issue_list", domain.getIssueList());
+        rd.forward(request, response);
+         */
     }
-
 }
