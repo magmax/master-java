@@ -17,7 +17,6 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,18 +28,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Controller extends HttpServlet {
 
-    Domain domain = Configuration.getInstance().getDomain();
-
-    /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -48,7 +35,8 @@ public class Controller extends HttpServlet {
     }
 
     private void showIndex(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-        domain.redirect("/create_exam.jsp");
+        Domain domain = Configuration.getDomain(response, request);
+        domain.redirect(request, "/create_exam.jsp");
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

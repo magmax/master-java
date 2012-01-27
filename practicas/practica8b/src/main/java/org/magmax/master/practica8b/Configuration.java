@@ -16,6 +16,9 @@
  */
 package org.magmax.master.practica8b;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author miguel
@@ -34,12 +37,6 @@ class Configuration {
         domain = null;
     }
     
-    public static Domain getDomain() {
-        if (domain == null)
-            return new Domain();
-        return domain;
-    }
-
     /**
      * This method is for testing purposes only. 
      * It allows to use a mocked domain.
@@ -47,5 +44,14 @@ class Configuration {
      */
     public static void setDomain(Domain domain) {
         Configuration.domain = domain;
+    }
+
+    static Domain getDomain(HttpServletResponse response, HttpServletRequest request) {
+        Domain result = domain;
+        if (domain == null)
+            result = new Domain();
+        result.setResponse(response);
+        result.setRequest(request);
+        return result;
     }
 }

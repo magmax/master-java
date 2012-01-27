@@ -17,6 +17,8 @@
 package org.magmax.master.practica8b;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.magmax.master.practica8b.pojo.Issue;
 
 /**
@@ -29,13 +31,21 @@ class Domain {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    void redirect(String create_examjsp) {
+    void redirect(HttpServletRequest request, String target) {
         throw new UnsupportedOperationException("Not yet implemented");
         /*
          * RequestDispatcher rd = request.getRequestDispatcher("/create_exam.jsp");
         request.setAttribute("issue_list", domain.getIssueList());
         rd.forward(request, response);
          */
+    }
+
+    void setResponse(HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    void setRequest(HttpServletRequest request) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
     
 }

@@ -49,13 +49,19 @@ public class ControllerTest {
     @Test
     public void testASimpleCallReturnsIndexUnderGet() throws ServletException, IOException {
         sut.doGet(request, response);
-        verify(domain).redirect("/create_exam.jsp");
+        verify(domain).redirect(request, "/create_exam.jsp");
     }
 
     
     @Test
     public void testASimpleCallReturnsIndexUnderPost() throws ServletException, IOException {
         sut.doPost(request, response);
-        verify(domain).redirect("/create_exam.jsp");
+        verify(domain).redirect(request, "/create_exam.jsp");
+    }
+    
+    @Test
+    public void testASimpleCallSetsCharset() throws ServletException, IOException {
+        sut.doPost(request, response);
+        verify(response).setContentType("text/html;charset=UTF-8");
     }
 }
