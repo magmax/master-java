@@ -37,4 +37,8 @@ public class Redirector {
         rd.forward(request, response);
          */
     }
+    
+    public boolean isValid() {
+        return request != null;
+    }
 }

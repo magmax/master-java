@@ -56,8 +56,17 @@ public class DomainTest {
     }
     
     @Test
-    public void testRedirectionObtain() {
+    public void testDoesNotWorkIfThereIsNoRequest(){
         Redirector redirector = sut.getRedirector();
-        assertNotNull(redirector);
+        assertNotNull("Can retreave a Redirector", redirector);
+        assertFalse("Redirector is not valid", redirector.isValid());
+    }
+    
+    @Test
+    public void testRedirectionObtain() {
+        sut.setRequest(request);
+        Redirector redirector = sut.getRedirector();
+        assertNotNull("Can retreave a Redirector", redirector);
+        assertTrue("Redirector is valid", redirector.isValid());
     }
 }
