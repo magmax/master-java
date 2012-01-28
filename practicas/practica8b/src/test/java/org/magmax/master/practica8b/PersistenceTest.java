@@ -18,6 +18,7 @@ package org.magmax.master.practica8b;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.util.List;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -26,6 +27,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.junit.*;
 import org.magmax.master.practica8b.pojo.Issue;
 import static org.junit.Assert.*;
+import org.magmax.master.practica8b.pojo.Question;
 
 /**
  *
@@ -69,9 +71,7 @@ public class PersistenceTest {
     }
 
     protected IDataSet getDataSet() throws Exception {
-        System.out.println("Cargando datos");
         InputStream data = getClass().getResourceAsStream("/test1.xml");
-
         IDataSet result = new FlatXmlDataSet(data);
         return result;
     }
@@ -80,15 +80,25 @@ public class PersistenceTest {
     public void testRetrieveAllIssues() throws SQLException, DatabaseNotDefinedException {
         Issue[] issues = sut.getAllIssues();
 
-        assertEquals("Length do not match", 2, issues.length);
+        assertEquals("Length do not match", 3, issues.length);
         for (Issue each : issues) {
             if (each.getId() == 1) {
                 assertEquals("Matemáticas", each.getName());
             } else if (each.getId() == 2) {
                 assertEquals("Informática", each.getName());
+            } else if (each.getId() == 3) {
+                assertEquals("Literatura", each.getName());
             } else {
                 fail("Unexpected issue");
             }
         }
+    }
+
+    @Test
+    public void testRetrieveQuestionsWhenThereIsNoOne() throws Exception {
+        List<Question> questions = sut.retrieveQuestions(3, 3);
+        
+        assertNotNull("questions no debe ser null", questions);
+        assertEquals("questions length", 0, questions.size());
     }
 }
