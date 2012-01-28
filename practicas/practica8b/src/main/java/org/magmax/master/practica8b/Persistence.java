@@ -31,30 +31,20 @@ import org.magmax.master.practica8b.pojo.Question;
  */
 public class Persistence {
 
-    private final String CONNECTION_STRING_TEMPLATE = "jdbc:derby:%s;create=true";
-    private String databaseName = "database.dat";
+    private String url;
+    private String pass;
+    private String user;
 
     private Persistence() {
     }
 
-    public static Persistence createPersistenceInMemory() throws DatabaseNotDefinedException {
+    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DatabaseNotDefinedException {
         Persistence result = new Persistence();
-        result.loadDatabaseDriver();
-        result.selectInMemoryName();
-        result.buildDatabase();
+        result.setDriver(driver);
+        result.setUrl(url);
+        result.setUser(user);
+        result.setPass(pass);
         return result;
-    }
-
-    public static Persistence createPersistenceForDatabase(String path) throws DatabaseNotDefinedException {
-        Persistence result = new Persistence();
-        result.loadDatabaseDriver();
-        result.useDatabase(path);
-        result.buildDatabase();
-        return result;
-    }
-
-    private void useDatabase(String path) {
-        databaseName = path;
     }
 
     public Issue[] getAllIssues() throws SQLException, DatabaseNotDefinedException {
@@ -74,7 +64,7 @@ public class Persistence {
         return result.toArray(new Issue[0]);
 
     }
-    
+
     List<Question> retrieveQuestions(int issue_id, int level) throws SQLException, DatabaseNotDefinedException {
         Connection connection = getValidConnection();
         PreparedStatement statement = connection.prepareStatement("select id, description, correct, answer1, answer2, answer3, answer4, difficulty from question where id_issue=? and difficulty<=?");
@@ -101,18 +91,6 @@ public class Persistence {
         connection.close();
         return result;
     }
-    
-    private void selectInMemoryName() {
-        databaseName = "memory:" + UUID.randomUUID();
-    }
-
-    private void loadDatabaseDriver() {
-        try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     private Connection getValidConnection() throws SQLException, DatabaseNotDefinedException {
         Connection result = getConnection();
@@ -121,24 +99,17 @@ public class Persistence {
     }
 
     private Connection getConnection() throws SQLException, DatabaseNotDefinedException {
-        return DriverManager.getConnection(getConnectionString());
-    }
-
-    private String getConnectionString() throws DatabaseNotDefinedException {
-        if (databaseName == null) {
+        Connection result = DriverManager.getConnection(url, user, pass);
+        if (result == null)
             throw new DatabaseNotDefinedException();
-        }
-        return String.format(CONNECTION_STRING_TEMPLATE, databaseName);
+        return result;
     }
 
-    private void buildDatabase() throws DatabaseNotDefinedException {
-        try {
-            Connection connection = getConnection();
-            buildIssueTable(connection);
-            buildQuestionTable(connection);
-        } catch (SQLException ex) {
-            Logger.getLogger("").log(Level.SEVERE, null, ex);
-        }
+    public void buildDatabase() throws DatabaseNotDefinedException, SQLException {
+        Connection connection = getConnection();
+        buildIssueTable(connection);
+        buildQuestionTable(connection);
+        connection.close();
     }
 
     private void buildIssueTable(Connection connection) throws SQLException {
@@ -148,13 +119,6 @@ public class Persistence {
         Statement statement = connection.createStatement();
         statement.execute("create table issue(id int, title varchar(50))");
         statement.close();
-        insertIssues(connection);
-        connection.close();
-    }
-
-    private void insertIssues(Connection connection) throws SQLException {
-        connection.createStatement().executeUpdate("insert into issue(id, title) values (1, 'Matematicas')");
-        connection.createStatement().executeUpdate("insert into issue(id, title) values (2, 'Informática')");
     }
 
     private boolean existsIssueTable(Connection connection) throws SQLException {
@@ -167,29 +131,6 @@ public class Persistence {
         }
         Statement statement = connection.createStatement();
         statement.execute("create table question(id int, description varchar(250), id_issue int, correct int, answer1 varchar(50), answer2 varchar(50), answer3 varchar(50), answer4 varchar(50), difficulty int)");
-        statement.close();
-        insertQuestions(connection);
-        connection.close();
-    }
-
-    private void insertQuestions(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (1, '1 + 2 =', 1, 1, 1, '1', '2', '3', '4')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (2, '2 + 3 =', 1, 1, 4, '2', '3', '4', '5')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (3, '3 + 2 =', 1, 1, 4, '2', '3', '4', '5')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (4, '4 + 1 =', 1, 1, 4, '2', '3', '4', '5')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (5, '5 - 1 =', 1, 1, 3, '2', '3', '4', '5')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (6, '6 - 1 =', 1, 1, 2, '4', '5', '6', '7')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (7, '7 * 1 =', 1, 2, 4, '4', '5', '6', '7')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (8, '8 * 2 =', 1, 2, 3, '14', '15', '16', '17')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (9, '9 + 1 =', 1, 2, 4, '9', '10', '11', '12')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (10, '10^2 =', 1, 3, 3, '80', '90', '100', '42')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (11, '¿Qué es la GPL?', 2, 3, 1, 'Una licencia libre', 'Un sistema de transmisión', 'Protocolo de móviles', 'Un avión')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (12, 'La primera familia de computadoras fue...', 2, 3, 3, 'Multivac', 'Univac', 'PDP', 'Eniac')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (13, 'Java es...', 2, 1, 2, 'Una computadora', 'Una red', 'Un lenguaje', 'Un compilador')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (14, 'Java es...', 2, 3, 3, 'Compilado', 'Estructurado', 'Interpretado', 'Ninguna de las anteriores')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (15, 'Sólo se puede hacer una aplicación web en...', 2, 2, 4, 'Python', 'C', 'Java', 'Todas las anteriores son correctas')");
-        statement.executeUpdate("insert into question(id, description, id_issue, difficulty, correct, answer1, answer2, answer3, answer4) values (16, 'Groovy es...', 2, 2, 4, 'Un servidor web', 'Una arquitectura de red', 'Una palabra inventada', 'Un lenguaje de programación')");
         statement.close();
     }
 
@@ -207,5 +148,21 @@ public class Persistence {
         boolean result = tables.next();
         tables.close();
         return result;
+    }
+
+    private void setUrl(String url) {
+        this.url = url;
+    }
+
+    private void setDriver(String driver) throws ClassNotFoundException {
+        Class.forName(driver);
+    }
+
+    private void setUser(String user) {
+        this.user = user;
+    }
+
+    private void setPass(String pass) {
+        this.pass = pass;
     }
 }

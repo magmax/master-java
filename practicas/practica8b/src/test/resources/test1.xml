@@ -2,4 +2,41 @@
 <dataset>
     <issue id="1" title="Matemáticas"/>
     <issue id="2" title="Informática"/>
+    <issue id="3" title="Literatura"/>
+
+    <question id="1" description="1 + 1 = " answer1="1" answer2="2" answer3="3" answer4="4" correct="2" 
+              id_issue="1" difficulty="1"/>
+    <question id="2" description="2 + 1 = " answer1="1" answer2="2" answer3="3" answer4="4" correct="3" 
+              id_issue="1" difficulty="1"/>
+    <question id="3" description="3 + 1 = " answer1="1" answer2="2" answer3="3" answer4="4" correct="4" 
+              id_issue="1" difficulty="1"/>
+    <question id="4" description="4 - 2 = " answer1="1" answer2="2" answer3="3" answer4="4" correct="2" 
+              id_issue="1" difficulty="1"/>
+    <question id="5" description="5 - 1 = " answer1="4" answer2="5" answer3="6" answer4="7" correct="1" 
+              id_issue="1" difficulty="1"/>
+    <question id="6" description="6 - 1 = " answer1="4" answer2="5" answer3="6" answer4="7" correct="2" 
+              id_issue="1" difficulty="1"/>
+    <question id="7" description="7 - 1 = " answer1="4" answer2="5" answer3="6" answer4="7" correct="3" 
+              id_issue="1" difficulty="1"/>
+    <question id="8" description="8 - 1 = " answer1="4" answer2="5" answer3="6" answer4="7" correct="4" 
+              id_issue="1" difficulty="1"/>
+    <question id="9" description="9 * 2 = " answer1="16" answer2="18" answer3="20" answer4="22" correct="2" 
+              id_issue="1" difficulty="2"/>
+    <question id="10" description="11 * 5 = " answer1="54" answer2="45" answer3="55" answer4="44" correct="3" 
+              id_issue="1" difficulty="2"/>
+    <question id="11" description="10 ^ 2 = " answer1="20" answer2="200" answer3="10" answer4="100" correct="4" 
+              id_issue="1" difficulty="3"/>
+    <question id="12" description="¿Qué es la GPL?" answer1="Una licencia libre" answer2="Un sistema de transmisión" answer3="Un protocolo de móviles" answer4="Un avión" correct="1" 
+              id_issue="2" difficulty="1"/>
+    <question id="13" description="La primera familia de computadoras fue..." answer1="Multivac" answer2="Univac" answer3="PDP" answer4="Eniac" correct="3" 
+              id_issue="2" difficulty="3"/>
+    <question id="14" description="Java es..." answer1="Una computadora" answer2="Una red" answer3="Un lenguaje" answer4="Un compilador" correct="3" 
+              id_issue="2" difficulty="1"/>
+    <question id="15" description="¿Por qué se llamó Python al lenguaje?" answer1="No hay razón concreta" answer2="Por los Monthy Python" answer3="Por la serpiente" answer4="Por Java" correct="2" 
+              id_issue="2" difficulty="3"/>
+    <question id="16" description="Sólo se puede hacer una aplicación web en..." answer1="Java" answer2="C" answer3="Python" answer4="Todas las anteriores son correctas" correct="4" 
+              id_issue="2" difficulty="1"/>
+
+              
+    
 </dataset>
