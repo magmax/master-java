@@ -16,7 +16,6 @@
  */
 package org.magmax.master.practica8b;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.magmax.master.practica8b.pojo.Issue;
@@ -28,12 +27,6 @@ import org.magmax.master.practica8b.pojo.Issue;
 class Domain {
     private HttpServletResponse response = null;
     private HttpServletRequest request;
-
-    Issue[] getIssueList() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    
 
     public HttpServletResponse getResponse() {
         return response;
@@ -52,7 +45,6 @@ class Domain {
     }
 
     public Redirector getRedirector() {
-        return new Redirector(request);
+        return new Redirector(request, response);
     }
-
 }

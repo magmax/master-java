@@ -22,34 +22,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
-/**
- *
- * @author miguel
- */
 public class ControllerTest {
+
     private Domain domain;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private Controller sut;
     private Redirector redirector;
-    
+
     @Before
     public void setUp() {
         redirector = mock(Redirector.class);
         domain = mock(Domain.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        
+
         Configuration.getInstance().setDomain(domain);
-        
+
         when(domain.getRedirector()).thenReturn(redirector);
-        
+
         sut = new Controller();
     }
-    
+
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void testRetrieveServletInfo() {
+        assertEquals("This is a servlet for practice 8 of a Java2EE Master.", sut.getServletInfo());
     }
 
     @Test
@@ -58,13 +61,12 @@ public class ControllerTest {
         verify(redirector).redirect(JspPage.CREATE);
     }
 
-    
     @Test
     public void testASimpleCallReturnsIndexUnderPost() throws ServletException, IOException {
         sut.doPost(request, response);
         verify(redirector).redirect(JspPage.CREATE);
     }
-    
+
     @Test
     public void testASimpleCallSetsCharset() throws ServletException, IOException {
         sut.doPost(request, response);

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 class Configuration {
     private static Configuration instance = null;
-    private static Domain domain = null;
+    private Domain domain = null;
     
     public static Configuration getInstance() {
         if (instance == null)
@@ -34,7 +34,7 @@ class Configuration {
     }
 
     public static void reset() {
-        domain = null;
+        instance.domain = null;
     }
     
     /**
@@ -42,13 +42,13 @@ class Configuration {
      * It allows to use a mocked domain.
      * @param domain Mocked domain to use.
      */
-    public static void setDomain(Domain domain) {
-        Configuration.domain = domain;
+    public void setDomain(Domain domain) {
+        instance.domain = domain;
     }
 
-    static Domain getDomain(HttpServletResponse response, HttpServletRequest request) {
+    public Domain getDomain(HttpServletResponse response, HttpServletRequest request) {
         Domain result = domain;
-        if (domain == null)
+        if (result == null)
             result = new Domain();
         result.setResponse(response);
         result.setRequest(request);

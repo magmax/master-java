@@ -17,6 +17,7 @@
 package org.magmax.master.practica8b;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -24,9 +25,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Redirector {
     private final HttpServletRequest request;
+    private final HttpServletResponse response;
 
-    public Redirector(HttpServletRequest request) {
+    Redirector(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
+        this.response = response;
     }
     
     void redirect(JspPage target) {
@@ -39,6 +42,6 @@ public class Redirector {
     }
     
     public boolean isValid() {
-        return request != null;
+        return request != null && response != null;
     }
 }

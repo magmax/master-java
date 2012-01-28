@@ -21,53 +21,48 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import org.magmax.master.practica8b.pojo.Issue;
-
+        
 /**
  *
  * @author miguel
  */
-public class DomainTest {
-    private Domain sut;
+public class RedirectorTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private Redirector sut;
     
     @Before
     public void setUp() {
-        sut = new Domain();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        sut = new Redirector(request, response);
     }
     
     @After
     public void tearDown() {
     }
-    
+
     @Test
-    public void testRequestCanBeRetrieved() {
-        sut.setRequest(request);
-        assertEquals(request, sut.getRequest());
+    public void testIsCreated() {
+        assertNotNull(sut);
     }
     
     @Test
-    public void testResponseCanBeRetrieved() {
-        sut.setResponse(response);
-        assertEquals(response, sut.getResponse());
+    public void testIsValid(){
+        assertTrue(sut.isValid());
     }
     
     @Test
-    public void testDoesNotWorkIfThereIsNoRequest(){
-        Redirector redirector = sut.getRedirector();
-        assertNotNull("Can retreave a Redirector", redirector);
-        assertFalse("Redirector is not valid", redirector.isValid());
+    public void testIsNotValidIfRequestIsNull(){
+        sut = new Redirector(null, response);
+        
+        assertFalse(sut.isValid());
     }
     
     @Test
-    public void testRedirectionObtain() {
-        sut.setRequest(request);
-        sut.setResponse(response);
-        Redirector redirector = sut.getRedirector();
-        assertNotNull("Can retreave a Redirector", redirector);
-        assertTrue("Redirector is valid", redirector.isValid());
+    public void testIsNotValidIfResponseIsNull(){
+        sut = new Redirector(request, null);
+        
+        assertFalse(sut.isValid());
     }
 }

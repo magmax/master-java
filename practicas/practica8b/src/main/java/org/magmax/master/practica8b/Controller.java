@@ -36,7 +36,7 @@ public class Controller extends HttpServlet {
     }
 
     private void showIndex(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-        Domain domain = Configuration.getDomain(response, request);
+        Domain domain = Configuration.getInstance().getDomain(response, request);
         domain.getRedirector().redirect(JspPage.CREATE);
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -78,6 +78,6 @@ public class Controller extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "This is a servlet for practice 8 of a Java2EE Master.";
     }// </editor-fold>
 }
