@@ -97,8 +97,25 @@ public class PersistenceTest {
     @Test
     public void testRetrieveQuestionsWhenThereIsNoOne() throws Exception {
         List<Question> questions = sut.retrieveQuestions(3, 3);
-        
+
         assertNotNull("questions no debe ser null", questions);
         assertEquals("questions length", 0, questions.size());
     }
+
+    @Test
+    public void testRetrieveQuestionsWhenThereAreNotEnoughOfThatLevel() throws Exception {
+        List<Question> questions = sut.retrieveQuestions(2, 1);
+
+        assertNotNull("questions no debe ser null", questions);
+        assertEquals("questions length", 2, questions.size());
+    }
+    
+    @Test
+    public void testRetrieveQuestionsWithInferiorLevelQuestions() throws Exception {
+        List<Question> questions = sut.retrieveQuestions(2, 2);
+
+        assertNotNull("questions no debe ser null", questions);
+        assertEquals("questions length", 3, questions.size());
+    }
+    
 }

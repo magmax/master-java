@@ -35,5 +35,5 @@
     <question id="15" description="¿Por qué se llamó Python al lenguaje?" answer1="No hay razón concreta" answer2="Por los Monthy Python" answer3="Por la serpiente" answer4="Por Java" correct="2" 
               id_issue="2" difficulty="3"/>
     <question id="16" description="Sólo se puede hacer una aplicación web en..." answer1="Java" answer2="C" answer3="Python" answer4="Todas las anteriores son correctas" correct="4" 
-              id_issue="2" difficulty="1"/>
+              id_issue="2" difficulty="2"/>
 </dataset>
