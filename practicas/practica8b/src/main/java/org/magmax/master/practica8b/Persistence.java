@@ -19,9 +19,6 @@ package org.magmax.master.practica8b;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.magmax.master.practica8b.pojo.Issue;
 import org.magmax.master.practica8b.pojo.Question;
 
@@ -38,7 +35,7 @@ public class Persistence {
     private Persistence() {
     }
 
-    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DatabaseNotDefinedException {
+    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException {
         Persistence result = new Persistence();
         result.setDriver(driver);
         result.setUrl(url);
@@ -154,7 +151,9 @@ public class Persistence {
         this.url = url;
     }
 
-    private void setDriver(String driver) throws ClassNotFoundException {
+    private void setDriver(String driver) throws ClassNotFoundException, DriverNotDefinedException {
+        if (driver == null)
+            throw new DriverNotDefinedException();
         Class.forName(driver);
     }
 

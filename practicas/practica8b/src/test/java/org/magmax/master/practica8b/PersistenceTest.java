@@ -118,4 +118,15 @@ public class PersistenceTest {
         assertEquals("questions length", 3, questions.size());
     }
     
+    @Test(expected=DriverNotDefinedException.class)
+    public void testErroneousDriver() throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException, SQLException {
+        sut = Persistence.createInstance(null, null, null, null);
+        sut.getAllIssues();
+    }
+    
+    @Test(expected=DatabaseNotDefinedException.class)
+    public void testErroneousDatabase () throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException, SQLException {
+        sut = Persistence.createInstance(driver, null, null, null);
+        sut.getAllIssues();
+    }
 }
