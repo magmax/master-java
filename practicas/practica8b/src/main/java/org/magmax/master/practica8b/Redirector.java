@@ -16,6 +16,13 @@
  */
 package org.magmax.master.practica8b;
 
+import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,24 +31,29 @@ import javax.servlet.http.HttpServletResponse;
  * @author miguel
  */
 public class Redirector {
+
     private final HttpServletRequest request;
     private final HttpServletResponse response;
+    private Map<String, Object> attributes = new HashMap<String, Object>();
 
     Redirector(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }
-    
-    void redirect(JspPage target) {
-        throw new UnsupportedOperationException("Not yet implemented");
-        /*
-         * RequestDispatcher rd = request.getRequestDispatcher("/create_exam.jsp");
-        request.setAttribute("issue_list", domain.getIssueList());
+
+    void redirect(JspPage target) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher(target.getUri());
+        for(Entry<String, Object> each : attributes.entrySet()) {
+            request.setAttribute(each.getKey(), each.getValue());
+        }
         rd.forward(request, response);
-         */
     }
-    
+
     public boolean isValid() {
         return request != null && response != null;
+    }
+
+    void addAttribute(String key, Object object) {
+        attributes.put(key, object);
     }
 }

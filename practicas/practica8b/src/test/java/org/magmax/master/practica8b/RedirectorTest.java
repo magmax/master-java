@@ -16,6 +16,10 @@
  */
 package org.magmax.master.practica8b;
 
+import java.io.IOException;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
@@ -30,11 +34,13 @@ public class RedirectorTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private Redirector sut;
+    private RequestDispatcher dispatcher;
     
     @Before
     public void setUp() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        dispatcher = mock(RequestDispatcher.class);
         sut = new Redirector(request, response);
     }
     
@@ -64,5 +70,27 @@ public class RedirectorTest {
         sut = new Redirector(request, null);
         
         assertFalse(sut.isValid());
+    }
+    
+    @Test
+    public void testRedirections() throws ServletException, IOException {
+        when(request.getRequestDispatcher(JspPage.CREATE.getUri())).thenReturn(dispatcher);
+        
+        sut.redirect(JspPage.CREATE);
+        
+        verify(request).getRequestDispatcher(JspPage.CREATE.getUri());
+    }
+    
+    @Test
+    public void testRedirectionWithAttributes() throws ServletException, IOException {
+        Object object = mock(Object.class);
+        String key = "object";
+        when(request.getRequestDispatcher(JspPage.CREATE.getUri())).thenReturn(dispatcher);
+        
+        sut.addAttribute(key, object);
+        sut.redirect(JspPage.CREATE);
+        
+        verify(request).setAttribute(key, object);
+        verify(request).getRequestDispatcher(JspPage.CREATE.getUri());
     }
 }
