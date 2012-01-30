@@ -35,7 +35,7 @@ public class Persistence {
     private Persistence() {
     }
 
-    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException {
+    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DriverNotDefinedException {
         Persistence result = new Persistence();
         result.setDriver(driver);
         result.setUrl(url);
@@ -44,7 +44,7 @@ public class Persistence {
         return result;
     }
 
-    public Issue[] getAllIssues() throws SQLException, DatabaseNotDefinedException {
+    public Issue[] getAllIssues() throws SQLException {
         Connection connection = getValidConnection();
         PreparedStatement statement = connection.prepareStatement("select id, title from issue");
         ResultSet resultset = statement.executeQuery();
@@ -62,7 +62,7 @@ public class Persistence {
 
     }
 
-    List<Question> retrieveQuestions(int issue_id, int level) throws SQLException, DatabaseNotDefinedException {
+    List<Question> retrieveQuestions(int issue_id, int level) throws SQLException {
         Connection connection = getValidConnection();
         PreparedStatement statement = connection.prepareStatement("select id, description, correct, answer1, answer2, answer3, answer4, difficulty from question where id_issue=? and difficulty<=?");
         statement.setInt(1, issue_id);
@@ -89,20 +89,17 @@ public class Persistence {
         return result;
     }
 
-    private Connection getValidConnection() throws SQLException, DatabaseNotDefinedException {
+    private Connection getValidConnection() throws SQLException {
         Connection result = getConnection();
         result.setAutoCommit(true);
         return result;
     }
 
-    private Connection getConnection() throws SQLException, DatabaseNotDefinedException {
-        Connection result = DriverManager.getConnection(url, user, pass);
-        if (result == null)
-            throw new DatabaseNotDefinedException();
-        return result;
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, user, pass);
     }
 
-    public void buildDatabase() throws DatabaseNotDefinedException, SQLException {
+    public void buildDatabase() throws SQLException {
         Connection connection = getConnection();
         buildIssueTable(connection);
         buildQuestionTable(connection);

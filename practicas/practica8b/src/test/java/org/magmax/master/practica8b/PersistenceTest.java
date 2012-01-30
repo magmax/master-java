@@ -42,7 +42,7 @@ public class PersistenceTest {
     private Persistence sut;
 
     @BeforeClass
-    public static void setUpClass() throws ClassNotFoundException, DatabaseNotDefinedException {
+    public static void setUpClass() throws ClassNotFoundException {
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, driver);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, url);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, user);
@@ -77,7 +77,7 @@ public class PersistenceTest {
     }
 
     @Test
-    public void testRetrieveAllIssues() throws SQLException, DatabaseNotDefinedException {
+    public void testRetrieveAllIssues() throws SQLException {
         Issue[] issues = sut.getAllIssues();
 
         assertEquals("Length do not match", 3, issues.length);
@@ -119,13 +119,13 @@ public class PersistenceTest {
     }
     
     @Test(expected=DriverNotDefinedException.class)
-    public void testErroneousDriver() throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException, SQLException {
+    public void testErroneousDriver() throws ClassNotFoundException, SQLException, DriverNotDefinedException {
         sut = Persistence.createInstance(null, null, null, null);
         sut.getAllIssues();
     }
     
-    @Test(expected=DatabaseNotDefinedException.class)
-    public void testErroneousDatabase () throws ClassNotFoundException, DatabaseNotDefinedException, DriverNotDefinedException, SQLException {
+    @Test(expected=SQLException.class)
+    public void testErroneousDatabase () throws ClassNotFoundException, SQLException, DriverNotDefinedException {
         sut = Persistence.createInstance(driver, null, null, null);
         sut.getAllIssues();
     }

@@ -20,6 +20,6 @@ package org.magmax.master.practica8b;
  *
  * @author miguel
  */
-public class DatabaseNotDefinedException extends Exception {
+public class DriverNotDefinedException extends Exception{
     
 }
