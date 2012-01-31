@@ -27,12 +27,14 @@ import org.magmax.master.practica8b.pojo.Question;
  * @author miguel
  */
 public class Persistence {
+    private DBCredentials credentials;
 
     private Persistence() {
     }
 
-    public static Persistence createInstance() throws ClassNotFoundException, DriverNotDefinedException {
+    public static Persistence createInstance(DBCredentials credentials) throws ClassNotFoundException, DriverNotDefinedException {
         Persistence result = new Persistence();
+        result.setCredentials(credentials);
         result.loadDriver();
         return result;
     }
@@ -89,7 +91,7 @@ public class Persistence {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(getUri(), getUser(), getPass());
+        return DriverManager.getConnection(credentials.getUrl(), credentials.getUser(), credentials.getPass());
     }
 
     public void buildDatabase() throws SQLException {
@@ -137,22 +139,14 @@ public class Persistence {
         return result;
     }
 
-    private String getUri() {
-        return Configuration.getInstance().getDbUri();
-    }
-
     private void loadDriver() throws ClassNotFoundException, DriverNotDefinedException {
-        String driver = Configuration.getInstance().getDbDriver();
+        String driver = credentials.getDriver();
         if (driver == null || driver.isEmpty())
             throw new DriverNotDefinedException();
         Class.forName(driver);
     }
 
-    private String getUser() {
-        return Configuration.getInstance().getDbUser();
-    }
-
-    private String getPass() {
-        return Configuration.getInstance().getDbPassword();
-    }
+    public void setCredentials(DBCredentials credentials) {
+        this.credentials = credentials;
+    }    
 }

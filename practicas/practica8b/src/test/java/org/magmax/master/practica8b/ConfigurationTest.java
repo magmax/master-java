@@ -42,13 +42,13 @@ public class ConfigurationTest {
         
         Configuration.getInstance().setDomain(domain);
         
-        assertSame(domain, Configuration.getInstance().getDomain(null, null, null));
+        assertSame(domain, Configuration.getInstance().getDomain(null, null));
     }
     
     @Test
     public void testCanBuildANewDomain() {
         Configuration.getInstance().setDomain(null);
         
-        assertNotNull(Configuration.getInstance().getDomain(null, null, null));
+        assertNotNull(Configuration.getInstance().getDomain(null, null));
     }
 }

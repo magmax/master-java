@@ -28,15 +28,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author miguel
  */
 public class Controller extends HttpServlet {
+
     public static final String DEFAULT_CHARSET = "text/html;charset=UTF-8";
     private Domain domain;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext context = getServletContext();
-        domain = Configuration.getInstance().getDomain(response, request, context);
+        domain = Configuration.getInstance().getDomain(response, request);
         try {
             response.setContentType(DEFAULT_CHARSET);
+            domain.setContext(getServletContext());
+            
             showIndex();
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,8 +49,8 @@ public class Controller extends HttpServlet {
     private void showIndex() throws IOException, ServletException {
         domain.getRedirector().redirect(JspPage.CREATE);
     }
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.

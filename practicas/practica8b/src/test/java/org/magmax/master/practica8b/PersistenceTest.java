@@ -35,35 +35,28 @@ import org.magmax.master.practica8b.pojo.Question;
  */
 public class PersistenceTest {
 
-    private static String driver = "org.hsqldb.jdbcDriver";
-    private static String url = "jdbc:hsqldb:mem:sample";
-    private static String user = "sa";
-    private static String pass = "";
     private Persistence sut;
 
     @BeforeClass
     public static void setUpClass() throws ClassNotFoundException {
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, driver);
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, url);
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, user);
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, pass);
+        DBCredentials cred = DBCredentials.createWithDefaults();
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, cred.getDriver());
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, cred.getUrl());
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, cred.getUser());
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, cred.getPass());
     }
 
     @Before
     public void setUp() throws Exception {
         Configuration.reset();
-        Configuration.getInstance().setDbDriver(driver);
-        Configuration.getInstance().setDbUri(url);
-        Configuration.getInstance().setDbUser(user);
-        Configuration.getInstance().setDbPassword(pass);
-        
-        sut = Persistence.createInstance();
+        DBCredentials credentials = DBCredentials.createWithDefaults();
+        sut = Persistence.createInstance(credentials);
         sut.buildDatabase();
 
         DatabaseConnection conn = null;
         try {
-            Class.forName(driver);
-            conn = new DatabaseConnection(DriverManager.getConnection(url, user, pass));
+            Class.forName(credentials.getDriver());
+            conn = new DatabaseConnection(DriverManager.getConnection(credentials.getUrl(), credentials.getUser(), credentials.getPass()));
             DatabaseOperation.CLEAN_INSERT.execute(conn, getDataSet());
         } finally {
             if (conn != null) {
@@ -126,15 +119,16 @@ public class PersistenceTest {
     
     @Test(expected=DriverNotDefinedException.class)
     public void testErroneousDriver() throws ClassNotFoundException, SQLException, DriverNotDefinedException {
-        Configuration.getInstance().setDbDriver(null);
-        sut = Persistence.createInstance();
+        DBCredentials credentials = new DBCredentials();
+        sut = Persistence.createInstance(credentials);
         sut.getAllIssues();
     }
     
     @Test(expected=SQLException.class)
     public void testErroneousDatabase () throws ClassNotFoundException, SQLException, DriverNotDefinedException {
-        Configuration.getInstance().setDbUri(null);
-        sut = Persistence.createInstance();
+        DBCredentials credentials = new DBCredentials();
+        credentials.setDriver(DBCredentials.DEFAULT_DRIVER);
+        sut = Persistence.createInstance(credentials);
         sut.getAllIssues();
     }
 }

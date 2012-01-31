@@ -16,6 +16,7 @@
  */
 package org.magmax.master.practica8b;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
@@ -32,19 +33,11 @@ public class DomainTest {
     private Domain sut;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private static String driver = "org.hsqldb.jdbcDriver";
-    private static String url = "jdbc:hsqldb:mem:sample";
-    private static String user = "sa";
-    private static String pass = "";
-    
+
     @Before
     public void setUp() {
         Configuration.reset();
-        Configuration.getInstance().setDbDriver(driver);
-        Configuration.getInstance().setDbUri(url);
-        Configuration.getInstance().setDbUser(user);
-        Configuration.getInstance().setDbPassword(pass);
-        
+
         sut = new Domain();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -82,7 +75,7 @@ public class DomainTest {
         assertTrue("Redirector is valid", redirector.isValid());
     }
 
-    @Test(expected=DriverNotDefinedException.class)
+    @Test(expected = DriverNotDefinedException.class)
     public void testTryingToGetAPersistenceObjectWithoutConfigure() throws ClassNotFoundException, DriverNotDefinedException {
         Configuration.reset();
         sut.getPersistence();
@@ -90,7 +83,8 @@ public class DomainTest {
 
     @Test
     public void testCanRetrieveAPersistenceObject() throws ClassNotFoundException, DriverNotDefinedException {
-        Persistence persistence = sut.getPersistence();
+        DBCredentials credentials = DBCredentials.createWithDefaults();
+        Persistence persistence = Persistence.createInstance(credentials);
         assertNotNull(persistence);
         assertTrue(persistence instanceof Persistence);
     }

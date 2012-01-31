@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author miguel
  */
 class Domain {
+
     private HttpServletResponse response = null;
     private HttpServletRequest request;
     private ServletContext context;
@@ -36,7 +37,7 @@ class Domain {
     public void setResponse(HttpServletResponse response) {
         this.response = response;
     }
-    
+
     public HttpServletRequest getRequest() {
         return request;
     }
@@ -54,6 +55,31 @@ class Domain {
     }
 
     public Persistence getPersistence() throws ClassNotFoundException, DriverNotDefinedException {
-        return Persistence.createInstance();
+        return Persistence.createInstance(getDBCredentials());
+    }
+
+    public DBCredentials getDBCredentials() {
+        DBCredentials result = new DBCredentials();
+
+        result.setDriver(getContextParameter(context, "driver"));
+        result.setUrl(getContextParameter(context, "uri"));
+        result.setUser(getContextParameter(context, "user"));
+        result.setPass(getContextParameter(context, "password"));
+
+        return result;
+    }
+
+    private String getContextParameter(ServletContext context, String keyword) {
+        if (context == null)
+            return "";
+        String result = context.getInitParameter(keyword);
+        if (result == null) {
+            return "";
+        }
+        return result;
+    }
+
+    void setContext(ServletContext servletContext) {
+        context = servletContext;
     }
 }
