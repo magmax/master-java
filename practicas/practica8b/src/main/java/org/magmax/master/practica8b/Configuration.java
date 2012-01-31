@@ -16,6 +16,7 @@
  */
 package org.magmax.master.practica8b;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 class Configuration {
     private static Configuration instance = null;
     private Domain domain = null;
+    private String dbDriver = "";
+    private String dbUri = "";
+    private String dbUser = "";
+    private String dbPassword = "";
     
     public static Configuration getInstance() {
         if (instance == null)
@@ -34,7 +39,12 @@ class Configuration {
     }
 
     public static void reset() {
-        instance.domain = null;
+        Configuration config = getInstance();
+        config.setDomain(null);
+        config.setDbDriver("");
+        config.setDbUri("");
+        config.setDbUser("");
+        config.setDbPassword("");
     }
     
     /**
@@ -46,12 +56,56 @@ class Configuration {
         instance.domain = domain;
     }
 
-    public Domain getDomain(HttpServletResponse response, HttpServletRequest request) {
+    public Domain getDomain(HttpServletResponse response, HttpServletRequest request, ServletContext context) {
         Domain result = domain;
         if (result == null)
             result = new Domain();
         result.setResponse(response);
         result.setRequest(request);
+        result.setServletContext(context);
+        setDbDriver(getContextParameter(context, "driver"));
+        setDbUri(getContextParameter(context, "uri"));
+        setDbUser(getContextParameter(context, "user"));
+        setDbPassword(getContextParameter(context, "password"));
+        return result;
+    }
+
+    public String getDbDriver() {
+        return dbDriver;
+    }
+
+    public void setDbDriver(String db_driver) {
+        this.dbDriver = db_driver;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public void setDbPassword(String db_password) {
+        this.dbPassword = db_password;
+    }
+
+    public String getDbUri() {
+        return dbUri;
+    }
+
+    public void setDbUri(String db_uri) {
+        this.dbUri = db_uri;
+    }
+
+    public String getDbUser() {
+        return dbUser;
+    }
+
+    public void setDbUser(String db_user) {
+        this.dbUser = db_user;
+    }
+    
+    private String getContextParameter(ServletContext context, String keyword) {
+        String result = context.getInitParameter(keyword);
+        if (result == null)
+            return "";
         return result;
     }
 }

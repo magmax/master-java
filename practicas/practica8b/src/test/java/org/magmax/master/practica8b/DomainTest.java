@@ -28,40 +28,51 @@ import org.magmax.master.practica8b.pojo.Issue;
  * @author miguel
  */
 public class DomainTest {
+
     private Domain sut;
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private static String driver = "org.hsqldb.jdbcDriver";
+    private static String url = "jdbc:hsqldb:mem:sample";
+    private static String user = "sa";
+    private static String pass = "";
     
     @Before
     public void setUp() {
+        Configuration.reset();
+        Configuration.getInstance().setDbDriver(driver);
+        Configuration.getInstance().setDbUri(url);
+        Configuration.getInstance().setDbUser(user);
+        Configuration.getInstance().setDbPassword(pass);
+        
         sut = new Domain();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testRequestCanBeRetrieved() {
         sut.setRequest(request);
         assertEquals(request, sut.getRequest());
     }
-    
+
     @Test
     public void testResponseCanBeRetrieved() {
         sut.setResponse(response);
         assertEquals(response, sut.getResponse());
     }
-    
+
     @Test
-    public void testDoesNotWorkIfThereIsNoRequest(){
+    public void testDoesNotWorkIfThereIsNoRequest() {
         Redirector redirector = sut.getRedirector();
         assertNotNull("Can retreave a Redirector", redirector);
         assertFalse("Redirector is not valid", redirector.isValid());
     }
-    
+
     @Test
     public void testRedirectionObtain() {
         sut.setRequest(request);
@@ -69,5 +80,18 @@ public class DomainTest {
         Redirector redirector = sut.getRedirector();
         assertNotNull("Can retreave a Redirector", redirector);
         assertTrue("Redirector is valid", redirector.isValid());
+    }
+
+    @Test(expected=DriverNotDefinedException.class)
+    public void testTryingToGetAPersistenceObjectWithoutConfigure() throws ClassNotFoundException, DriverNotDefinedException {
+        Configuration.reset();
+        sut.getPersistence();
+    }
+
+    @Test
+    public void testCanRetrieveAPersistenceObject() throws ClassNotFoundException, DriverNotDefinedException {
+        Persistence persistence = sut.getPersistence();
+        assertNotNull(persistence);
+        assertTrue(persistence instanceof Persistence);
     }
 }

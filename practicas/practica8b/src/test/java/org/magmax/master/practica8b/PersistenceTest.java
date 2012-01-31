@@ -51,7 +51,13 @@ public class PersistenceTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = Persistence.createInstance(driver, url, user, pass);
+        Configuration.reset();
+        Configuration.getInstance().setDbDriver(driver);
+        Configuration.getInstance().setDbUri(url);
+        Configuration.getInstance().setDbUser(user);
+        Configuration.getInstance().setDbPassword(pass);
+        
+        sut = Persistence.createInstance();
         sut.buildDatabase();
 
         DatabaseConnection conn = null;
@@ -120,13 +126,15 @@ public class PersistenceTest {
     
     @Test(expected=DriverNotDefinedException.class)
     public void testErroneousDriver() throws ClassNotFoundException, SQLException, DriverNotDefinedException {
-        sut = Persistence.createInstance(null, null, null, null);
+        Configuration.getInstance().setDbDriver(null);
+        sut = Persistence.createInstance();
         sut.getAllIssues();
     }
     
     @Test(expected=SQLException.class)
     public void testErroneousDatabase () throws ClassNotFoundException, SQLException, DriverNotDefinedException {
-        sut = Persistence.createInstance(driver, null, null, null);
+        Configuration.getInstance().setDbUri(null);
+        sut = Persistence.createInstance();
         sut.getAllIssues();
     }
 }

@@ -16,9 +16,9 @@
  */
 package org.magmax.master.practica8b;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.magmax.master.practica8b.pojo.Issue;
 
 /**
  *
@@ -27,6 +27,7 @@ import org.magmax.master.practica8b.pojo.Issue;
 class Domain {
     private HttpServletResponse response = null;
     private HttpServletRequest request;
+    private ServletContext context;
 
     public HttpServletResponse getResponse() {
         return response;
@@ -46,5 +47,13 @@ class Domain {
 
     public Redirector getRedirector() {
         return new Redirector(request, response);
+    }
+
+    public void setServletContext(ServletContext context) {
+        this.context = context;
+    }
+
+    public Persistence getPersistence() throws ClassNotFoundException, DriverNotDefinedException {
+        return Persistence.createInstance();
     }
 }

@@ -68,6 +68,13 @@ public class ControllerTest {
     }
 
     @Test
+    public void testRedirectorCreateRequiresAListOfIssues() throws ServletException, IOException {
+        sut.doPost(request, response);
+        verify(redirector).redirect(JspPage.CREATE);
+        fail ("requires a list of issues");
+    }
+
+    @Test
     public void testASimpleCallSetsCharset() throws ServletException, IOException {
         sut.doPost(request, response);
         verify(response).setContentType("text/html;charset=UTF-8");

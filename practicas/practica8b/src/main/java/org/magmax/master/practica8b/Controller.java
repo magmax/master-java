@@ -17,6 +17,7 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,15 +29,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Controller extends HttpServlet {
     public static final String DEFAULT_CHARSET = "text/html;charset=UTF-8";
+    private Domain domain;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType(DEFAULT_CHARSET);
-        showIndex(response, request);
+        ServletContext context = getServletContext();
+        domain = Configuration.getInstance().getDomain(response, request, context);
+        try {
+            response.setContentType(DEFAULT_CHARSET);
+            showIndex();
+        } catch (Exception e) {
+            e.printStackTrace();
+            domain.getRedirector().redirect(JspPage.ERROR);
+        }
     }
 
-    private void showIndex(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-        Domain domain = Configuration.getInstance().getDomain(response, request);
+    private void showIndex() throws IOException, ServletException {
         domain.getRedirector().redirect(JspPage.CREATE);
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

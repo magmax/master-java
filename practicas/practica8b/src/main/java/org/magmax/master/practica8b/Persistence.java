@@ -28,19 +28,12 @@ import org.magmax.master.practica8b.pojo.Question;
  */
 public class Persistence {
 
-    private String url;
-    private String pass;
-    private String user;
-
     private Persistence() {
     }
 
-    public static Persistence createInstance(String driver, String url, String user, String pass) throws ClassNotFoundException, DriverNotDefinedException {
+    public static Persistence createInstance() throws ClassNotFoundException, DriverNotDefinedException {
         Persistence result = new Persistence();
-        result.setDriver(driver);
-        result.setUrl(url);
-        result.setUser(user);
-        result.setPass(pass);
+        result.loadDriver();
         return result;
     }
 
@@ -96,7 +89,7 @@ public class Persistence {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, pass);
+        return DriverManager.getConnection(getUri(), getUser(), getPass());
     }
 
     public void buildDatabase() throws SQLException {
@@ -144,21 +137,22 @@ public class Persistence {
         return result;
     }
 
-    private void setUrl(String url) {
-        this.url = url;
+    private String getUri() {
+        return Configuration.getInstance().getDbUri();
     }
 
-    private void setDriver(String driver) throws ClassNotFoundException, DriverNotDefinedException {
-        if (driver == null)
+    private void loadDriver() throws ClassNotFoundException, DriverNotDefinedException {
+        String driver = Configuration.getInstance().getDbDriver();
+        if (driver == null || driver.isEmpty())
             throw new DriverNotDefinedException();
         Class.forName(driver);
     }
 
-    private void setUser(String user) {
-        this.user = user;
+    private String getUser() {
+        return Configuration.getInstance().getDbUser();
     }
 
-    private void setPass(String pass) {
-        this.pass = pass;
+    private String getPass() {
+        return Configuration.getInstance().getDbPassword();
     }
 }
