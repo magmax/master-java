@@ -23,6 +23,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.magmax.master.practica8b.pojo.Issue;
+import sun.security.krb5.Credentials;
 
 /**
  *
@@ -87,5 +88,26 @@ public class DomainTest {
         Persistence persistence = Persistence.createInstance(credentials);
         assertNotNull(persistence);
         assertTrue(persistence instanceof Persistence);
+    }
+
+    @Test
+    public void testCanRetrieveAGivenContext() {
+        String driver = "Killing in the name";
+        String url = "You do what you do why they tough ya";
+        String user = "I won't do what they told me";
+        String password = "Rage against the machine";
+        ServletContext context = mock(ServletContext.class);
+        when(context.getInitParameter("driver")).thenReturn(driver);
+        when(context.getInitParameter("uri")).thenReturn(url);
+        when(context.getInitParameter("user")).thenReturn(user);
+        when(context.getInitParameter("password")).thenReturn(password);
+        sut.setServletContext(context);
+
+        DBCredentials credentials = sut.getDBCredentials();
+
+        assertEquals(driver, credentials.getDriver());
+        assertEquals(url, credentials.getUrl());
+        assertEquals(user, credentials.getUser());
+        assertEquals(password, credentials.getPass());
     }
 }
