@@ -95,7 +95,7 @@ public class DomainTest {
         String driver = "Killing in the name";
         String url = "You do what you do why they tough ya";
         String user = "I won't do what they told me";
-        String password = "Rage against the machine";
+        String password = null;
         ServletContext context = mock(ServletContext.class);
         when(context.getInitParameter("driver")).thenReturn(driver);
         when(context.getInitParameter("uri")).thenReturn(url);
