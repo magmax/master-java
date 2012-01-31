@@ -37,7 +37,7 @@ public class Controller extends HttpServlet {
         domain = Configuration.getInstance().getDomain(response, request);
         try {
             response.setContentType(DEFAULT_CHARSET);
-            domain.setContext(getServletContext());
+            domain.setServletContext(getServletContext());
             
             showIndex();
         } catch (Exception e) {

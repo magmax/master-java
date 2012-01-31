@@ -78,8 +78,4 @@ class Domain {
         }
         return result;
     }
-
-    void setContext(ServletContext servletContext) {
-        context = servletContext;
-    }
 }
