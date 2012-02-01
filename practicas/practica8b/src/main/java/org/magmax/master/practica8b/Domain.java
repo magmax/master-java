@@ -17,6 +17,7 @@
 package org.magmax.master.practica8b;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 class Domain {
 
     private HttpServletResponse response = null;
-    private HttpServletRequest request;
-    private ServletContext context;
-
+    private HttpServletRequest request = null;
+    private HttpServlet controller = null;
+    
     public HttpServletResponse getResponse() {
         return response;
     }
@@ -50,10 +51,6 @@ class Domain {
         return new Redirector(request, response);
     }
 
-    public void setServletContext(ServletContext context) {
-        this.context = context;
-    }
-
     public Persistence getPersistence() throws ClassNotFoundException, DriverNotDefinedException {
         return Persistence.createInstance(getDBCredentials());
     }
@@ -61,21 +58,31 @@ class Domain {
     public DBCredentials getDBCredentials() {
         DBCredentials result = new DBCredentials();
 
-        result.setDriver(getContextParameter(context, "driver"));
-        result.setUrl(getContextParameter(context, "uri"));
-        result.setUser(getContextParameter(context, "user"));
-        result.setPass(getContextParameter(context, "password"));
+        result.setDriver(getContextParameter("driver"));
+        result.setUrl(getContextParameter("uri"));
+        result.setUser(getContextParameter("user"));
+        result.setPass(getContextParameter("password"));
 
         return result;
     }
 
-    private String getContextParameter(ServletContext context, String keyword) {
-        if (context == null)
+    private String getContextParameter(String keyword) {
+        if (controller == null)
             return "";
-        String result = context.getInitParameter(keyword);
+        String result = getContext().getInitParameter(keyword);
         if (result == null) {
             return "";
         }
         return result;
+    }
+
+    void setController(HttpServlet controller) {
+        this.controller = controller;
+    }
+
+    public ServletContext getContext() {
+        if (controller == null)
+            return null;
+        return controller.getServletContext();
     }
 }

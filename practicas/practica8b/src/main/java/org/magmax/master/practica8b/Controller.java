@@ -34,11 +34,9 @@ public class Controller extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        domain = Configuration.getInstance().getDomain(response, request);
+        response.setContentType(DEFAULT_CHARSET);
+        domain = Configuration.getInstance().getDomain(this, request, response);
         try {
-            response.setContentType(DEFAULT_CHARSET);
-            domain.setServletContext(getServletContext());
-            
             showIndex();
         } catch (Exception e) {
             e.printStackTrace();

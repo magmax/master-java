@@ -24,7 +24,6 @@ import org.junit.*;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
-@Ignore("I cannot find a way to prove Controller mocking only the Context.")
 public class ControllerTest {
 
     private Domain domain;
@@ -70,6 +69,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore("No sé por qué añadí este test... Creo que es pronto.")
     public void testRedirectorCreateRequiresAListOfIssues() throws ServletException, IOException {
         sut.doPost(request, response);
         verify(redirector).redirect(JspPage.CREATE);

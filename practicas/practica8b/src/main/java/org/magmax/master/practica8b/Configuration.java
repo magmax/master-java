@@ -17,6 +17,7 @@
 package org.magmax.master.practica8b;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,12 +49,13 @@ class Configuration {
         instance.domain = domain;
     }
 
-    public Domain getDomain(HttpServletResponse response, HttpServletRequest request) {
+    public Domain getDomain(HttpServlet controller, HttpServletRequest request, HttpServletResponse response) {
         Domain result = domain;
         if (result == null)
             result = new Domain();
-        result.setResponse(response);
+        result.setController(controller);
         result.setRequest(request);
+        result.setResponse(response);
         return result;
     }
 }
