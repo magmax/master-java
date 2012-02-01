@@ -17,7 +17,6 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +35,15 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType(DEFAULT_CHARSET);
         domain = Configuration.getInstance().getDomain(this, request, response);
+        loadNextPage();
+    }
+
+    private void loadNextPage() throws ServletException, IOException {
         try {
             showIndex();
         } catch (Exception e) {
             e.printStackTrace();
-            domain.getRedirector().redirect(JspPage.ERROR);
+            showError();
         }
     }
 
@@ -48,7 +51,11 @@ public class Controller extends HttpServlet {
         domain.getRedirector().redirect(JspPage.CREATE);
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    private void showError() throws IOException, ServletException {
+        domain.getRedirector().redirect(JspPage.ERROR);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.

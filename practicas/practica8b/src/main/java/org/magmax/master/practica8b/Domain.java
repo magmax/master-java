@@ -69,7 +69,7 @@ class Domain {
     private String getContextParameter(String keyword) {
         if (controller == null)
             return "";
-        String result = getContext().getInitParameter(keyword);
+        String result = controller.getServletContext().getInitParameter(keyword);
         if (result == null) {
             return "";
         }
@@ -78,11 +78,5 @@ class Domain {
 
     void setController(HttpServlet controller) {
         this.controller = controller;
-    }
-
-    public ServletContext getContext() {
-        if (controller == null)
-            return null;
-        return controller.getServletContext();
     }
 }
