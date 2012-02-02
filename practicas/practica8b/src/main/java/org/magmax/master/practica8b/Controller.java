@@ -17,6 +17,7 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +36,10 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType(DEFAULT_CHARSET);
         domain = Configuration.getInstance().getDomain(this, request, response);
-        loadNextPage();
+        loadNextPage(request, response);
     }
 
-    private void loadNextPage() throws ServletException, IOException {
+    public void loadNextPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             showIndex();
         } catch (Exception e) {
@@ -47,14 +48,26 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void showIndex() throws IOException, ServletException {
-        domain.getRedirector().redirect(JspPage.CREATE);
+    /**
+     * This is only for tests purposes. Do not use.
+     */
+    public void setDomain(Domain domain) {
+        this.domain = domain;
+    }
+
+    
+    private void showIndex() throws IOException, ServletException, ClassNotFoundException, DriverNotDefinedException, SQLException {
+        Persistence persistence = domain.getPersistence();
+        Redirector redirector = domain.getRedirector();
+        redirector.addAttribute("issue_list", persistence.getAllIssues());
+        redirector.redirect(JspPage.CREATE);
     }
 
     private void showError() throws IOException, ServletException {
         domain.getRedirector().redirect(JspPage.ERROR);
     }
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

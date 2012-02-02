@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.*;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import org.magmax.master.practica8b.pojo.Issue;
 
 public class ControllerTest {
 
@@ -40,11 +41,11 @@ public class ControllerTest {
         response = mock(HttpServletResponse.class);
 
         Configuration.getInstance().setDomain(domain);
-
         when(domain.getRedirector()).thenReturn(redirector);
 
         sut = new Controller();
         sut.init();
+        sut.setDomain(domain);
     }
 
     @After
@@ -57,23 +58,29 @@ public class ControllerTest {
     }
 
     @Test
-    public void testASimpleCallReturnsIndexUnderGet() throws ServletException, IOException {
+    public void testASimpleCallReturnsErrorUnderGet() throws ServletException, IOException {
         sut.doGet(request, response);
-        verify(redirector).redirect(JspPage.CREATE);
+        verify(redirector).redirect(JspPage.ERROR);
     }
 
     @Test
-    public void testASimpleCallReturnsIndexUnderPost() throws ServletException, IOException {
+    public void testASimpleCallReturnsErrorUnderPost() throws ServletException, IOException {
         sut.doPost(request, response);
-        verify(redirector).redirect(JspPage.CREATE);
+        verify(redirector).redirect(JspPage.ERROR);
     }
-
+    
     @Test
-    @Ignore("No sé por qué añadí este test... Creo que es pronto.")
-    public void testRedirectorCreateRequiresAListOfIssues() throws ServletException, IOException {
-        sut.doPost(request, response);
+    public void testKnowsHowToGenerateIndexWhenNoIssues() throws Exception {
+        Persistence persistence = mock(Persistence.class);
+        Issue[] issues = new Issue[0];
+        when(domain.getPersistence()).thenReturn(persistence);
+        when(persistence.getAllIssues()).thenReturn(issues);
+        
+        sut.loadNextPage(request, response);
+        
         verify(redirector).redirect(JspPage.CREATE);
-        fail ("requires a list of issues");
+        verify(redirector).addAttribute("issue_list", issues);
+        verify(persistence).getAllIssues();
     }
 
     @Test
