@@ -17,11 +17,11 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.magmax.master.practica8b.pojo.Issue;
 
 /**
  *
@@ -55,19 +55,32 @@ public class Controller extends HttpServlet {
         this.domain = domain;
     }
 
-    
-    private void showIndex() throws IOException, ServletException, ClassNotFoundException, DriverNotDefinedException, SQLException {
-        Persistence persistence = domain.getPersistence();
+    private void showIndex() throws Exception {
+        Persistence persistence = getPersistence();
         Redirector redirector = domain.getRedirector();
-        redirector.addAttribute("issue_list", persistence.getAllIssues());
+        redirector.addAttribute("issue_list", getAllIssues(persistence));
         redirector.redirect(JspPage.CREATE);
+    }
+
+    private Issue[] getAllIssues(Persistence persistence) throws Exception {
+       Issue[] result = persistence.getAllIssues();
+       if (result == null)
+           throw new Exception ("Problems found to find Issues");       
+       return result;
+    }
+
+    private Persistence getPersistence() throws Exception, ClassNotFoundException, DriverNotDefinedException {
+        Persistence persistence = domain.getPersistence();
+        if (persistence == null) {
+            throw new Exception("Could not connect to database");
+        }
+        return persistence;
     }
 
     private void showError() throws IOException, ServletException {
         domain.getRedirector().redirect(JspPage.ERROR);
     }
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

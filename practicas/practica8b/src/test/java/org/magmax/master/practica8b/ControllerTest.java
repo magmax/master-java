@@ -32,16 +32,19 @@ public class ControllerTest {
     private HttpServletResponse response;
     private Controller sut;
     private Redirector redirector;
+    private Persistence persistence;
 
     @Before
-    public void setUp() throws ServletException {
+    public void setUp() throws ServletException, ClassNotFoundException, DriverNotDefinedException {
         redirector = mock(Redirector.class);
         domain = mock(Domain.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        persistence = mock(Persistence.class);
 
         Configuration.getInstance().setDomain(domain);
         when(domain.getRedirector()).thenReturn(redirector);
+        when(domain.getPersistence()).thenReturn(persistence);
 
         sut = new Controller();
         sut.init();
@@ -60,7 +63,7 @@ public class ControllerTest {
     @Test
     public void testASimpleCallReturnsErrorUnderGet() throws ServletException, IOException {
         sut.doGet(request, response);
-        verify(redirector).redirect(JspPage.ERROR);
+        verify(redirector, times(1)).redirect(JspPage.ERROR);
     }
 
     @Test
@@ -68,17 +71,16 @@ public class ControllerTest {
         sut.doPost(request, response);
         verify(redirector).redirect(JspPage.ERROR);
     }
-    
+
     @Test
     public void testKnowsHowToGenerateIndexWhenNoIssues() throws Exception {
-        Persistence persistence = mock(Persistence.class);
         Issue[] issues = new Issue[0];
-        when(domain.getPersistence()).thenReturn(persistence);
         when(persistence.getAllIssues()).thenReturn(issues);
-        
+
         sut.loadNextPage(request, response);
-        
-        verify(redirector).redirect(JspPage.CREATE);
+
+        verify(redirector, times(1)).redirect(JspPage.CREATE);
+        verify(redirector, times(0)).redirect(JspPage.ERROR);
         verify(redirector).addAttribute("issue_list", issues);
         verify(persistence).getAllIssues();
     }
@@ -87,5 +89,13 @@ public class ControllerTest {
     public void testASimpleCallSetsCharset() throws ServletException, IOException {
         sut.doPost(request, response);
         verify(response).setContentType("text/html;charset=UTF-8");
+    }
+
+    @Test
+    public void testFailsWhenNoPersistence() throws Exception {
+        when (domain.getPersistence()).thenReturn(null);
+        sut.loadNextPage(request, response);
+        verify(redirector, times(0)).redirect(JspPage.CREATE);
+        verify(redirector, times(1)).redirect(JspPage.ERROR);
     }
 }
