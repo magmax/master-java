@@ -142,4 +142,10 @@ public class DomainTest {
         assertEquals("", actual);
         verify(servletContext).getInitParameter(key);
     }
+    
+    @Test
+    public void knowsHowToBuildAMessageGenerator() {
+        MessageGenerator messageGenerator = sut.getMessageGenerator();
+        assertNotNull(messageGenerator);
+    }
 }

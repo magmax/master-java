@@ -33,6 +33,7 @@ public class ControllerTest {
     private Controller sut;
     private Redirector redirector;
     private Persistence persistence;
+    private MessageGenerator messageGenerator;
 
     @Before
     public void setUp() throws ServletException, ClassNotFoundException, DriverNotDefinedException {
@@ -41,7 +42,8 @@ public class ControllerTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         persistence = mock(Persistence.class);
-
+        messageGenerator = mock(MessageGenerator.class);
+        
         Configuration.getInstance().setDomain(domain);
         when(domain.getRedirector()).thenReturn(redirector);
         when(domain.getPersistence()).thenReturn(persistence);
@@ -116,10 +118,29 @@ public class ControllerTest {
         when(request.getParameter("level")).thenReturn("1");
         when(domain.getContextParameter("issue")).thenReturn("1");
         when(domain.getContextParameter("level")).thenReturn("1");
+        when(domain.getMessageGenerator()).thenReturn(messageGenerator);
+        when(messageGenerator.getMessage()).thenReturn("The number of the beast");
         
         sut.loadNextPage(request, response);
         
         verify(redirector, times(1)).redirect(JspPage.RESULT);
         verify(persistence, times(0)).retrieveQuestions(anyInt(), anyInt());
+    }
+
+    @Test
+    public void testBuildsCorrectMessage() throws Exception {
+        when(request.getParameter("issue")).thenReturn("1");
+        when(request.getParameter("level")).thenReturn("1");
+        when(domain.getContextParameter("issue")).thenReturn("1");
+        when(domain.getContextParameter("level")).thenReturn("1");
+        when(domain.getMessageGenerator()).thenReturn(messageGenerator);
+        when(messageGenerator.getMessage()).thenReturn("Be quick or be dead");
+        
+        sut.loadNextPage(request, response);
+
+        verify(redirector).addAttribute("message", "Be quick or be dead");
+        verify(messageGenerator).setLevel(1);
+        verify(messageGenerator).setPunctuation(0);
+        verify(messageGenerator, times(1)).getMessage();
     }
 }

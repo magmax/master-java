@@ -78,4 +78,8 @@ class Domain {
     void setController(HttpServlet controller) {
         this.controller = controller;
     }
+
+    MessageGenerator getMessageGenerator() {
+        return new MessageGenerator();
+    }
 }

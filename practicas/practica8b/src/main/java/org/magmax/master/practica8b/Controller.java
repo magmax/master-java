@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,17 +45,20 @@ public class Controller extends HttpServlet {
 
     public void loadNextPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String level = request.getParameter("level");
-            String issue = request.getParameter("issue");
-            if (level != null && issue != null) {
-                if (level.equals(domain.getContextParameter("level"))
-                        && issue.equals(domain.getContextParameter("issue"))) {
-                    showResults();
-                } else {
-                    showPerformExam(Integer.valueOf(issue), Integer.valueOf(level));
-                }
-            } else {
+            Integer level = getSessionLevel(request);
+            Integer issue = getSessionIssue(request);
+            if (level == null && issue == null) {
                 showIndex();
+                return;
+            }
+
+            if (level == getContextLevel() && issue == getContextIssue()) {
+                showResults(level, getSessionExam(request), getSessionAnswers(request));
+                return;
+            }
+
+            if (true) {
+                showPerformExam(issue, level);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,6 +71,38 @@ public class Controller extends HttpServlet {
      */
     public void setDomain(Domain domain) {
         this.domain = domain;
+    }
+
+    private Integer getContextIssue() {
+        String result = domain.getContextParameter("issue");
+        return result == null? null : Integer.valueOf(result);
+    }
+
+    private Integer getContextLevel() {
+        String result = domain.getContextParameter("level");
+        return result == null? null : Integer.valueOf(result);
+    }
+
+    private Integer getSessionLevel(HttpServletRequest request) {
+        String result = request.getParameter("level");
+        return result == null ? null : Integer.valueOf(result);
+    }
+
+    private Integer getSessionIssue(HttpServletRequest request) {
+        String result = request.getParameter("issue");
+        return result == null ? null : Integer.valueOf(result);
+    }
+
+    private Issue[] getSessionExam(ServletRequest request) {
+        return (Issue[]) request.getAttribute("exam");
+    }
+
+    private Integer[] getSessionAnswers(ServletRequest request) {
+        Integer[] result = (Integer[]) request.getAttribute("answers");
+        if (result == null) {
+            return new Integer[0];
+        }
+        return result;
     }
 
     private void showIndex() throws Exception {
@@ -91,9 +127,12 @@ public class Controller extends HttpServlet {
         redirector.redirect(JspPage.EXAM);
     }
 
-    private void showResults() throws Exception {
+    private void showResults(Integer level, Issue[] exam, Integer[] answers) throws Exception {
+        MessageGenerator message = domain.getMessageGenerator();
+        message.setLevel(level);
+        message.setPunctuation(0);
         Redirector redirector = domain.getRedirector();
-        redirector.addAttribute("exam", domain.getContextParameter("exam"));
+        redirector.addAttribute("message", message.getMessage());
         redirector.redirect(JspPage.RESULT);
     }
 
