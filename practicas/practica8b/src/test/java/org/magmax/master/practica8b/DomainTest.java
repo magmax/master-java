@@ -34,6 +34,7 @@ public class DomainTest {
     private Domain sut;
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private Controller controller;
 
     @Before
     public void setUp() {
@@ -42,6 +43,7 @@ public class DomainTest {
         sut = new Domain();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        controller = mock(Controller.class);
     }
 
     @After
@@ -110,5 +112,34 @@ public class DomainTest {
         assertEquals(url, credentials.getUrl());
         assertEquals(user, credentials.getUser());
         assertEquals("", credentials.getPass());
+    }
+
+    @Test
+    public void canRetrieveContextParameters() {
+        String expected = "Nothing Else Matters";
+        String key = "Fuel";
+
+        sut.setController(controller);
+        ServletContext servletContext = mock(ServletContext.class);
+        when(servletContext.getInitParameter(key)).thenReturn(expected);
+        when(controller.getServletContext()).thenReturn(servletContext);
+
+        String actual = sut.getContextParameter(key);
+        assertEquals(expected, actual);
+        verify(servletContext).getInitParameter(key);
+    }
+
+    @Test
+    public void canRetrieveContextParametersThatCannotBeNull() {
+        String key = "Fuel";
+
+        sut.setController(controller);
+        ServletContext servletContext = mock(ServletContext.class);
+        when(servletContext.getInitParameter(key)).thenReturn(null);
+        when(controller.getServletContext()).thenReturn(servletContext);
+
+        String actual = sut.getContextParameter(key);
+        assertEquals("", actual);
+        verify(servletContext).getInitParameter(key);
     }
 }
