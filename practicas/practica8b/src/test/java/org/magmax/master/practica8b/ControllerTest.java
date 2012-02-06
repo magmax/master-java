@@ -60,16 +60,14 @@ public class ControllerTest {
         assertEquals("This is a servlet for practice 8 of a Java2EE Master.", sut.getServletInfo());
     }
 
-    @Test
+    @Test(expected=ServletException.class)
     public void testASimpleCallReturnsErrorUnderGet() throws ServletException, IOException {
         sut.doGet(request, response);
-        verify(redirector, times(1)).redirect(JspPage.ERROR);
     }
 
-    @Test
+    @Test(expected=ServletException.class)
     public void testASimpleCallReturnsErrorUnderPost() throws ServletException, IOException {
         sut.doPost(request, response);
-        verify(redirector).redirect(JspPage.ERROR);
     }
 
     @Test
@@ -80,22 +78,36 @@ public class ControllerTest {
         sut.loadNextPage(request, response);
 
         verify(redirector, times(1)).redirect(JspPage.CREATE);
-        verify(redirector, times(0)).redirect(JspPage.ERROR);
         verify(redirector).addAttribute("issue_list", issues);
         verify(persistence).getAllIssues();
     }
 
     @Test
-    public void testASimpleCallSetsCharset() throws ServletException, IOException {
+    public void testASimpleCallSetsCharset() throws Exception {
+        Issue[] issues = new Issue[0];
+        when(persistence.getAllIssues()).thenReturn(issues);
+
         sut.doPost(request, response);
+        
         verify(response).setContentType("text/html;charset=UTF-8");
     }
 
-    @Test
+    @Test(expected=ServletException.class)
     public void testFailsWhenNoPersistence() throws Exception {
         when (domain.getPersistence()).thenReturn(null);
+        
         sut.loadNextPage(request, response);
-        verify(redirector, times(0)).redirect(JspPage.CREATE);
-        verify(redirector, times(1)).redirect(JspPage.ERROR);
+    }
+    
+    @Test
+    public void testRedirectsToNewExamWhenIssueAndLevelAreSet() throws Exception {
+        when(request.getParameter("issue")).thenReturn("1");
+        when(request.getParameter("level")).thenReturn("1");
+        
+        sut.loadNextPage(request, response);
+        
+        verify(redirector, times(1)).redirect(JspPage.EXAM);
+        verify(redirector, times(0)).redirect(JspPage.ERROR);
+        verify(persistence).retrieveQuestions(1, 1);
     }
 }

@@ -17,11 +17,14 @@
 package org.magmax.master.practica8b;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.magmax.master.practica8b.pojo.Issue;
+import org.magmax.master.practica8b.pojo.Question;
 
 /**
  *
@@ -41,10 +44,16 @@ public class Controller extends HttpServlet {
 
     public void loadNextPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            showIndex();
+            String level = request.getParameter("level");
+            String issue = request.getParameter("issue");
+            if (level != null && issue != null) {
+                showPerformExam(Integer.valueOf(issue), Integer.valueOf(level));
+            } else {
+                showIndex();
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            showError();
+            throw new ServletException(e);
         }
     }
 
@@ -63,10 +72,22 @@ public class Controller extends HttpServlet {
     }
 
     private Issue[] getAllIssues(Persistence persistence) throws Exception {
-       Issue[] result = persistence.getAllIssues();
-       if (result == null)
-           throw new Exception ("Problems found to find Issues");       
-       return result;
+        Issue[] result = persistence.getAllIssues();
+        if (result == null) {
+            throw new Exception("Problems found to find Issues");
+        }
+        return result;
+    }
+
+    private void showError() throws IOException, ServletException {
+        domain.getRedirector().redirect(JspPage.ERROR);
+    }
+
+    private void showPerformExam(int issue_id, int level) throws Exception {
+        Persistence persistence = getPersistence();
+        Redirector redirector = domain.getRedirector();
+        redirector.addAttribute("exam", getExam(persistence, issue_id, level));
+        redirector.redirect(JspPage.EXAM);
     }
 
     private Persistence getPersistence() throws Exception, ClassNotFoundException, DriverNotDefinedException {
@@ -75,10 +96,6 @@ public class Controller extends HttpServlet {
             throw new Exception("Could not connect to database");
         }
         return persistence;
-    }
-
-    private void showError() throws IOException, ServletException {
-        domain.getRedirector().redirect(JspPage.ERROR);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -121,4 +138,8 @@ public class Controller extends HttpServlet {
     public String getServletInfo() {
         return "This is a servlet for practice 8 of a Java2EE Master.";
     }// </editor-fold>
+
+    private List<Question> getExam(Persistence persistence, int issue_id, int level) throws SQLException {
+        return persistence.retrieveQuestions(issue_id, level);
+    }
 }
