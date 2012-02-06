@@ -65,7 +65,7 @@ class Domain {
         return result;
     }
 
-    private String getContextParameter(String keyword) {
+    public String getContextParameter(String keyword) {
         if (controller == null)
             return "";
         String result = controller.getServletContext().getInitParameter(keyword);

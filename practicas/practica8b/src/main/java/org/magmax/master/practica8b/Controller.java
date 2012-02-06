@@ -47,7 +47,12 @@ public class Controller extends HttpServlet {
             String level = request.getParameter("level");
             String issue = request.getParameter("issue");
             if (level != null && issue != null) {
-                showPerformExam(Integer.valueOf(issue), Integer.valueOf(level));
+                if (level.equals(domain.getContextParameter("level"))
+                        && issue.equals(domain.getContextParameter("issue"))) {
+                    showResults();
+                } else {
+                    showPerformExam(Integer.valueOf(issue), Integer.valueOf(level));
+                }
             } else {
                 showIndex();
             }
@@ -79,15 +84,17 @@ public class Controller extends HttpServlet {
         return result;
     }
 
-    private void showError() throws IOException, ServletException {
-        domain.getRedirector().redirect(JspPage.ERROR);
-    }
-
     private void showPerformExam(int issue_id, int level) throws Exception {
         Persistence persistence = getPersistence();
         Redirector redirector = domain.getRedirector();
         redirector.addAttribute("exam", getExam(persistence, issue_id, level));
         redirector.redirect(JspPage.EXAM);
+    }
+
+    private void showResults() throws Exception {
+        Redirector redirector = domain.getRedirector();
+        redirector.addAttribute("exam", domain.getContextParameter("exam"));
+        redirector.redirect(JspPage.RESULT);
     }
 
     private Persistence getPersistence() throws Exception, ClassNotFoundException, DriverNotDefinedException {

@@ -107,7 +107,19 @@ public class ControllerTest {
         sut.loadNextPage(request, response);
         
         verify(redirector, times(1)).redirect(JspPage.EXAM);
-        verify(redirector, times(0)).redirect(JspPage.ERROR);
         verify(persistence).retrieveQuestions(1, 1);
+    }
+    
+    @Test
+    public void testRedirectsToShowExamWhenIssueAndLevelAreStoredAndEqualToNewOnes() throws Exception {
+        when(request.getParameter("issue")).thenReturn("1");
+        when(request.getParameter("level")).thenReturn("1");
+        when(domain.getContextParameter("issue")).thenReturn("1");
+        when(domain.getContextParameter("level")).thenReturn("1");
+        
+        sut.loadNextPage(request, response);
+        
+        verify(redirector, times(1)).redirect(JspPage.RESULT);
+        verify(persistence, times(0)).retrieveQuestions(anyInt(), anyInt());
     }
 }

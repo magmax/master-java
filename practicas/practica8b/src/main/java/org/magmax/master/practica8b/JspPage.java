@@ -24,6 +24,7 @@ public enum JspPage {
     ERROR("/index.jsp"),
     CREATE("/create_exam.jsp"),
     EXAM("/perform_exam.jsp"),
+    RESULT("/show_exam.jsp"),
     ;
     private final String uri;
     
