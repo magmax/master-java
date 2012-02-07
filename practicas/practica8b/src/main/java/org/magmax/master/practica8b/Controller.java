@@ -19,6 +19,8 @@ package org.magmax.master.practica8b;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
@@ -41,6 +43,7 @@ public class Controller extends HttpServlet {
         response.setContentType(DEFAULT_CHARSET);
         domain = Configuration.getInstance().getDomain(this, request, response);
         loadNextPage(request, response);
+        
     }
 
     public void loadNextPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,12 +78,12 @@ public class Controller extends HttpServlet {
 
     private Integer getContextIssue() {
         String result = domain.getContextParameter("issue");
-        return result == null? null : Integer.valueOf(result);
+        return result == null ? null : Integer.valueOf(result);
     }
 
     private Integer getContextLevel() {
         String result = domain.getContextParameter("level");
-        return result == null? null : Integer.valueOf(result);
+        return result == null ? null : Integer.valueOf(result);
     }
 
     private String getEvaluationMessage(Question[] exam, Integer level, Integer[] answers) {

@@ -4,6 +4,7 @@
     Author     : miguel
 --%>
 
+<%@page import="org.magmax.master.practica8b.pojo.Issue"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -25,7 +26,7 @@
                     <select name="issue">
                         <% 
                         String selected="selected=\"true\"";
-                        for (Issue each : request.getAttribute("issue")) 
+                        for (Issue each : (Issue[]) request.getAttribute("issue_list")) 
                         { 
                         %>
                             <option label="<%=each.getName()%>" value="<%=each.getId()%>" <%=selected%>/>

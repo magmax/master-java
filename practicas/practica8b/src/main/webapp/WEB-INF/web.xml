@@ -13,4 +13,23 @@
             30
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>org.hsqldb.jdbcDriver</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>uri</param-name>
+        <param-value>jdbc:hsqldb:database.dat</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>sa</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>password</param-name>
+        <param-value></param-value>
+    </context-param>
 </web-app>
