@@ -84,17 +84,17 @@ public class Controller extends HttpServlet {
     }
 
     private Integer getSessionLevel(HttpServletRequest request) {
-        String result = request.getParameter("level");
+        String result = (String) request.getAttribute("level");
         return result == null ? null : Integer.valueOf(result);
     }
 
     private Integer getSessionIssue(HttpServletRequest request) {
-        String result = request.getParameter("issue");
+        String result = (String) request.getAttribute("issue");
         return result == null ? null : Integer.valueOf(result);
     }
 
-    private Issue[] getSessionExam(ServletRequest request) {
-        return (Issue[]) request.getAttribute("exam");
+    private Question[] getSessionExam(ServletRequest request) {
+        return (Question[]) request.getAttribute("exam");
     }
 
     private Integer[] getSessionAnswers(ServletRequest request) {
@@ -127,7 +127,7 @@ public class Controller extends HttpServlet {
         redirector.redirect(JspPage.EXAM);
     }
 
-    private void showResults(Integer level, Issue[] exam, Integer[] answers) throws Exception {
+    private void showResults(Integer level, Question[] exam, Integer[] answers) throws Exception {
         MessageGenerator message = domain.getMessageGenerator();
         message.setLevel(level);
         message.setPunctuation(0);

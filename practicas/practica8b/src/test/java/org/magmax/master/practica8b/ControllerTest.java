@@ -24,6 +24,7 @@ import org.junit.*;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import org.magmax.master.practica8b.pojo.Issue;
+import org.magmax.master.practica8b.pojo.Question;
 
 public class ControllerTest {
 
@@ -43,7 +44,7 @@ public class ControllerTest {
         response = mock(HttpServletResponse.class);
         persistence = mock(Persistence.class);
         messageGenerator = mock(MessageGenerator.class);
-        
+
         Configuration.getInstance().setDomain(domain);
         when(domain.getRedirector()).thenReturn(redirector);
         when(domain.getPersistence()).thenReturn(persistence);
@@ -57,17 +58,27 @@ public class ControllerTest {
     public void tearDown() {
     }
 
+    private Question[] getExampleExam() {
+        Question[] result = new Question[5];
+        for (int i = 0; i < result.length; ++i) {
+            result[i] = new Question();
+            result[i].setId(i);
+            result[i].setCorrect(1);
+        }
+        return result;
+    }
+
     @Test
     public void testRetrieveServletInfo() {
         assertEquals("This is a servlet for practice 8 of a Java2EE Master.", sut.getServletInfo());
     }
 
-    @Test(expected=ServletException.class)
+    @Test(expected = ServletException.class)
     public void testASimpleCallReturnsErrorUnderGet() throws ServletException, IOException {
         sut.doGet(request, response);
     }
 
-    @Test(expected=ServletException.class)
+    @Test(expected = ServletException.class)
     public void testASimpleCallReturnsErrorUnderPost() throws ServletException, IOException {
         sut.doPost(request, response);
     }
@@ -90,52 +101,73 @@ public class ControllerTest {
         when(persistence.getAllIssues()).thenReturn(issues);
 
         sut.doPost(request, response);
-        
+
         verify(response).setContentType("text/html;charset=UTF-8");
     }
 
-    @Test(expected=ServletException.class)
+    @Test(expected = ServletException.class)
     public void testFailsWhenNoPersistence() throws Exception {
-        when (domain.getPersistence()).thenReturn(null);
-        
+        when(domain.getPersistence()).thenReturn(null);
+
         sut.loadNextPage(request, response);
     }
-    
+
     @Test
     public void testRedirectsToNewExamWhenIssueAndLevelAreSet() throws Exception {
-        when(request.getParameter("issue")).thenReturn("1");
-        when(request.getParameter("level")).thenReturn("1");
-        
+        when(request.getAttribute("issue")).thenReturn("1");
+        when(request.getAttribute("level")).thenReturn("1");
+        Issue[] issues = new Issue[0];
+        when(persistence.getAllIssues()).thenReturn(issues);
+
         sut.loadNextPage(request, response);
-        
+
         verify(redirector, times(1)).redirect(JspPage.EXAM);
         verify(persistence).retrieveQuestions(1, 1);
     }
-    
+
     @Test
     public void testRedirectsToShowExamWhenIssueAndLevelAreStoredAndEqualToNewOnes() throws Exception {
-        when(request.getParameter("issue")).thenReturn("1");
-        when(request.getParameter("level")).thenReturn("1");
+        when(request.getAttribute("issue")).thenReturn("1");
+        when(request.getAttribute("level")).thenReturn("1");
         when(domain.getContextParameter("issue")).thenReturn("1");
         when(domain.getContextParameter("level")).thenReturn("1");
         when(domain.getMessageGenerator()).thenReturn(messageGenerator);
         when(messageGenerator.getMessage()).thenReturn("The number of the beast");
-        
+
         sut.loadNextPage(request, response);
-        
+
         verify(redirector, times(1)).redirect(JspPage.RESULT);
         verify(persistence, times(0)).retrieveQuestions(anyInt(), anyInt());
     }
 
     @Test
     public void testBuildsCorrectMessage() throws Exception {
-        when(request.getParameter("issue")).thenReturn("1");
-        when(request.getParameter("level")).thenReturn("1");
+        when(request.getAttribute("issue")).thenReturn("1");
+        when(request.getAttribute("level")).thenReturn("1");
         when(domain.getContextParameter("issue")).thenReturn("1");
         when(domain.getContextParameter("level")).thenReturn("1");
         when(domain.getMessageGenerator()).thenReturn(messageGenerator);
         when(messageGenerator.getMessage()).thenReturn("Be quick or be dead");
-        
+
+        sut.loadNextPage(request, response);
+
+        verify(redirector).addAttribute("message", "Be quick or be dead");
+        verify(messageGenerator).setLevel(1);
+        verify(messageGenerator).setPunctuation(0);
+        verify(messageGenerator, times(1)).getMessage();
+    }
+
+    @Test
+    public void testKnowsHowToEvalTheExam() throws Exception {
+        when(request.getAttribute("issue")).thenReturn("1");
+        when(request.getAttribute("level")).thenReturn("1");
+        when(request.getAttribute("exam")).thenReturn(getExampleExam());
+        when(request.getAttribute("answers")).thenReturn(new Integer[]{1, 2, 2, 2, 2});
+        when(domain.getContextParameter("issue")).thenReturn("1");
+        when(domain.getContextParameter("level")).thenReturn("1");
+        when(domain.getMessageGenerator()).thenReturn(messageGenerator);
+        when(messageGenerator.getMessage()).thenReturn("Be quick or be dead");
+
         sut.loadNextPage(request, response);
 
         verify(redirector).addAttribute("message", "Be quick or be dead");
