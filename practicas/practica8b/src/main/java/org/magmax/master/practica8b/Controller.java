@@ -83,6 +83,14 @@ public class Controller extends HttpServlet {
         return result == null? null : Integer.valueOf(result);
     }
 
+    private String getEvaluationMessage(Question[] exam, Integer level, Integer[] answers) {
+        Evaluator evaluator = new Evaluator(exam);
+        MessageGenerator message = domain.getMessageGenerator();
+        message.setLevel(level);
+        message.setPunctuation(evaluator.evaluate(answers));
+        return message.getMessage();
+    }
+
     private Integer getSessionLevel(HttpServletRequest request) {
         String result = (String) request.getAttribute("level");
         return result == null ? null : Integer.valueOf(result);
@@ -128,11 +136,9 @@ public class Controller extends HttpServlet {
     }
 
     private void showResults(Integer level, Question[] exam, Integer[] answers) throws Exception {
-        MessageGenerator message = domain.getMessageGenerator();
-        message.setLevel(level);
-        message.setPunctuation(0);
+        String message = getEvaluationMessage(exam, level, answers);
         Redirector redirector = domain.getRedirector();
-        redirector.addAttribute("message", message.getMessage());
+        redirector.addAttribute("message", message);
         redirector.redirect(JspPage.RESULT);
     }
 

@@ -172,7 +172,26 @@ public class ControllerTest {
 
         verify(redirector).addAttribute("message", "Be quick or be dead");
         verify(messageGenerator).setLevel(1);
-        verify(messageGenerator).setPunctuation(0);
+        verify(messageGenerator).setPunctuation(1);
+        verify(messageGenerator, times(1)).getMessage();
+    }
+
+    @Test
+    public void testKnowsHowToEvalAnotherExam() throws Exception {
+        when(request.getAttribute("issue")).thenReturn("1");
+        when(request.getAttribute("level")).thenReturn("1");
+        when(request.getAttribute("exam")).thenReturn(getExampleExam());
+        when(request.getAttribute("answers")).thenReturn(new Integer[]{1, 2, 2, 2, 1});
+        when(domain.getContextParameter("issue")).thenReturn("1");
+        when(domain.getContextParameter("level")).thenReturn("1");
+        when(domain.getMessageGenerator()).thenReturn(messageGenerator);
+        when(messageGenerator.getMessage()).thenReturn("Be quick or be dead");
+
+        sut.loadNextPage(request, response);
+
+        verify(redirector).addAttribute("message", "Be quick or be dead");
+        verify(messageGenerator).setLevel(1);
+        verify(messageGenerator).setPunctuation(2);
         verify(messageGenerator, times(1)).getMessage();
     }
 }
