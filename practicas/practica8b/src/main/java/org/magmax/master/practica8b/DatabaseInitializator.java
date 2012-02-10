@@ -29,6 +29,10 @@ import java.util.logging.Logger;
 public class DatabaseInitializator {
 
     public static void main(String[] args) throws Exception {
+        easyInitialize();
+    }
+
+    public static void easyInitialize() throws ClassNotFoundException, DriverNotDefinedException, SQLException {
         Logger logger = Logger.getLogger("MASTER 8B");
         
         logger.info("Initializating database for Master in J2EE (Practice 8B)");

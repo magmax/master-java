@@ -18,6 +18,7 @@ package org.magmax.master.practica8b;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,20 +44,20 @@ public class Controller extends HttpServlet {
         response.setContentType(DEFAULT_CHARSET);
         domain = Configuration.getInstance().getDomain(this, request, response);
         loadNextPage(request, response);
-        
+
     }
 
     public void loadNextPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Integer level = getSessionLevel(request);
-            Integer issue = getSessionIssue(request);
-            if (level == null && issue == null) {
+            Integer level = getParameterLevel();
+            Integer issue = getParameterIssue();
+            if (level == null || issue == null) {
                 showIndex();
                 return;
             }
 
-            if (level == getContextLevel() && issue == getContextIssue()) {
-                showResults(level, getSessionExam(request), getSessionAnswers(request));
+            if (level == getSessionLevel() && issue == getSessionIssue()) {
+                showResults(level, getSessionExam(), getSessionAnswers());
                 return;
             }
 
@@ -76,14 +77,12 @@ public class Controller extends HttpServlet {
         this.domain = domain;
     }
 
-    private Integer getContextIssue() {
-        String result = domain.getContextParameter("issue");
-        return result == null ? null : Integer.valueOf(result);
+    private Integer getParameterIssue() {
+        return toInt(domain.getRequest().getParameter("issue"));
     }
 
-    private Integer getContextLevel() {
-        String result = domain.getContextParameter("level");
-        return result == null ? null : Integer.valueOf(result);
+    private Integer getParameterLevel() {
+        return toInt(domain.getRequest().getParameter("level"));
     }
 
     private String getEvaluationMessage(Question[] exam, Integer level, Integer[] answers) {
@@ -94,22 +93,31 @@ public class Controller extends HttpServlet {
         return message.getMessage();
     }
 
-    private Integer getSessionLevel(HttpServletRequest request) {
-        String result = (String) request.getAttribute("level");
-        return result == null ? null : Integer.valueOf(result);
+    private Integer getSessionLevel() {
+        return toInt(domain.getRequest().getAttribute("level"));
     }
 
-    private Integer getSessionIssue(HttpServletRequest request) {
-        String result = (String) request.getAttribute("issue");
-        return result == null ? null : Integer.valueOf(result);
+    private Integer getSessionIssue() {
+        return toInt(domain.getRequest().getAttribute("issue"));
     }
 
-    private Question[] getSessionExam(ServletRequest request) {
-        return (Question[]) request.getAttribute("exam");
+    private Question[] getSessionExam() {
+        return (Question[]) domain.getRequest().getAttribute("exam");
     }
 
-    private Integer[] getSessionAnswers(ServletRequest request) {
-        Integer[] result = (Integer[]) request.getAttribute("answers");
+    private Integer toInt(Object value) {
+        if (value == null) {
+            return null;
+        }
+        String string = value.toString();
+        if (string.isEmpty()) {
+            return null;
+        }
+        return Integer.valueOf(string);
+    }
+
+    private Integer[] getSessionAnswers() {
+        Integer[] result = (Integer[]) domain.getRequest().getAttribute("answers");
         if (result == null) {
             return new Integer[0];
         }
@@ -133,8 +141,12 @@ public class Controller extends HttpServlet {
 
     private void showPerformExam(int issue_id, int level) throws Exception {
         Persistence persistence = getPersistence();
+        List<Question> exam = getExam(persistence, issue_id, level);
+        if (exam == null) {
+            throw new Exception("Exam could not be generated");
+        }
         Redirector redirector = domain.getRedirector();
-        redirector.addAttribute("exam", getExam(persistence, issue_id, level));
+        redirector.addAttribute("exam", exam);
         redirector.redirect(JspPage.EXAM);
     }
 

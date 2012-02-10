@@ -21,10 +21,10 @@ package org.magmax.master.practica8b;
  * @author miguel
  */
 public enum JspPage {
-    ERROR("/index.jsp"),
-    CREATE("/create_exam.jsp"),
-    EXAM("/perform_exam.jsp"),
-    RESULT("/show_exam.jsp"),
+    ERROR("index.jsp"),
+    CREATE("create_exam.jsp"),
+    EXAM("perform_exam.jsp"),
+    RESULT("show_exam.jsp"),
     ;
     private final String uri;
     

@@ -20,7 +20,7 @@
 
         <h2>Selector de exámenes</h2>
 
-        <form action="newexam.jsp" method="POST">
+        <form action="" method="POST">
             <div class="issue">
                 <p>Tema:
                     <select name="issue">
@@ -40,9 +40,9 @@
             <div class="difficulty">
                 <p>Dificultad:
                 <ul>
-                    <li><input type="radio" name="difficulty" value="1" checked="true">Baja</input></li>
-                    <li><input type="radio" name="difficulty" value="2">Media</input></li>
-                    <li><input type="radio" name="difficulty" value="3">Alta</input></li>
+                    <li><input type="radio" name="level" value="1" checked="true">Baja</input></li>
+                    <li><input type="radio" name="level" value="2">Media</input></li>
+                    <li><input type="radio" name="level" value="3">Alta</input></li>
                 </ul>
                 </p>
             </div>

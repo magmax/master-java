@@ -51,4 +51,11 @@ public class ConfigurationTest {
         
         assertNotNull(Configuration.getInstance().getDomain(null, null, null));
     }
+
+    @Test
+    public void testRetrievingTwoDomainsAreDifferent() {
+        Configuration.getInstance().setDomain(null);
+        
+        assertFalse(Configuration.getInstance().getDomain(null, null, null) == Configuration.getInstance().getDomain(null, null, null));
+    }
 }
