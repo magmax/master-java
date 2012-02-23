@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+package org.magmax.master.project.admin.section;
 
-import org.magmax.eswing.crud.CrudObject;
+import org.magmax.eswing.crud.DefaultCrudModel;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-class Phone implements CrudObject {
+public class SectionCrudModel extends DefaultCrudModel {
 
-    public String getValueByColumn(int pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    private static String[] headers = new String[]{"Nombre"};
+
+    public SectionCrudModel() {
+        super();
+        setColumnIdentifiers(headers);
     }
-    
+
 }
