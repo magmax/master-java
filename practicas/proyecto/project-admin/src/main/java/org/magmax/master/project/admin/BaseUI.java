@@ -16,12 +16,12 @@
  */
 package org.magmax.master.project.admin;
 
-import org.magmax.eswing.crud.CrudModel;
+import java.awt.Dimension;
+import java.awt.event.WindowEvent;
 import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.CrudUICreate;
 import org.magmax.eswing.crud.CrudUIDetails;
 import org.magmax.eswing.crud.CrudUIUpdate;
-import org.magmax.master.project.admin.user.User;
 
 /**
  *
@@ -65,6 +65,10 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
         showWindow();
     }
 
+    private void close() {
+        this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
     private void showWindow() {
         setVisible(true);
     }
@@ -85,19 +89,20 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Close");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Save");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout contentPaneLayout = new javax.swing.GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 239, Short.MAX_VALUE)
-        );
+        contentPane.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,9 +111,8 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(contentPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contentPane, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 224, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
@@ -121,7 +125,7 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(contentPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(contentPane, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -131,6 +135,17 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        close();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        save = true;
+        close();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentPane;
     private javax.swing.JButton jButton1;

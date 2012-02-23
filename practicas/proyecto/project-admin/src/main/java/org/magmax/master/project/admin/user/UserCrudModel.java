@@ -26,20 +26,11 @@ import org.magmax.eswing.crud.DefaultCrudModel;
  */
 public class UserCrudModel extends DefaultCrudModel {
 
+    private static String[] headers = new String[]{"Nombre", "Admin"};
+
     public UserCrudModel() {
         super();
-        setColumnIdentifiers(new String[] {"Nombre", "Admin"});
+        setColumnIdentifiers(headers);
     }
-
-    @Override
-    public void add(CrudObject item) {
-        super.add(item);
-    }
-
-    @Override
-    public void remove(List data) {
-        super.remove(data);
-    }
-
 
 }

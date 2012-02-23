@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin;
+package org.magmax.master.project.admin.user;
 
-import org.magmax.eswing.crud.DefaultCrudModel;
+import java.awt.Frame;
+import org.magmax.master.project.admin.BaseUI;
 
 /**
  *
  * @author miguel
  */
-class ProductCrudModel extends DefaultCrudModel {
+public class UserDialog extends BaseUI<User> {
 
-    public ProductCrudModel() {
+    public UserDialog(Frame parent) {
+        super(parent, new UserPanel());
     }
     
 }

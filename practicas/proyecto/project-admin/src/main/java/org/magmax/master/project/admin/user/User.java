@@ -42,6 +42,7 @@ public class User implements CrudObject {
         this.name = name;
     }
 
+    @Override
     public String getAttributeAsString(int pos) {
         switch (pos) {
             case 0:

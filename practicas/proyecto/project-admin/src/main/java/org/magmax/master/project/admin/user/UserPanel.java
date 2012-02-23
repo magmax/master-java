@@ -22,7 +22,8 @@ import org.magmax.master.project.admin.BaseCrudPanel;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class UserUI extends BaseCrudPanel<User> {
+public class UserPanel extends BaseCrudPanel<User> {
+
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
     public static final String TITLE_UPDATE = "Update User";
@@ -30,7 +31,7 @@ public class UserUI extends BaseCrudPanel<User> {
     /**
      * Creates new form UserUI
      */
-    public UserUI() {
+    public UserPanel() {
         initComponents();
     }
 
@@ -59,7 +60,7 @@ public class UserUI extends BaseCrudPanel<User> {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +90,7 @@ public class UserUI extends BaseCrudPanel<User> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(isAdmin)
-                        .addGap(0, 183, Short.MAX_VALUE))
+                        .addGap(0, 217, Short.MAX_VALUE))
                     .addComponent(nameEntry)))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -102,11 +103,11 @@ public class UserUI extends BaseCrudPanel<User> {
                     .addComponent(nameEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(isAdmin)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
