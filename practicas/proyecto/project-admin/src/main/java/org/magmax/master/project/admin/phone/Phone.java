@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+package org.magmax.master.project.admin.phone;
 
 import org.magmax.eswing.crud.CrudObject;
 
@@ -23,9 +23,23 @@ import org.magmax.eswing.crud.CrudObject;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 class Phone implements CrudObject {
+    private String number;
 
-    public String getValueByColumn(int pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+    
+    public Object getValueByColumn(int column) {
+        switch(column) {
+            case 0:
+                return number;
+            default:
+                return "";
+        }
     }
     
 }

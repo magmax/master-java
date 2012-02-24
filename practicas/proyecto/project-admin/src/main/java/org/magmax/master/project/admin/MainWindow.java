@@ -51,7 +51,7 @@ public class MainWindow extends javax.swing.JFrame {
         productTable = new CrudTable(new ProductCrudModel());
         jPanel3.add(productTable);
         
-        ProductDialog productDialog = new ProductDialog((this));
+        ProductDialog productDialog = new ProductDialog(this);
         productTable.setCrudUICreate(productDialog);
         productTable.setCrudUIUpdate(productDialog);
         productTable.setCrudUIDetails(productDialog);
