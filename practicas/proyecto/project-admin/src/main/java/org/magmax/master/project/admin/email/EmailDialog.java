@@ -14,23 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+package org.magmax.master.project.admin.email;
 
-import java.util.List;
-import org.magmax.eswing.crud.CrudObject;
-import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.admin.phone.*;
+import java.awt.Frame;
+import org.magmax.master.project.admin.BaseUI;
 
 /**
  *
  * @author miguel
  */
-public class UserCrudModel extends DefaultCrudModel {
+public class EmailDialog extends BaseUI<Email> {
 
-    private static String[] headers = new String[]{"Nombre", "Admin"};
-
-    public UserCrudModel() {
-        super();
-        setColumnIdentifiers(headers);
+    public EmailDialog(Frame parent) {
+        super(parent, new EmailPanel());
     }
-
 }

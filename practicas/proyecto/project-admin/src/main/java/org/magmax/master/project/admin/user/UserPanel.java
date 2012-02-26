@@ -16,13 +16,20 @@
  */
 package org.magmax.master.project.admin.user;
 
+import org.magmax.eswing.crud.CrudTable;
+import org.magmax.eswing.crud.DefaultCrudUIDelete;
 import org.magmax.master.project.admin.BaseCrudPanel;
+import org.magmax.master.project.admin.email.EmailCrudModel;
+import org.magmax.master.project.admin.email.EmailDialog;
+import org.magmax.master.project.admin.phone.PhoneCrudModel;
+import org.magmax.master.project.admin.phone.PhoneDialog;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class UserUI extends BaseCrudPanel<User> {
+public class UserPanel extends BaseCrudPanel<User> {
+
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
     public static final String TITLE_UPDATE = "Update User";
@@ -30,8 +37,10 @@ public class UserUI extends BaseCrudPanel<User> {
     /**
      * Creates new form UserUI
      */
-    public UserUI() {
+    public UserPanel() {
         initComponents();
+        initPhonePanel();
+        initEmailPanel();
     }
 
     /**
@@ -54,30 +63,10 @@ public class UserUI extends BaseCrudPanel<User> {
         isAdmin.setText("Es administrador");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Teléfonos"));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("E-mails"));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,7 +78,7 @@ public class UserUI extends BaseCrudPanel<User> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(isAdmin)
-                        .addGap(0, 183, Short.MAX_VALUE))
+                        .addGap(0, 217, Short.MAX_VALUE))
                     .addComponent(nameEntry)))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -102,11 +91,10 @@ public class UserUI extends BaseCrudPanel<User> {
                     .addComponent(nameEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(isAdmin)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -155,5 +143,25 @@ public class UserUI extends BaseCrudPanel<User> {
     public void setWidgetsEnabled(boolean enabled) {
         nameEntry.setEnabled(enabled);
         isAdmin.setEnabled(enabled);
+    }
+
+    private void initPhonePanel() {
+        CrudTable phoneTable = new CrudTable(new PhoneCrudModel());
+        jPanel1.add(phoneTable);
+        
+        PhoneDialog phoneDialog = new PhoneDialog(null);
+        phoneTable.setCrudUICreate(phoneDialog);
+        phoneTable.setCrudUIUpdate(phoneDialog);
+        phoneTable.setCrudUIDelete(new DefaultCrudUIDelete());
+    }
+    
+    private void initEmailPanel() {
+        CrudTable emailTable = new CrudTable(new EmailCrudModel());
+        jPanel2.add(emailTable);
+        
+        EmailDialog emailDialog = new EmailDialog(null);
+        emailTable.setCrudUICreate(emailDialog);
+        emailTable.setCrudUIUpdate(emailDialog);
+        emailTable.setCrudUIDelete(new DefaultCrudUIDelete());
     }
 }

@@ -14,7 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+
+package org.magmax.master.project.admin.email;
 
 import org.magmax.eswing.crud.CrudObject;
 
@@ -22,35 +23,24 @@ import org.magmax.eswing.crud.CrudObject;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class User implements CrudObject {
-    private String name;
-    private boolean admin;
+class Email implements CrudObject {
+    private String address;
 
-    public boolean isAdmin() {
-        return admin;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAddress(String address) {
+        this.address = address;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
+    
     public Object getValueByColumn(int column) {
-        switch (column) {
+        switch(column) {
             case 0:
-                return name;
-            case 1:
-                return String.valueOf(admin);
+                return address;
             default:
                 return "";
         }
     }
+    
 }

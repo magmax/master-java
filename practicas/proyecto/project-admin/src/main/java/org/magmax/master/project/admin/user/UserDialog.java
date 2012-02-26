@@ -16,21 +16,17 @@
  */
 package org.magmax.master.project.admin.user;
 
-import java.util.List;
-import org.magmax.eswing.crud.CrudObject;
-import org.magmax.eswing.crud.DefaultCrudModel;
+import java.awt.Frame;
+import org.magmax.master.project.admin.BaseUI;
 
 /**
  *
  * @author miguel
  */
-public class UserCrudModel extends DefaultCrudModel {
+public class UserDialog extends BaseUI<User> {
 
-    private static String[] headers = new String[]{"Nombre", "Admin"};
-
-    public UserCrudModel() {
-        super();
-        setColumnIdentifiers(headers);
+    public UserDialog(Frame parent) {
+        super(parent, new UserPanel());
     }
-
+    
 }

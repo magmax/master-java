@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin;
+package org.magmax.master.project.admin.section;
 
 import org.magmax.eswing.crud.DefaultCrudModel;
 
@@ -22,8 +22,13 @@ import org.magmax.eswing.crud.DefaultCrudModel;
  *
  * @author miguel
  */
-class SectionCrudModel extends DefaultCrudModel {
+public class SectionCrudModel extends DefaultCrudModel {
+
+    private static String[] headers = new String[]{"Nombre"};
 
     public SectionCrudModel() {
+        super();
+        setColumnIdentifiers(headers);
     }
+
 }

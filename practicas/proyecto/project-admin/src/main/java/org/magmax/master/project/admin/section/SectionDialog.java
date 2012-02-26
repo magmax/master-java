@@ -14,23 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+package org.magmax.master.project.admin.section;
 
-import java.util.List;
-import org.magmax.eswing.crud.CrudObject;
-import org.magmax.eswing.crud.DefaultCrudModel;
+import java.awt.Frame;
+import org.magmax.master.project.admin.BaseUI;
 
 /**
  *
  * @author miguel
  */
-public class UserCrudModel extends DefaultCrudModel {
+public class SectionDialog extends BaseUI<Section> {
 
-    private static String[] headers = new String[]{"Nombre", "Admin"};
-
-    public UserCrudModel() {
-        super();
-        setColumnIdentifiers(headers);
+    public SectionDialog(Frame parent) {
+        super(parent, new SectionPanel());
     }
-
+    
 }

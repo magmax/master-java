@@ -17,18 +17,26 @@
 package org.magmax.master.project.admin;
 
 import org.magmax.master.project.admin.user.UserCrudModel;
-import org.magmax.master.project.admin.user.UserUI;
+import org.magmax.master.project.admin.user.UserPanel;
 import org.magmax.eswing.crud.CrudTable;
 import org.magmax.eswing.crud.DefaultCrudUIDelete;
+import org.magmax.master.project.admin.product.ProductCrudModel;
+import org.magmax.master.project.admin.product.ProductDialog;
+import org.magmax.master.project.admin.section.SectionCrudModel;
+import org.magmax.master.project.admin.section.SectionDialog;
+import org.magmax.master.project.admin.user.User;
+import org.magmax.master.project.admin.user.UserDialog;
 
 /**
  *
  * @author miguel
  */
 public class MainWindow extends javax.swing.JFrame {
+
     private CrudTable userTable;
     private CrudTable sectionTable;
     private CrudTable productTable;
+
     /**
      * Creates new form MainWindow
      */
@@ -41,25 +49,35 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void initializeProductPanel() {
         productTable = new CrudTable(new ProductCrudModel());
-        
         jPanel3.add(productTable);
+        
+        ProductDialog productDialog = new ProductDialog(this);
+        productTable.setCrudUICreate(productDialog);
+        productTable.setCrudUIUpdate(productDialog);
+        productTable.setCrudUIDetails(productDialog);
+        productTable.setCrudUIDelete(new DefaultCrudUIDelete());
     }
 
     private void initializeSectionPanel() {
         sectionTable = new CrudTable(new SectionCrudModel());
-        
         jPanel2.add(sectionTable);
+        
+        SectionDialog sectionDialog = new SectionDialog((this));
+        sectionTable.setCrudUICreate(sectionDialog);
+        sectionTable.setCrudUIUpdate(sectionDialog);
+        //sectionTable.setCrudUIDetails(sectionDialog);
+        sectionTable.setCrudUIDelete(new DefaultCrudUIDelete());
     }
 
     private void initializeUserPanel() {
         userTable = new CrudTable(new UserCrudModel());
-        UserUI userUI = new UserUI();
-        userTable.setCrudUICreate(userUI);
-        userTable.setCrudUIUpdate(userUI);
-        userTable.setCrudUIDetails(userUI);
-        userTable.setCrudUIDelete(new DefaultCrudUIDelete());
-        
         jPanel1.add(userTable);
+
+        UserDialog userDialog = new UserDialog(this);
+        userTable.setCrudUICreate(userDialog);
+        userTable.setCrudUIUpdate(userDialog);
+        userTable.setCrudUIDetails(userDialog);
+        userTable.setCrudUIDelete(new DefaultCrudUIDelete());
     }
 
     /**
@@ -138,6 +156,7 @@ public class MainWindow extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new MainWindow().setVisible(true);
             }
