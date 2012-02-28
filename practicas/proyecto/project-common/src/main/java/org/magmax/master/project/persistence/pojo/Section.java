@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.persistence.dao;
+package org.magmax.master.project.persistence.pojo;
 
-import org.magmax.master.project.persistence.pojo.User;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class UserDAO extends GenericDAO<User>{
+@Entity
+public class Section {
 
-    public UserDAO(String origin) {
-        super(origin);
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String name;
+
+    public Section() {
     }
 
-    public UserDAO() {
+    public Integer getId() {
+        return id;
     }
 
-    @Override
-    Class getMyClass() {
-        return User.class;
+    public void setId(Integer id) {
+        this.id = id;
     }
-   
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

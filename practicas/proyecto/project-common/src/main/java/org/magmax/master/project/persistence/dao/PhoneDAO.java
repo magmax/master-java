@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,27 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import org.magmax.master.project.persistence.pojo.Phone;
 import org.magmax.master.project.persistence.pojo.User;
-
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class UserDAO extends GenericDAO<User>{
+public class PhoneDAO extends GenericDAO<Phone> {
 
-    public UserDAO(String origin) {
-        super(origin);
-    }
-
-    public UserDAO() {
+    @Override
+    public void store(Phone phone) {
+        User user = phone.getUser();
+        if (user != null && user.getId() == null) {
+            UserDAO userdao = new UserDAO(getDataOrigin());
+            userdao.store(user);
+        }
+        super.store(phone);
     }
 
     @Override
     Class getMyClass() {
-        return User.class;
+        return Phone.class;
     }
-   
 }

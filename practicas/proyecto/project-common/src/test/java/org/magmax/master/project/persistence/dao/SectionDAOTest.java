@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,30 @@
  */
 package org.magmax.master.project.persistence.dao;
 
-import org.magmax.master.project.persistence.pojo.User;
-
+import org.junit.*;
+import static org.junit.Assert.*;
+import org.magmax.master.project.persistence.pojo.Section;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class UserDAO extends GenericDAO<User>{
+public class SectionDAOTest {
+    private SectionDAO sut;
+    private Section section;
 
-    public UserDAO(String origin) {
-        super(origin);
+    @Before
+    public void setUp() throws Exception {
+        section = new Section();
+        section.setName("Iron Maiden");
+        sut = new SectionDAO();
     }
 
-    public UserDAO() {
+    @Test
+    public void testCreation() {
+        sut.store(section);
+        sut.refresh(section);
+        
+        assertNotNull(section.getId());
     }
-
-    @Override
-    Class getMyClass() {
-        return User.class;
-    }
-   
 }

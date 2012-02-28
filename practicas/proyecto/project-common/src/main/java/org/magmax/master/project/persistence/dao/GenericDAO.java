@@ -17,16 +17,17 @@
 package org.magmax.master.project.persistence.dao;
 
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import javax.persistence.Query;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class GenericDAO<T extends Object> {
+public abstract class GenericDAO<T extends Object> {
 
     private static final String DEFAULT_DATA_ORIGIN = "development";
     private final EntityManagerFactory emFactory;
@@ -55,12 +56,14 @@ public class GenericDAO<T extends Object> {
         entityManager.getTransaction().commit();
     }
 
-    public T getById(Object id) {
+    public T findById(Object id) {
         return (T) entityManager.find(getMyClass(), id);
     }
 
-    public Collection<T> getAll() {
-        throw new NotImplementedException();
+    public Collection<T> findAll() {
+        Query query = entityManager.createQuery("from " + getMyClass().getSimpleName());
+        List<T> resultset = query.getResultList();
+        return resultset;
     }
 
     public void refresh(T object) {
@@ -71,7 +74,5 @@ public class GenericDAO<T extends Object> {
         return dataOrigin;
     }
     
-    private Class getMyClass() {
-        return this.getClass().getGenericSuperclass().getClass();
-    }
+    abstract Class getMyClass();
 }

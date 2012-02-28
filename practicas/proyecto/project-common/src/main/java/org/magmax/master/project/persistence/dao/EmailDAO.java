@@ -42,4 +42,9 @@ public class EmailDAO extends GenericDAO<Email> {
         }
         super.store(email);
     }
+
+    @Override
+    Class getMyClass() {
+        return Email.class;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * Copyright (C) 2012 miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,32 +16,46 @@
  */
 package org.magmax.master.project.persistence.dao;
 
-import org.magmax.master.project.persistence.pojo.User;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import static org.junit.Assert.*;
+import org.magmax.master.project.persistence.pojo.Phone;
+import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
- * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
+ * @author miguel
  */
-public class UserDAOTest {
-
-    private UserDAO sut;
-    private User user;
-
+public class PhoneDAOTest {
+    private PhoneDAO sut;
+    private Phone phone;
+    
     @Before
     public void setUp() {
-        user = new User();
-        user.setName("ACDC");
-        sut = new UserDAO("development");
+        sut = new PhoneDAO();
+        phone = new Phone();
+        phone.setNumber("666 555 444");
     }
+    
 
     @Test
     public void testCreation() {
-        sut.store(user);
-
-        sut.refresh(user);
-        assertNotNull(user.getId());
+        sut.store(phone);
+        sut.refresh(phone);
+        
+        assertNotNull(phone.getId());
     }
+
+    @Test
+    public void testHasAnUser() {
+        User user = new User();
+        user.setName("Jim Morrison");
+        phone.setUser(user);
+        
+        sut.store(phone);
+        sut.refresh(phone);
+        
+        Phone retrieved = sut.findById(phone.getId());
+        
+        assertEquals(retrieved.getUser().getId(), phone.getUser().getId());
+       }
 }

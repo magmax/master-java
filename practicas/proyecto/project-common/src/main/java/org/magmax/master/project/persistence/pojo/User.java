@@ -39,6 +39,8 @@ public class User {
     private Boolean isAdmin;
     @ManyToOne(targetEntity = Email.class)
     private Collection<Email> emails;
+    @ManyToOne(targetEntity = Phone.class)
+    private Collection<Phone> phones;
 
     public User() {
     }
@@ -76,12 +78,21 @@ public class User {
     }
 
     public Collection<Email> getEmails() {
-        if (emails == null)
+        if (emails == null) {
             emails = new HashSet<Email>();
+        }
         return emails;
     }
 
     public void setEmails(Set<Email> emails) {
         this.emails = emails;
+    }
+
+    public Collection<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Collection<Phone> phones) {
+        this.phones = phones;
     }
 }
