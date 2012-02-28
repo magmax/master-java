@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import javax.persistence.ManyToOne;
  * @author miguel
  */
 @Entity
-public class Phone {
+public class Phone implements GenericEntity<Integer> {
 
     @Id
     @GeneratedValue

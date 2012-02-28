@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import javax.persistence.EntityManager;
 import org.magmax.master.project.persistence.pojo.Phone;
 import org.magmax.master.project.persistence.pojo.User;
 
@@ -23,20 +24,20 @@ import org.magmax.master.project.persistence.pojo.User;
  *
  * @author miguel
  */
-public class PhoneDAO extends GenericDAO<Phone> {
+public class PhoneDAO extends GenericDAO<Phone, Integer> {
+
+    public PhoneDAO(EntityManager entityManager) {
+        super(entityManager);
+    }
 
     @Override
     public void store(Phone phone) {
         User user = phone.getUser();
         if (user != null && user.getId() == null) {
-            UserDAO userdao = new UserDAO(getDataOrigin());
+            UserDAO userdao = new UserDAO(getEntityManager());
             userdao.store(user);
         }
         super.store(phone);
     }
 
-    @Override
-    Class getMyClass() {
-        return Phone.class;
-    }
 }

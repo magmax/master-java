@@ -17,27 +17,41 @@
 package org.magmax.master.project.persistence.dao;
 
 import javax.persistence.EntityManager;
-import org.magmax.master.project.persistence.pojo.Email;
-import org.magmax.master.project.persistence.pojo.User;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class EmailDAO extends GenericDAO<Email, Integer> {
+public class DAOFactory {
 
-    public EmailDAO(EntityManager entityManager) {
-        super(entityManager);
+    private static String DEFAULT_DATA_ORIGIN = "development";
+    private final EntityManagerFactory emFactory;
+    private final EntityManager entityManager;
+
+    public DAOFactory() {
+        this(DEFAULT_DATA_ORIGIN);
     }
 
-    @Override
-    public void store(Email email) {
-        User user = email.getUser();
-        if (user != null && user.getId() == null) {
-            UserDAO userdao = new UserDAO(getEntityManager());
-            userdao.store(user);
-            userdao.refresh(user);
-        }
-        super.store(email);
+    public DAOFactory(String origin) {
+        emFactory = Persistence.createEntityManagerFactory(origin);
+        entityManager = emFactory.createEntityManager();
+    }
+    
+    public UserDAO getUserDAO() {
+        return new UserDAO(entityManager);
+    }
+
+    public EmailDAO getEmailDAO() {
+        return new EmailDAO(entityManager);
+    }
+    
+    public PhoneDAO getPhoneDAO() {
+        return new PhoneDAO(entityManager);
+    }
+    
+    public SectionDAO getSectionDAO(){
+        return new SectionDAO(entityManager);
     }
 }

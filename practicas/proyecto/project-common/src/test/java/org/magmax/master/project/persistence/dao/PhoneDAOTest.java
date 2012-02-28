@@ -26,22 +26,24 @@ import org.magmax.master.project.persistence.pojo.User;
  * @author miguel
  */
 public class PhoneDAOTest {
+
     private PhoneDAO sut;
     private Phone phone;
-    
+    private DAOFactory factory;
+
     @Before
     public void setUp() {
-        sut = new PhoneDAO();
+        factory = new DAOFactory("development");
+        sut = factory.getPhoneDAO();
         phone = new Phone();
         phone.setNumber("666 555 444");
     }
-    
 
     @Test
     public void testCreation() {
         sut.store(phone);
         sut.refresh(phone);
-        
+
         assertNotNull(phone.getId());
     }
 
@@ -50,12 +52,12 @@ public class PhoneDAOTest {
         User user = new User();
         user.setName("Jim Morrison");
         phone.setUser(user);
-        
+
         sut.store(phone);
         sut.refresh(phone);
-        
+
         Phone retrieved = sut.findById(phone.getId());
-        
+
         assertEquals(retrieved.getUser().getId(), phone.getUser().getId());
-       }
+    }
 }

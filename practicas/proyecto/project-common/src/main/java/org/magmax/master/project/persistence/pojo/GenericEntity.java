@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 miguel
+ * Copyright (C) 2012 Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,38 +16,15 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-@Entity
-public class Section implements GenericEntity<Integer>  {
+public interface GenericEntity<T extends Serializable> {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
-    private String name;
+    T getId();
 
-    public Section() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    void setId (T id);
 }

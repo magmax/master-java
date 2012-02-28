@@ -16,9 +16,9 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,7 +29,7 @@ import javax.persistence.ManyToOne;
  * @author miguel
  */
 @Entity
-public class User {
+public class User implements GenericEntity<Integer> {
 
     @Id
     @GeneratedValue
@@ -38,9 +38,9 @@ public class User {
     private String password;
     private Boolean isAdmin;
     @ManyToOne(targetEntity = Email.class)
-    private Collection<Email> emails;
+    private List<Email> emails;
     @ManyToOne(targetEntity = Phone.class)
-    private Collection<Phone> phones;
+    private List<Phone> phones;
 
     public User() {
     }
@@ -77,14 +77,14 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public Collection<Email> getEmails() {
+    public List<Email> getEmails() {
         if (emails == null) {
-            emails = new HashSet<Email>();
+            emails = new ArrayList<Email>();
         }
         return emails;
     }
 
-    public void setEmails(Set<Email> emails) {
+    public void setEmails(List<Email> emails) {
         this.emails = emails;
     }
 
@@ -92,7 +92,7 @@ public class User {
         return phones;
     }
 
-    public void setPhones(Collection<Phone> phones) {
+    public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
 }

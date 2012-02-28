@@ -16,17 +16,16 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import javax.persistence.EntityManager;
 import org.magmax.master.project.persistence.pojo.Section;
 
 /**
  *
  * @author miguel
  */
-public class SectionDAO extends GenericDAO<Section> {
+public class SectionDAO extends GenericDAO<Section, Integer> {
 
-    @Override
-    Class getMyClass() {
-        return Section.class;
+    public SectionDAO(EntityManager entityManager) {
+        super(entityManager);
     }
-    
 }

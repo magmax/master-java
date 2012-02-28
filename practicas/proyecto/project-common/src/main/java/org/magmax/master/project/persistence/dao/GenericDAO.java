@@ -16,32 +16,33 @@
  */
 package org.magmax.master.project.persistence.dao;
 
-import java.util.Collection;
+import org.magmax.master.project.persistence.pojo.GenericEntity;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public abstract class GenericDAO<T extends Object> {
+public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
 
-    private static final String DEFAULT_DATA_ORIGIN = "development";
-    private final EntityManagerFactory emFactory;
     private final EntityManager entityManager;
-    private final String dataOrigin;
+    private final Class<T> persistentClass;
 
-    public GenericDAO() {
-        this(DEFAULT_DATA_ORIGIN);
+    public GenericDAO(EntityManager entityManager) {
+        persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.entityManager = entityManager;
     }
     
-    public GenericDAO(String origin) {
-        emFactory = Persistence.createEntityManagerFactory(origin);
-        entityManager = emFactory.createEntityManager();
-        dataOrigin = origin;
+    protected EntityManager getEntityManager() {
+        return entityManager;
     }
 
     public void store(T object) {
@@ -56,23 +57,24 @@ public abstract class GenericDAO<T extends Object> {
         entityManager.getTransaction().commit();
     }
 
-    public T findById(Object id) {
-        return (T) entityManager.find(getMyClass(), id);
+    public T findById(I id) {
+        return (T) entityManager.find(persistentClass, id);
     }
 
-    public Collection<T> findAll() {
-        Query query = entityManager.createQuery("from " + getMyClass().getSimpleName());
-        List<T> resultset = query.getResultList();
-        return resultset;
+    public List<T> findAll() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object> query = builder.createQuery();
+        Root<T> from = query.from(persistentClass);
+        CriteriaQuery<Object> select = query.select(from);
+        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+        List<T> result = new ArrayList<T>();
+        for (Object each : typedQuery.getResultList()) {
+            result.add((T)each);
+        }
+        return result;
     }
 
     public void refresh(T object) {
         entityManager.refresh(object);
     }
-
-    protected String getDataOrigin() {
-        return dataOrigin;
-    }
-    
-    abstract Class getMyClass();
 }

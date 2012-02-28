@@ -16,13 +16,12 @@
  */
 package org.magmax.master.project.persistence.dao;
 
-import java.util.Collection;
+import java.util.List;
 import org.magmax.master.project.persistence.pojo.User;
 import org.magmax.master.project.persistence.pojo.Email;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -33,12 +32,14 @@ public class EmailDAOTest {
 
     private EmailDAO sut;
     private Email email;
+    private DAOFactory factory;
 
     @Before
     public void setUp() {
+        factory = new DAOFactory("development");
         email = new Email();
         email.setAddress(DEFAULT_EMAIL);
-        sut = new EmailDAO("development");
+        sut = factory.getEmailDAO();
     }
 
     @Test
@@ -70,12 +71,12 @@ public class EmailDAOTest {
     }
     
     @Test
-    @Ignore("Revisar cuando se ajuste correctamente la clase GenericDAO")
     public void testCanFindAllEmails() {
         sut.store(email);
         
-        Collection<Email> emails = sut.findAll();
+        List<Email> emails = sut.findAll();
         
         assertEquals(1, emails.size());
+        assertEquals(email.getAddress(), emails.get(0).getAddress());
     }
 }

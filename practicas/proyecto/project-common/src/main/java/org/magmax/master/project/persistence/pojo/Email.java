@@ -27,7 +27,7 @@ import javax.persistence.ManyToOne;
  * @author miguel
  */
 @Entity
-public class Email implements Serializable {
+public class Email implements GenericEntity<Integer> {
 
     @Id
     @GeneratedValue

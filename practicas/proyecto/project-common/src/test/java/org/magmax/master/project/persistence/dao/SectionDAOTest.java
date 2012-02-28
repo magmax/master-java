@@ -27,12 +27,14 @@ import org.magmax.master.project.persistence.pojo.Section;
 public class SectionDAOTest {
     private SectionDAO sut;
     private Section section;
+    private DAOFactory factory;
 
     @Before
     public void setUp() throws Exception {
+        factory = new DAOFactory("development");
         section = new Section();
         section.setName("Iron Maiden");
-        sut = new SectionDAO();
+        sut = factory.getSectionDAO();
     }
 
     @Test

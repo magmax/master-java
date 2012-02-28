@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import javax.persistence.EntityManager;
 import org.magmax.master.project.persistence.pojo.User;
 
 
@@ -23,18 +24,9 @@ import org.magmax.master.project.persistence.pojo.User;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class UserDAO extends GenericDAO<User>{
+public class UserDAO extends GenericDAO<User, Integer>{
 
-    public UserDAO(String origin) {
-        super(origin);
+    public UserDAO(EntityManager entityManager) {
+        super(entityManager);
     }
-
-    public UserDAO() {
-    }
-
-    @Override
-    Class getMyClass() {
-        return User.class;
-    }
-   
 }

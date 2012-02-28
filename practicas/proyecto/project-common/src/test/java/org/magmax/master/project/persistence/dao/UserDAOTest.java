@@ -19,6 +19,7 @@ package org.magmax.master.project.persistence.dao;
 import org.magmax.master.project.persistence.pojo.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.magmax.master.project.persistence.pojo.Email;
 import static org.junit.Assert.*;
 
 /**
@@ -29,12 +30,14 @@ public class UserDAOTest {
 
     private UserDAO sut;
     private User user;
+    private DAOFactory factory;
 
     @Before
     public void setUp() {
+        factory = new DAOFactory("development");
         user = new User();
         user.setName("ACDC");
-        sut = new UserDAO("development");
+        sut = factory.getUserDAO();
     }
 
     @Test
@@ -43,5 +46,18 @@ public class UserDAOTest {
 
         sut.refresh(user);
         assertNotNull(user.getId());
+    }
+
+    @Test
+    public void testCanRetrieveEmails() {
+        Email email = new Email();
+        email.setAddress("example@example.org");
+        email.setUser(user);
+        EmailDAO emaildao = factory.getEmailDAO();
+        emaildao.store(email);
+
+        User current = sut.findById(user.getId());
+        assertEquals(1, current.getEmails().size());
+        assertEquals(email.getAddress(), current.getEmails().get(0).getAddress());
     }
 }
