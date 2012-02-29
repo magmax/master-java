@@ -22,7 +22,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -37,9 +39,9 @@ public class User implements GenericEntity<Integer> {
     private String name;
     private String password;
     private Boolean isAdmin;
-    @ManyToOne(targetEntity = Email.class)
+    @OneToMany(mappedBy="user", targetEntity = Email.class)
     private List<Email> emails;
-    @ManyToOne(targetEntity = Phone.class)
+    @OneToMany(mappedBy="user", targetEntity = Phone.class)
     private List<Phone> phones;
 
     public User() {
@@ -88,11 +90,25 @@ public class User implements GenericEntity<Integer> {
         this.emails = emails;
     }
 
+    public void addEmail(Email email) {
+        if (emails == null) {
+            emails = new ArrayList<Email>();
+        }
+        emails.add(email);
+    }
+
     public Collection<Phone> getPhones() {
         return phones;
     }
 
     public void setPhones(List<Phone> phones) {
         this.phones = phones;
+    }
+
+    public void addPhone(Phone phone) {
+        if (phones == null) {
+            phones = new ArrayList<Phone>();
+        }
+        phones.add(phone);
     }
 }

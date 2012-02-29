@@ -32,9 +32,10 @@ public class EmailDAO extends GenericDAO<Email, Integer> {
 
     @Override
     public void store(Email email) {
+        UserDAO userdao = new UserDAO(getEntityManager());
         User user = email.getUser();
-        if (user != null && user.getId() == null) {
-            UserDAO userdao = new UserDAO(getEntityManager());
+        if (user != null) {
+            user.addEmail(email);
             userdao.store(user);
             userdao.refresh(user);
         }

@@ -40,14 +40,18 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
         persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.entityManager = entityManager;
     }
-    
+
     protected EntityManager getEntityManager() {
         return entityManager;
     }
 
     public void store(T object) {
         entityManager.getTransaction().begin();
-        entityManager.persist(object);
+        if (object.getId() == null) {
+            entityManager.persist(object);
+        } else {
+            entityManager.merge(object);
+        }
         entityManager.getTransaction().commit();
     }
 
@@ -69,7 +73,7 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
         TypedQuery<Object> typedQuery = entityManager.createQuery(select);
         List<T> result = new ArrayList<T>();
         for (Object each : typedQuery.getResultList()) {
-            result.add((T)each);
+            result.add((T) each);
         }
         return result;
     }
