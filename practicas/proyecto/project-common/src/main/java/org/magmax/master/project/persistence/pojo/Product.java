@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,15 +26,15 @@ import javax.persistence.ManyToOne;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 @Entity
-public class Product implements Serializable {
+public class Product implements GenericEntity<Integer> {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     @ManyToOne(targetEntity=Section.class)
     private Section section;
-    private float prize;
+    private Float prize;
 
     public Product() {
     }
@@ -48,11 +47,11 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -64,11 +63,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public float getPrize() {
+    public Float getPrize() {
         return prize;
     }
 
-    public void setPrize(float prize) {
+    public void setPrize(Float prize) {
         this.prize = prize;
     }
 

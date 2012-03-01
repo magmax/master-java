@@ -54,4 +54,8 @@ public class DAOFactory {
     public SectionDAO getSectionDAO(){
         return new SectionDAO(entityManager);
     }
+    
+    public ProductDAO getProductDAO() {
+        return new ProductDAO(entityManager);
+    }
 }
