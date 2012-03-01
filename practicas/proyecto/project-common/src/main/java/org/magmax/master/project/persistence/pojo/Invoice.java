@@ -16,6 +16,8 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -23,17 +25,16 @@ import javax.persistence.*;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 @Entity
-public class SoldProduct implements GenericEntity<Integer> {
+public class Invoice implements GenericEntity<Integer> {
 
     @Id
     @GeneratedValue
     private Integer id;
-    @OneToOne(targetEntity = Product.class)
-    private Product product;
-    private Integer units;
-    private Float prizePerUnit;
-    @ManyToOne(targetEntity = Invoice.class)
-    private Invoice invoice;
+    @ManyToOne(targetEntity = User.class)
+    private User user;
+    @OneToMany(targetEntity=SoldProduct.class, mappedBy="invoice")
+    private List<SoldProduct> products;
+    private String address;
 
     public Integer getId() {
         return id;
@@ -43,35 +44,35 @@ public class SoldProduct implements GenericEntity<Integer> {
         this.id = id;
     }
 
-    public Float getPrizePerUnit() {
-        return prizePerUnit;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPrizePerUnit(Float prizePerUnit) {
-        this.prizePerUnit = prizePerUnit;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Product getProduct() {
-        return product;
+    public User getUser() {
+        return user;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getUnits() {
-        return units;
+    public List<SoldProduct> getProducts() {
+        if (products == null)
+            products = new ArrayList<SoldProduct>();
+        return products;
     }
 
-    public void setUnits(Integer units) {
-        this.units = units;
+    public void setProducts(List<SoldProduct> products) {
+        this.products = products;
     }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    
+    public void addProduct(SoldProduct product) {
+        if (products == null)
+            products = new ArrayList<SoldProduct>();
+        products.add(product);
     }
 }

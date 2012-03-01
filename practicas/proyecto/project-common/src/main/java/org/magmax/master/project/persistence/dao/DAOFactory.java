@@ -62,4 +62,8 @@ public class DAOFactory {
     public SoldProductDAO getSoldProductDAO(){
         return new SoldProductDAO(entityManager);
     }
+
+    public InvoiceDAO getInvoiceDAO() {
+        return new InvoiceDAO(entityManager);
+    }
 }
