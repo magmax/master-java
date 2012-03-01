@@ -19,12 +19,16 @@ package org.magmax.master.project.persistence.dao;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.magmax.master.project.persistence.pojo.Invoice;
+import org.magmax.master.project.persistence.pojo.Product;
+import org.magmax.master.project.persistence.pojo.SoldProduct;
+import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
  * @author miguel
  */
 public class InvoiceDAOTest {
+
     private InvoiceDAO sut;
     private Invoice invoice;
     private DAOFactory factory;
@@ -40,7 +44,42 @@ public class InvoiceDAOTest {
     public void testCreation() {
         sut.store(invoice);
         sut.refresh(invoice);
-        
+
         assertNotNull(invoice.getId());
+    }
+
+    @Test
+    public void testDateIsFilled() {
+        sut.storeAndRefresh(invoice);
+
+        assertNotNull(invoice.getDate());
+    }
+
+    @Test
+    public void testCanHaveASoldProduct() {
+        Product product = new Product();
+        product.setName("T-shirt");
+        SoldProduct soldproduct = new SoldProduct();
+        soldproduct.setProduct(product);
+        invoice.addProduct(soldproduct);
+        
+        sut.storeAndRefresh(invoice);
+        
+        Invoice current = sut.findById(invoice.getId());
+
+        assertEquals("Invoice must have a product", 1, current.getProducts().size());
+        assertEquals(product.getName(), current.getProducts().get(0).getProduct().getName());
+    }
+
+    @Test
+    public void testCanHaveAnUser() {
+        User user = new User();
+        user.setName("Max Cavalera");
+        invoice.setUser(user);
+        
+        sut.storeAndRefresh(invoice);
+        
+        Invoice current = sut.findById(invoice.getId());
+        assertEquals(user.getName(), current.getUser().getName());
     }
 }

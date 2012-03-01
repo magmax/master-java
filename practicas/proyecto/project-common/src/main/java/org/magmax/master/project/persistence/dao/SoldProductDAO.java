@@ -17,6 +17,7 @@
 package org.magmax.master.project.persistence.dao;
 
 import javax.persistence.EntityManager;
+import org.magmax.master.project.persistence.pojo.Product;
 import org.magmax.master.project.persistence.pojo.SoldProduct;
 
 /**
@@ -28,4 +29,15 @@ public class SoldProductDAO extends GenericDAO<SoldProduct, Integer> {
     public SoldProductDAO(EntityManager entityManager) {
         super(entityManager);
     }
+
+    @Override
+    public void store(SoldProduct soldproduct) {
+        Product product = soldproduct.getProduct();
+        if (product != null ) {
+            ProductDAO productdao = new ProductDAO(getEntityManager()) ;
+            productdao.storeAndRefresh(product);
+        }
+        super.store(soldproduct);
+    }
+
 }

@@ -54,6 +54,11 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
         }
         entityManager.getTransaction().commit();
     }
+    
+    public void storeAndRefresh(T object) {
+        store(object);
+        refresh(object);        
+    }
 
     public void delete(T object) {
         entityManager.getTransaction().begin();

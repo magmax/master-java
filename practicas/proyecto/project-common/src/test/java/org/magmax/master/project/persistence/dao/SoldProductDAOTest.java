@@ -39,8 +39,6 @@ public class SoldProductDAOTest {
         product = new Product();
         product.setName("Compact Disc");
         product.setPrize(5.59F);
-        ProductDAO productdao = factory.getProductDAO();
-        productdao.store(product);
         soldProduct = new SoldProduct();
         soldProduct.setProduct(product);
         sut = factory.getSoldProductDAO();
@@ -48,9 +46,14 @@ public class SoldProductDAOTest {
 
     @Test
     public void testCreation() {
-        sut.store(soldProduct);
+        sut.storeAndRefresh(soldProduct);
 
-        sut.refresh(soldProduct);
         assertNotNull(soldProduct.getId());
+    }
+    
+    public void testSoldProductsHaveProducts() {
+        sut.storeAndRefresh(soldProduct);
+        
+        assertEquals(product.getName(), soldProduct.getProduct().getName());
     }
 }

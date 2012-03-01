@@ -16,8 +16,12 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.sql.Date;
+import java.util.Calendar;
 import javax.persistence.EntityManager;
 import org.magmax.master.project.persistence.pojo.Invoice;
+import org.magmax.master.project.persistence.pojo.SoldProduct;
+import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
@@ -27,5 +31,21 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
 
     public InvoiceDAO(EntityManager entityManager) {
         super(entityManager);
+    }
+
+    @Override
+    public void store(Invoice invoice) {
+        SoldProductDAO soldproductdao = new SoldProductDAO(getEntityManager());
+        invoice.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
+        User user = invoice.getUser();
+        if (user != null) {
+            UserDAO userdao = new UserDAO(getEntityManager());
+            userdao.storeAndRefresh(user);
+        }
+        super.store(invoice);
+        for (SoldProduct each : invoice.getProducts()) {
+            each.setInvoice(invoice);
+            soldproductdao.storeAndRefresh(each);
+        }
     }
 }

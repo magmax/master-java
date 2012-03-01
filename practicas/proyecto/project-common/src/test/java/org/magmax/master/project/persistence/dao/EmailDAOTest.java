@@ -44,20 +44,17 @@ public class EmailDAOTest {
 
     @Test
     public void testCreation() {
-        sut.store(email);
+        sut.storeAndRefresh(email);
 
-        sut.refresh(email);
         assertNotNull(email.getId());
     }
 
     @Test
     public void testAnEmailIsAssociatedToAnUser() {
         User user = new User();
-
         email.setUser(user);
 
-        sut.store(email);
-        sut.refresh(email);
+        sut.storeAndRefresh(email);
 
         assertNotNull(email.getId());
     }
