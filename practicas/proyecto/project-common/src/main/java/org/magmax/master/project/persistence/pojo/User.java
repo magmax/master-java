@@ -22,12 +22,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author miguel
  */
 @Entity
+@Table(name="user_table")
 public class User implements GenericEntity<Integer> {
 
     @Id
@@ -36,9 +38,9 @@ public class User implements GenericEntity<Integer> {
     private String name;
     private String password;
     private Boolean isAdmin;
-    @OneToMany(mappedBy = "user", targetEntity = Email.class)
+    @OneToMany(targetEntity = Email.class, mappedBy = "user")
     private List<Email> emails;
-    @OneToMany(mappedBy = "user", targetEntity = Phone.class)
+    @OneToMany(targetEntity = Phone.class, mappedBy = "user")
     private List<Phone> phones;
 
     public User() {

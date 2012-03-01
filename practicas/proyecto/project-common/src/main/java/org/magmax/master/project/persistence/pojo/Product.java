@@ -16,37 +16,43 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 @Entity
-@Table(name="section_table")
-public class Section implements GenericEntity<Integer> {
-
+public class Product implements Serializable {
     @Id
     @GeneratedValue
-    private Integer id;
+    private int id;
     private String name;
-    @OneToMany(targetEntity = Product.class, mappedBy = "section")
-    private List<Product> products;
+    private String description;
+    @ManyToOne(targetEntity=Section.class)
+    private Section section;
+    private float prize;
 
-    public Section() {
+    public Product() {
     }
 
-    public Integer getId() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -58,21 +64,19 @@ public class Section implements GenericEntity<Integer> {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        if (products == null) {
-            products = new ArrayList<Product>();
-        }
-        return products;
+    public float getPrize() {
+        return prize;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setPrize(float prize) {
+        this.prize = prize;
     }
 
-    public void addProduct(Product product) {
-        if (products == null) {
-            products = new ArrayList<Product>();
-        }
-        products.add(product);
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
 }
