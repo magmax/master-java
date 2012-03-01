@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -24,26 +23,15 @@ import javax.persistence.*;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 @Entity
-public class Product implements GenericEntity<Integer> {
+public class SoldProduct implements GenericEntity<Integer> {
+
     @Id
     @GeneratedValue
     private Integer id;
-    private String name;
-    private String description;
-    @ManyToOne(targetEntity=Section.class)
-    private Section section;
-    private Float prize;
-    
-    public Product() {
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @OneToOne(targetEntity = Product.class)
+    private Product product;
+    private Integer units;
+    private Float prizePerUnit;
 
     public Integer getId() {
         return id;
@@ -53,27 +41,27 @@ public class Product implements GenericEntity<Integer> {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Float getPrizePerUnit() {
+        return prizePerUnit;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPrizePerUnit(Float prizePerUnit) {
+        this.prizePerUnit = prizePerUnit;
     }
 
-    public Float getPrize() {
-        return prize;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setPrize(Float prize) {
-        this.prize = prize;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Section getSection() {
-        return section;
+    public Integer getUnits() {
+        return units;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setUnits(Integer units) {
+        this.units = units;
     }
 }
