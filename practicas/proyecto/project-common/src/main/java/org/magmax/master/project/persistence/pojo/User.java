@@ -17,13 +17,10 @@
 package org.magmax.master.project.persistence.pojo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
@@ -39,9 +36,9 @@ public class User implements GenericEntity<Integer> {
     private String name;
     private String password;
     private Boolean isAdmin;
-    @OneToMany(mappedBy="user", targetEntity = Email.class)
+    @OneToMany(mappedBy = "user", targetEntity = Email.class)
     private List<Email> emails;
-    @OneToMany(mappedBy="user", targetEntity = Phone.class)
+    @OneToMany(mappedBy = "user", targetEntity = Phone.class)
     private List<Phone> phones;
 
     public User() {
@@ -97,7 +94,10 @@ public class User implements GenericEntity<Integer> {
         emails.add(email);
     }
 
-    public Collection<Phone> getPhones() {
+    public List<Phone> getPhones() {
+        if (phones == null) {
+            phones = new ArrayList<Phone>();
+        }
         return phones;
     }
 

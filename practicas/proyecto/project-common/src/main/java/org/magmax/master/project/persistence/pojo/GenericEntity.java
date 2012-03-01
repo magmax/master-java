@@ -22,7 +22,7 @@ import java.io.Serializable;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public interface GenericEntity<T extends Serializable> {
+public interface GenericEntity<T extends Serializable> extends Serializable {
 
     T getId();
 

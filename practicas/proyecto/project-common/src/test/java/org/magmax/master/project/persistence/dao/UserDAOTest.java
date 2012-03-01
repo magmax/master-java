@@ -20,6 +20,7 @@ import org.magmax.master.project.persistence.pojo.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.magmax.master.project.persistence.pojo.Email;
+import org.magmax.master.project.persistence.pojo.Phone;
 import static org.junit.Assert.*;
 
 /**
@@ -59,5 +60,18 @@ public class UserDAOTest {
         User current = sut.findById(user.getId());
         assertEquals(1, current.getEmails().size());
         assertEquals(email.getAddress(), current.getEmails().get(0).getAddress());
+    }
+    
+    @Test
+    public void testCanRetrievePhones() {
+        Phone phone = new Phone();
+        phone.setNumber("666555444");
+        phone.setUser(user);
+        PhoneDAO phonedao = factory.getPhoneDAO();
+        phonedao.store(phone);
+
+        User current = sut.findById(user.getId());
+        assertEquals(1, current.getPhones().size());
+        assertEquals(phone.getNumber(), current.getPhones().get(0).getNumber());
     }
 }

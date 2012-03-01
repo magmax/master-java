@@ -16,17 +16,14 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 @Entity
 public class Email implements GenericEntity<Integer> {
@@ -35,17 +32,8 @@ public class Email implements GenericEntity<Integer> {
     @GeneratedValue
     private Integer id;
     @ManyToOne(targetEntity = User.class)
-    @JoinTable(name = "UserEmail", joinColumns = {
-        @JoinColumn(name = "userid")
-    },
-    inverseJoinColumns = {
-        @JoinColumn(name = "emailid")
-    })
     private User user;
     private String address;
-
-    public Email() {
-    }
 
     public Integer getId() {
         return id;

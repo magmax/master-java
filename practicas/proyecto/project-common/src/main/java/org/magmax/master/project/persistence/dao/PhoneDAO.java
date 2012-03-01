@@ -22,7 +22,7 @@ import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class PhoneDAO extends GenericDAO<Phone, Integer> {
 
@@ -32,12 +32,13 @@ public class PhoneDAO extends GenericDAO<Phone, Integer> {
 
     @Override
     public void store(Phone phone) {
+        UserDAO userdao = new UserDAO(getEntityManager());
         User user = phone.getUser();
-        if (user != null && user.getId() == null) {
-            UserDAO userdao = new UserDAO(getEntityManager());
+        if (user != null) {
+            user.addPhone(phone);
             userdao.store(user);
+            userdao.refresh(user);
         }
         super.store(phone);
     }
-
 }
