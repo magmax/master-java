@@ -14,19 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.user;
+package org.magmax.master.project.admin;
 
-import java.awt.Frame;
-import org.magmax.master.project.admin.BaseUI;
+import org.magmax.master.project.persistence.dao.DAOFactory;
 
 /**
  *
  * @author miguel
  */
-public class UserDialog extends BaseUI<UserRow> {
+public class Persistence extends DAOFactory {
 
-    public UserDialog(Frame parent) {
-        super(parent, new UserPanel());
+    private static Persistence instance = null;
+
+    private Persistence() {
+        super("production");
     }
-    
+
+    public static Persistence getInstance() {
+        if (instance == null) {
+            instance = new Persistence();
+        }
+        return instance;
+    }
 }

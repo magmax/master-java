@@ -19,6 +19,8 @@ package org.magmax.master.project.admin.user;
 import java.util.List;
 import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.admin.Persistence;
+import org.magmax.master.project.persistence.dao.UserDAO;
 
 /**
  *
@@ -32,5 +34,25 @@ public class UserCrudModel extends DefaultCrudModel {
         super();
         setColumnIdentifiers(headers);
     }
+
+    @Override
+    public void add(CrudObject item) {
+        UserRow userrow = (UserRow) item;
+        Persistence persistence = Persistence.getInstance();
+        UserDAO userdao = persistence.getUserDAO();
+        userdao.store((userrow.getEntity()));
+        super.add(item);
+    }
+
+    @Override
+    public void remove(List data) {
+        super.remove(data);
+    }
+
+    @Override
+    public void update(CrudObject item) {
+        super.update(item);
+    }
+
 
 }

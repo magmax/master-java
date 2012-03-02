@@ -28,7 +28,7 @@ import org.magmax.master.project.admin.phone.PhoneDialog;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class UserPanel extends BaseCrudPanel<User> {
+public class UserPanel extends BaseCrudPanel<UserRow> {
 
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
@@ -121,22 +121,22 @@ public class UserPanel extends BaseCrudPanel<User> {
     }
 
     @Override
-    public User getCrudObject() {
-        User result = new User();
+    public UserRow getCrudObject() {
+        UserRow result = new UserRow();
         updateCrudObject(result);
         return result;
     }
 
     @Override
-    public void setCrudObject(User item) {
-        nameEntry.setText(item.getName());
-        isAdmin.setSelected(item.isAdmin());
+    public void setCrudObject(UserRow item) {
+        nameEntry.setText(item.getEntity().getName());
+        isAdmin.setSelected(item.getEntity().isAdmin());
     }
 
     @Override
-    public void updateCrudObject(User item) {
-        item.setName(nameEntry.getText());
-        item.setAdmin(isAdmin.isSelected());
+    public void updateCrudObject(UserRow item) {
+        item.getEntity().setName(nameEntry.getText());
+        item.getEntity().setAdmin(isAdmin.isSelected());
     }
 
     @Override

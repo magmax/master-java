@@ -33,6 +33,7 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
     public BaseUI(java.awt.Frame parent, BaseCrudPanel<T> panel) {
         super(parent, true);
         initComponents();
+        setLocationByPlatform(true);
         this.panel = panel;
         contentPane.add(panel);
     }

@@ -24,7 +24,7 @@ import org.magmax.master.project.admin.product.ProductCrudModel;
 import org.magmax.master.project.admin.product.ProductDialog;
 import org.magmax.master.project.admin.section.SectionCrudModel;
 import org.magmax.master.project.admin.section.SectionDialog;
-import org.magmax.master.project.admin.user.User;
+import org.magmax.master.project.admin.user.UserRow;
 import org.magmax.master.project.admin.user.UserDialog;
 
 /**
@@ -42,6 +42,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        setLocationByPlatform(true);
         initializeUserPanel();
         initializeSectionPanel();
         initializeProductPanel();
