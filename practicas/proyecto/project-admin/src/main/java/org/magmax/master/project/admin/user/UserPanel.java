@@ -33,6 +33,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
     public static final String TITLE_UPDATE = "Update User";
+    private CrudTable phoneTable;
+    private CrudTable emailTable;
 
     /**
      * Creates new form UserUI
@@ -145,20 +147,26 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
         isAdmin.setEnabled(enabled);
     }
 
+    @Override
+    public void clearWidgets() {
+        nameEntry.setText("");
+        isAdmin.setSelected(false);
+    }
+
     private void initPhonePanel() {
-        CrudTable phoneTable = new CrudTable(new PhoneCrudModel());
+        phoneTable = new CrudTable(new PhoneCrudModel());
         jPanel1.add(phoneTable);
-        
+
         PhoneDialog phoneDialog = new PhoneDialog(null);
         phoneTable.setCrudUICreate(phoneDialog);
         phoneTable.setCrudUIUpdate(phoneDialog);
         phoneTable.setCrudUIDelete(new DefaultCrudUIDelete());
     }
-    
+
     private void initEmailPanel() {
-        CrudTable emailTable = new CrudTable(new EmailCrudModel());
+        emailTable = new CrudTable(new EmailCrudModel());
         jPanel2.add(emailTable);
-        
+
         EmailDialog emailDialog = new EmailDialog(null);
         emailTable.setCrudUICreate(emailDialog);
         emailTable.setCrudUIUpdate(emailDialog);

@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.admin.phone;
 
-import org.magmax.master.project.admin.section.*;
 import org.magmax.master.project.admin.BaseCrudPanel;
 
 /**
@@ -106,5 +105,10 @@ public class PhonePanel extends BaseCrudPanel<Phone> {
     @Override
     public void setWidgetsEnabled(boolean enabled) {
         nameEntry.setEnabled(enabled);
+    }
+
+    @Override
+    public void clearWidgets() {
+        nameEntry.setText("");
     }
 }

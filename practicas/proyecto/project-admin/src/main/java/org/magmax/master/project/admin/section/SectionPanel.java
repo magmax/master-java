@@ -106,4 +106,9 @@ public class SectionPanel extends BaseCrudPanel<Section> {
     public void setWidgetsEnabled(boolean enabled) {
         nameEntry.setEnabled(enabled);
     }
+
+    @Override
+    public void clearWidgets() {
+        nameEntry.setText("");
+    }
 }

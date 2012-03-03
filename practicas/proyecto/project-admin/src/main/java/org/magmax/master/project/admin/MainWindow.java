@@ -17,14 +17,12 @@
 package org.magmax.master.project.admin;
 
 import org.magmax.master.project.admin.user.UserCrudModel;
-import org.magmax.master.project.admin.user.UserPanel;
 import org.magmax.eswing.crud.CrudTable;
 import org.magmax.eswing.crud.DefaultCrudUIDelete;
 import org.magmax.master.project.admin.product.ProductCrudModel;
 import org.magmax.master.project.admin.product.ProductDialog;
 import org.magmax.master.project.admin.section.SectionCrudModel;
 import org.magmax.master.project.admin.section.SectionDialog;
-import org.magmax.master.project.admin.user.UserRow;
 import org.magmax.master.project.admin.user.UserDialog;
 
 /**
@@ -57,6 +55,7 @@ public class MainWindow extends javax.swing.JFrame {
         productTable.setCrudUIUpdate(productDialog);
         productTable.setCrudUIDetails(productDialog);
         productTable.setCrudUIDelete(new DefaultCrudUIDelete());
+        productTable.loadData();
     }
 
     private void initializeSectionPanel() {
@@ -79,6 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         userTable.setCrudUIUpdate(userDialog);
         userTable.setCrudUIDetails(userDialog);
         userTable.setCrudUIDelete(new DefaultCrudUIDelete());
+        userTable.loadData();
     }
 
     /**
@@ -96,6 +96,11 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close(evt);
+            }
+        });
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -121,6 +126,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void close(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_close
+        Persistence.getInstance().destroy();
+    }//GEN-LAST:event_close
 
     /**
      * @param args the command line arguments

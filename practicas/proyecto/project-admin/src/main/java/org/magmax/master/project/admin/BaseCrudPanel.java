@@ -23,7 +23,8 @@ import org.magmax.eswing.crud.CrudObject;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public abstract class BaseCrudPanel<T extends CrudObject> extends JPanel{
+public abstract class BaseCrudPanel<T extends CrudObject> extends JPanel {
+
     public abstract String getTitleCreation();
 
     public abstract String getTitleUpdate();
@@ -37,4 +38,6 @@ public abstract class BaseCrudPanel<T extends CrudObject> extends JPanel{
     public abstract void updateCrudObject(T item);
 
     public abstract void setWidgetsEnabled(boolean b);
+
+    public abstract void clearWidgets();
 }

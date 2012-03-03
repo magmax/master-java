@@ -21,6 +21,7 @@ import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudModel;
 import org.magmax.master.project.admin.Persistence;
 import org.magmax.master.project.persistence.dao.UserDAO;
+import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
@@ -37,9 +38,8 @@ public class UserCrudModel extends DefaultCrudModel {
 
     @Override
     public void add(CrudObject item) {
+        UserDAO userdao = getDAO();
         UserRow userrow = (UserRow) item;
-        Persistence persistence = Persistence.getInstance();
-        UserDAO userdao = persistence.getUserDAO();
         userdao.store((userrow.getEntity()));
         super.add(item);
     }
@@ -51,8 +51,26 @@ public class UserCrudModel extends DefaultCrudModel {
 
     @Override
     public void update(CrudObject item) {
+        UserDAO userdao = getDAO();
+        UserRow userrow = (UserRow) item;
+        userdao.store((userrow.getEntity()));
         super.update(item);
     }
 
+    @Override
+    public void load() {
+        UserDAO userdao = getDAO();
+        for (User each : userdao.findAll()) {
+            UserRow row = new UserRow();
+            row.setEntity(each);
+            super.add(row);
+        }
+        super.load();
+    }
 
+    private UserDAO getDAO() {
+        Persistence persistence = Persistence.getInstance();
+        UserDAO userdao = persistence.getUserDAO();
+        return userdao;
+    }
 }

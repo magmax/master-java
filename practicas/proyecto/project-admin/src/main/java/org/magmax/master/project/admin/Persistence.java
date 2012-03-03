@@ -36,4 +36,10 @@ public class Persistence extends DAOFactory {
         }
         return instance;
     }
+
+    public void destroy() {
+        if (instance == null)
+            return;
+        super.destroy();
+    }
 }

@@ -106,4 +106,9 @@ public class EmailPanel extends BaseCrudPanel<Email> {
     public void setWidgetsEnabled(boolean enabled) {
         nameEntry.setEnabled(enabled);
     }
+
+    @Override
+    public void clearWidgets() {
+        nameEntry.setText("");
+    }
 }

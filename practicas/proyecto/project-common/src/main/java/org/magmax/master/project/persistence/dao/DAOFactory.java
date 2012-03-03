@@ -39,6 +39,11 @@ public class DAOFactory {
         entityManager = emFactory.createEntityManager();
     }
     
+    protected void destroy() {
+        entityManager.close();
+        emFactory.close();
+    }
+    
     public UserDAO getUserDAO() {
         return new UserDAO(entityManager);
     }

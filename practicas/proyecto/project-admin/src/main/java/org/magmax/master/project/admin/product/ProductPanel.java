@@ -168,7 +168,7 @@ public class ProductPanel extends BaseCrudPanel<Product> {
     public void updateCrudObject(Product item) {
         item.setName(nameEntry.getText());
         item.setDescription(descriptionTextarea.getText());
-        item.setPrize((Float)prizeSpinner.getValue());
+        item.setPrize((Float) prizeSpinner.getValue());
         // FIXME: Section
     }
 
@@ -178,5 +178,13 @@ public class ProductPanel extends BaseCrudPanel<Product> {
         descriptionTextarea.setEnabled(enabled);
         sectionCombobox.setEnabled(enabled);
         prizeSpinner.setEnabled(enabled);
+    }
+
+    @Override
+    public void clearWidgets() {
+        nameEntry.setText("");
+        descriptionTextarea.setText("");
+        sectionCombobox.setSelectedIndex(-1);
+        prizeSpinner.setValue(0);
     }
 }
