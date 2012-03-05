@@ -17,7 +17,6 @@
 package org.magmax.master.project.admin.user;
 
 import java.util.List;
-import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudModel;
 import org.magmax.master.project.admin.Persistence;
 import org.magmax.master.project.persistence.dao.UserDAO;
@@ -27,7 +26,7 @@ import org.magmax.master.project.persistence.pojo.User;
  *
  * @author miguel
  */
-public class UserCrudModel extends DefaultCrudModel {
+public class UserCrudModel extends DefaultCrudModel<UserRow> {
 
     private static String[] headers = new String[]{"Nombre", "Admin"};
 
@@ -37,37 +36,40 @@ public class UserCrudModel extends DefaultCrudModel {
     }
 
     @Override
-    public void add(CrudObject item) {
+    public void add(UserRow item) {
         saveItem(item);
         super.add(item);
     }
 
     @Override
-    public void remove(List data) {
-        super.remove(data);
-    }
-
-    @Override
-    public void update(CrudObject item) {
+    public void update(UserRow item) {
         saveItem(item);
         super.update(item);
     }
 
-    private void saveItem(CrudObject item) {
-        UserDAO userdao = getDAO();
-        UserRow userrow = (UserRow) item;
-        userdao.store((userrow.getEntity()));
+    @Override
+    public void remove(List<UserRow> data) {
+        UserDAO dao = getDAO();
+        for(UserRow each : data) 
+            dao.delete(each.getEntity());
+        super.remove(data);
     }
 
+    
+    
     @Override
     public void load() {
-        UserDAO userdao = getDAO();
-        for (User each : userdao.findAll()) {
+        for (User each : getDAO().findAll()) {
             UserRow row = new UserRow();
             row.setEntity(each);
             super.add(row);
         }
         super.load();
+    }
+
+    private void saveItem(UserRow userrow) {
+        UserDAO userdao = getDAO();
+        userdao.store((userrow.getEntity()));
     }
 
     private UserDAO getDAO() {

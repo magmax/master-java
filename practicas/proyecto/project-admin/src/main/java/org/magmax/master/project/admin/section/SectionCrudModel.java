@@ -17,7 +17,6 @@
 package org.magmax.master.project.admin.section;
 
 import java.util.List;
-import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudModel;
 import org.magmax.master.project.admin.Persistence;
 import org.magmax.master.project.persistence.dao.SectionDAO;
@@ -27,7 +26,7 @@ import org.magmax.master.project.persistence.pojo.Section;
  *
  * @author miguel
  */
-public class SectionCrudModel extends DefaultCrudModel {
+public class SectionCrudModel extends DefaultCrudModel<SectionRow> {
 
     private static String[] headers = new String[]{"Nombre"};
 
@@ -37,7 +36,7 @@ public class SectionCrudModel extends DefaultCrudModel {
     }
 
     @Override
-    public void add(CrudObject item) {
+    public void add(SectionRow item) {
         saveItem(item);
         super.add(item);
     }
@@ -47,24 +46,27 @@ public class SectionCrudModel extends DefaultCrudModel {
         for (Section each : getDAO().findAll()) {
             SectionRow row = new SectionRow();
             row.setEntity(each);
+            super.add(row);
         }
+        super.load();
     }
 
     @Override
-    public void remove(List data) {
+    public void remove(List<SectionRow> data) {
+        for(SectionRow each : data) {
+            getDAO().delete(each.getEntity());
+        }
         super.remove(data);
     }
 
     @Override
-    public void update(CrudObject item) {
+    public void update(SectionRow item) {
         saveItem(item);
         super.update(item);
     }
 
-    private void saveItem(CrudObject item) {
-        SectionDAO sectiondao = getDAO();
-        SectionRow sectionrow = (SectionRow) item;
-        sectiondao.store(sectionrow.getEntity());
+    private void saveItem(SectionRow sectionrow) {
+        getDAO().store(sectionrow.getEntity());
     }
 
     private SectionDAO getDAO() {

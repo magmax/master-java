@@ -25,6 +25,7 @@ import org.magmax.master.project.persistence.pojo.User;
  */
 public class UserRow extends DefaultCrudObject<User> {
 
+    @Override
     public User getEntity() {
         if (super.getEntity() == null) {
             setEntity(new User());
