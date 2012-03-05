@@ -38,9 +38,7 @@ public class UserCrudModel extends DefaultCrudModel {
 
     @Override
     public void add(CrudObject item) {
-        UserDAO userdao = getDAO();
-        UserRow userrow = (UserRow) item;
-        userdao.store((userrow.getEntity()));
+        saveItem(item);
         super.add(item);
     }
 
@@ -51,10 +49,14 @@ public class UserCrudModel extends DefaultCrudModel {
 
     @Override
     public void update(CrudObject item) {
+        saveItem(item);
+        super.update(item);
+    }
+
+    private void saveItem(CrudObject item) {
         UserDAO userdao = getDAO();
         UserRow userrow = (UserRow) item;
         userdao.store((userrow.getEntity()));
-        super.update(item);
     }
 
     @Override

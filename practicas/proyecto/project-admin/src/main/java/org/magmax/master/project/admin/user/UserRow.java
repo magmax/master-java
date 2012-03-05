@@ -16,34 +16,29 @@
  */
 package org.magmax.master.project.admin.user;
 
-import org.magmax.eswing.crud.CrudObject;
+import org.magmax.eswing.crud.DefaultCrudObject;
 import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class UserRow implements CrudObject {
-
-    private User entity;
+public class UserRow extends DefaultCrudObject<User> {
 
     public User getEntity() {
-        if (entity == null)
-            entity = new User();
-        return entity;
+        if (super.getEntity() == null) {
+            setEntity(new User());
+        }
+        return super.getEntity();
     }
 
-    public void setEntity(User entity) {
-        this.entity = entity;
-    }
-    
     @Override
     public Object getValueByColumn(int column) {
         switch (column) {
             case 0:
-                return entity.getName();
+                return getEntity().getName();
             case 1:
-                return entity.isAdmin().toString();
+                return getEntity().isAdmin().toString();
             default:
                 return "";
         }

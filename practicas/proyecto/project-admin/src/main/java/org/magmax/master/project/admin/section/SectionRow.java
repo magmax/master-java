@@ -16,28 +16,28 @@
  */
 package org.magmax.master.project.admin.section;
 
-import org.magmax.eswing.crud.CrudObject;
+import org.magmax.eswing.crud.DefaultCrudObject;
+import org.magmax.master.project.persistence.pojo.Section;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class Section implements CrudObject {
-    private String name;
+public class SectionRow extends DefaultCrudObject<Section> {
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public Section getEntity() {
+        if (super.getEntity() == null) {
+            setEntity(new Section());
+        }
+        return super.getEntity();
     }
 
     @Override
     public Object getValueByColumn(int column) {
         switch (column) {
             case 0:
-                return name;
+                return getEntity().getName();
             default:
                 return "";
         }

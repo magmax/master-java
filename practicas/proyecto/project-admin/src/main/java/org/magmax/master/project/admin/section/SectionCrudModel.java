@@ -16,7 +16,12 @@
  */
 package org.magmax.master.project.admin.section;
 
+import java.util.List;
+import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.admin.Persistence;
+import org.magmax.master.project.persistence.dao.SectionDAO;
+import org.magmax.master.project.persistence.pojo.Section;
 
 /**
  *
@@ -31,4 +36,40 @@ public class SectionCrudModel extends DefaultCrudModel {
         setColumnIdentifiers(headers);
     }
 
+    @Override
+    public void add(CrudObject item) {
+        saveItem(item);
+        super.add(item);
+    }
+
+    @Override
+    public void load() {
+        for (Section each : getDAO().findAll()) {
+            SectionRow row = new SectionRow();
+            row.setEntity(each);
+        }
+    }
+
+    @Override
+    public void remove(List data) {
+        super.remove(data);
+    }
+
+    @Override
+    public void update(CrudObject item) {
+        saveItem(item);
+        super.update(item);
+    }
+
+    private void saveItem(CrudObject item) {
+        SectionDAO sectiondao = getDAO();
+        SectionRow sectionrow = (SectionRow) item;
+        sectiondao.store(sectionrow.getEntity());
+    }
+
+    private SectionDAO getDAO() {
+        Persistence persistence = Persistence.getInstance();
+        SectionDAO sectionDao = persistence.getSectionDAO();
+        return sectionDao;
+    }
 }

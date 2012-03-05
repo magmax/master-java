@@ -22,7 +22,7 @@ import org.magmax.master.project.admin.BaseCrudPanel;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class SectionPanel extends BaseCrudPanel<Section> {
+public class SectionPanel extends BaseCrudPanel<SectionRow> {
 
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
@@ -86,20 +86,20 @@ public class SectionPanel extends BaseCrudPanel<Section> {
     }
 
     @Override
-    public Section getCrudObject() {
-        Section result = new Section();
+    public SectionRow getCrudObject() {
+        SectionRow result = new SectionRow();
         updateCrudObject(result);
         return result;
     }
 
     @Override
-    public void setCrudObject(Section item) {
-        nameEntry.setText(item.getName());
+    public void setCrudObject(SectionRow item) {
+        nameEntry.setText(item.getEntity().getName());
     }
 
     @Override
-    public void updateCrudObject(Section item) {
-        item.setName(nameEntry.getText());
+    public void updateCrudObject(SectionRow item) {
+        item.getEntity().setName(nameEntry.getText());
     }
 
     @Override

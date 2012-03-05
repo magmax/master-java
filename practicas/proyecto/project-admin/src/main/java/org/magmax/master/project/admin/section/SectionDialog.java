@@ -23,7 +23,7 @@ import org.magmax.master.project.admin.BaseUI;
  *
  * @author miguel
  */
-public class SectionDialog extends BaseUI<Section> {
+public class SectionDialog extends BaseUI<SectionRow> {
 
     public SectionDialog(Frame parent) {
         super(parent, new SectionPanel());

@@ -17,7 +17,6 @@
 package org.magmax.master.project.admin;
 
 import java.awt.event.WindowEvent;
-import javax.swing.WindowConstants;
 import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.CrudUICreate;
 import org.magmax.eswing.crud.CrudUIDetails;
@@ -35,7 +34,6 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
         super(parent, true);
         initComponents();
         setLocationByPlatform(true);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.panel = panel;
         contentPane.add(panel);
     }
