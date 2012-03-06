@@ -22,7 +22,7 @@ import org.magmax.master.project.admin.BaseCrudPanel;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class ProductPanel extends BaseCrudPanel<Product> {
+public class ProductPanel extends BaseCrudPanel<ProductRow> {
 
     public static final String TITLE_CREATION = "Product creation";
     public static final String TITLE_DETAILS = "Product Details";
@@ -150,14 +150,14 @@ public class ProductPanel extends BaseCrudPanel<Product> {
     }
 
     @Override
-    public Product getCrudObject() {
-        Product result = new Product();
+    public ProductRow getCrudObject() {
+        ProductRow result = new ProductRow();
         updateCrudObject(result);
         return result;
     }
 
     @Override
-    public void setCrudObject(Product item) {
+    public void setCrudObject(ProductRow item) {
         nameEntry.setText(item.getName());
         descriptionTextarea.setText(item.getDescription());
         prizeSpinner.setValue(item.getPrize());
@@ -165,7 +165,7 @@ public class ProductPanel extends BaseCrudPanel<Product> {
     }
 
     @Override
-    public void updateCrudObject(Product item) {
+    public void updateCrudObject(ProductRow item) {
         item.setName(nameEntry.getText());
         item.setDescription(descriptionTextarea.getText());
         item.setPrize((Float) prizeSpinner.getValue());

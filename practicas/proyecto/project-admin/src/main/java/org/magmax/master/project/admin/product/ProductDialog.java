@@ -23,7 +23,7 @@ import org.magmax.master.project.admin.BaseUI;
  *
  * @author miguel
  */
-public class ProductDialog extends BaseUI<Product> {
+public class ProductDialog extends BaseUI<ProductRow> {
 
     public ProductDialog(Frame parent) {
         super(parent, new ProductPanel());

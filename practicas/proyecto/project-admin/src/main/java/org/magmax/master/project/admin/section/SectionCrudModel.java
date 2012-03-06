@@ -70,8 +70,6 @@ public class SectionCrudModel extends DefaultCrudModel<SectionRow> {
     }
 
     private SectionDAO getDAO() {
-        Persistence persistence = Persistence.getInstance();
-        SectionDAO sectionDao = persistence.getSectionDAO();
-        return sectionDao;
+        return Persistence.getInstance().getSectionDAO();
     }
 }

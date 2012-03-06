@@ -49,14 +49,13 @@ public class UserCrudModel extends DefaultCrudModel<UserRow> {
 
     @Override
     public void remove(List<UserRow> data) {
-        UserDAO dao = getDAO();
-        for(UserRow each : data) 
-            dao.delete(each.getEntity());
+        UserDAO userdao = getDAO();
+        for (UserRow each : data) {
+            userdao.delete(each.getEntity());
+        }
         super.remove(data);
     }
 
-    
-    
     @Override
     public void load() {
         for (User each : getDAO().findAll()) {
@@ -69,12 +68,10 @@ public class UserCrudModel extends DefaultCrudModel<UserRow> {
 
     private void saveItem(UserRow userrow) {
         UserDAO userdao = getDAO();
-        userdao.store((userrow.getEntity()));
+        userdao.store(userrow.getEntity());
     }
 
     private UserDAO getDAO() {
-        Persistence persistence = Persistence.getInstance();
-        UserDAO userdao = persistence.getUserDAO();
-        return userdao;
+        return Persistence.getInstance().getUserDAO();
     }
 }

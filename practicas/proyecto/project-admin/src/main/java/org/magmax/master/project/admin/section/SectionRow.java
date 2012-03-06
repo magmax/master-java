@@ -27,10 +27,12 @@ public class SectionRow extends DefaultCrudObject<Section> {
 
     @Override
     public Section getEntity() {
-        if (super.getEntity() == null) {
-            setEntity(new Section());
+        Section entity = super.getEntity();
+        if (entity == null) {
+            entity = new Section();
+            setEntity(entity);
         }
-        return super.getEntity();
+        return entity;
     }
 
     @Override

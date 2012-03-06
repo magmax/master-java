@@ -24,7 +24,7 @@ import org.magmax.master.project.persistence.pojo.Section;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-class ProductDAO extends GenericDAO<Product, Integer> {
+public class ProductDAO extends GenericDAO<Product, Integer> {
 
     public ProductDAO(EntityManager entityManager) {
         super(entityManager);

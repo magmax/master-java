@@ -17,50 +17,24 @@
 package org.magmax.master.project.admin.product;
 
 import org.magmax.eswing.crud.CrudObject;
+import org.magmax.eswing.crud.DefaultCrudObject;
+import org.magmax.master.project.persistence.pojo.Product;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class Product implements CrudObject {
-
-    private String name;
-    private Float prize;
-    private String description;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Float getPrize() {
-        return prize;
-    }
-
-    public void setPrize(Float prize) {
-        this.prize = prize;
-    }
+public class ProductRow extends DefaultCrudObject<Product> {
 
     @Override
     public Object getValueByColumn(int column) {
         switch (column) {
             case 0:
-                return name;
+                return getEntity().getName();
             case 1:
-                return description;
+                return getEntity().getDescription();
             case 2:
-                return prize;
+                return getEntity().getPrize();
             default:
                 return "";
         }

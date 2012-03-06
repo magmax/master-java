@@ -67,6 +67,7 @@ public class MainWindow extends javax.swing.JFrame {
         sectionTable.setCrudUIUpdate(sectionDialog);
         //sectionTable.setCrudUIDetails(sectionDialog);
         sectionTable.setCrudUIDelete(new DefaultCrudUIDelete());
+        sectionTable.loadData();
     }
 
     private void initializeUserPanel() {
