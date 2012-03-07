@@ -158,17 +158,17 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
 
     @Override
     public void setCrudObject(ProductRow item) {
-        nameEntry.setText(item.getName());
-        descriptionTextarea.setText(item.getDescription());
-        prizeSpinner.setValue(item.getPrize());
+        nameEntry.setText(item.getEntity().getName());
+        descriptionTextarea.setText(item.getEntity().getDescription());
+        prizeSpinner.setValue(item.getEntity().getPrize());
         // FIXME: Section
     }
 
     @Override
     public void updateCrudObject(ProductRow item) {
-        item.setName(nameEntry.getText());
-        item.setDescription(descriptionTextarea.getText());
-        item.setPrize((Float) prizeSpinner.getValue());
+        item.getEntity().setName(nameEntry.getText());
+        item.getEntity().setDescription(descriptionTextarea.getText());
+        item.getEntity().setPrize((Float) prizeSpinner.getValue());
         // FIXME: Section
     }
 

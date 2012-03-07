@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.admin.section;
+package org.magmax.master.project.admin;
 
+import org.magmax.master.project.admin.section.*;
 import java.util.List;
 import org.magmax.eswing.crud.DefaultCrudModel;
 import org.magmax.master.project.admin.Persistence;
@@ -26,11 +27,11 @@ import org.magmax.master.project.persistence.pojo.Section;
  *
  * @author miguel
  */
-public class SectionCrudModel extends DefaultCrudModel<SectionRow> {
+public class BaseCrudModel extends DefaultCrudModel<SectionRow> {
 
     private static String[] headers = new String[]{"Nombre"};
 
-    public SectionCrudModel() {
+    public BaseCrudModel() {
         super();
         setColumnIdentifiers(headers);
     }

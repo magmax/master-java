@@ -16,14 +16,17 @@
  */
 package org.magmax.master.project.admin.product;
 
-import org.magmax.master.project.admin.section.*;
+import java.util.List;
 import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.admin.Persistence;
+import org.magmax.master.project.persistence.dao.ProductDAO;
+import org.magmax.master.project.persistence.pojo.Product;
 
 /**
  *
  * @author miguel
  */
-public class ProductCrudModel extends DefaultCrudModel {
+public class ProductCrudModel extends DefaultCrudModel<ProductRow> {
 
     private static String[] headers = new String[]{"Producto", "Descripción", "Precio"};
 
@@ -32,4 +35,38 @@ public class ProductCrudModel extends DefaultCrudModel {
         setColumnIdentifiers(headers);
     }
 
+    @Override
+    public void add(ProductRow item) {
+        getDAO().store(item.getEntity());
+        super.add(item);
+    }
+
+    @Override
+    public void load() {
+        for (Product each : getDAO().findAll()) {
+            ProductRow row = new ProductRow();
+            row.setEntity(each);
+            super.add(row);
+        }
+
+        super.load();
+    }
+
+    @Override
+    public void remove(List<ProductRow> data) {
+        for (ProductRow each : data) {
+            getDAO().delete(each.getEntity());
+        }
+        super.remove(data);
+    }
+
+    @Override
+    public void update(ProductRow item) {
+        getDAO().store(item.getEntity());
+        super.update(item);
+    }
+
+    private ProductDAO getDAO() {
+        return Persistence.getInstance().getProductDAO();
+    }
 }

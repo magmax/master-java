@@ -27,6 +27,16 @@ import org.magmax.master.project.persistence.pojo.Product;
 public class ProductRow extends DefaultCrudObject<Product> {
 
     @Override
+    public Product getEntity() {
+        Product entity = super.getEntity();
+        if (entity == null) {
+            entity = new Product();
+            super.setEntity(entity);
+        }
+        return super.getEntity();
+    }
+
+    @Override
     public Object getValueByColumn(int column) {
         switch (column) {
             case 0:
