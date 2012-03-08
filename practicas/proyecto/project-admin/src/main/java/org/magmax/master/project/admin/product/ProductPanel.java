@@ -16,7 +16,11 @@
  */
 package org.magmax.master.project.admin.product;
 
+import javax.swing.SpinnerNumberModel;
 import org.magmax.master.project.admin.BaseCrudPanel;
+import org.magmax.master.project.admin.Persistence;
+import org.magmax.master.project.persistence.dao.SectionDAO;
+import org.magmax.master.project.persistence.pojo.Section;
 
 /**
  *
@@ -33,7 +37,6 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
      */
     public ProductPanel() {
         initComponents();
-        // FIXME: Retrieve the list of sections
     }
 
     /**
@@ -76,7 +79,7 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -84,7 +87,7 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
 
         jLabel3.setText("Precio:");
 
-        prizeSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), null, Float.valueOf(10.0f)));
+        prizeSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), null, Float.valueOf(1.0f)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -161,15 +164,17 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
         nameEntry.setText(item.getEntity().getName());
         descriptionTextarea.setText(item.getEntity().getDescription());
         prizeSpinner.setValue(item.getEntity().getPrize());
-        // FIXME: Section
+        loadSections();
+        selectSection(item.getEntity().getSection());
     }
 
     @Override
     public void updateCrudObject(ProductRow item) {
+        Number prize = (Number) prizeSpinner.getValue();
         item.getEntity().setName(nameEntry.getText());
         item.getEntity().setDescription(descriptionTextarea.getText());
-        item.getEntity().setPrize((Float) prizeSpinner.getValue());
-        // FIXME: Section
+        item.getEntity().setPrize(prize.floatValue());
+        item.getEntity().setSection((Section) sectionCombobox.getSelectedItem());
     }
 
     @Override
@@ -178,6 +183,7 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
         descriptionTextarea.setEnabled(enabled);
         sectionCombobox.setEnabled(enabled);
         prizeSpinner.setEnabled(enabled);
+        loadSections();
     }
 
     @Override
@@ -186,5 +192,26 @@ public class ProductPanel extends BaseCrudPanel<ProductRow> {
         descriptionTextarea.setText("");
         sectionCombobox.setSelectedIndex(-1);
         prizeSpinner.setValue(0);
+    }
+
+    private void loadSections() {
+        sectionCombobox.removeAllItems();
+        SectionDAO sectiondao = Persistence.getInstance().getSectionDAO();
+        for (Section each : sectiondao.findAll()) {
+            sectionCombobox.addItem(each);
+        }
+    }
+
+    private void selectSection(Section section) {
+        if (section == null) {
+            return;
+        }
+        for (int i = 0; i < sectionCombobox.getItemCount(); ++i) {
+            Section current = (Section) sectionCombobox.getItemAt(i);
+            if (section.getId() == current.getId()) {
+                sectionCombobox.setSelectedIndex(i);
+                return;
+            }
+        }
     }
 }

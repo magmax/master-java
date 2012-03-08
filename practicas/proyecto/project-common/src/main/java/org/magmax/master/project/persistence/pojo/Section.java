@@ -75,4 +75,9 @@ public class Section implements GenericEntity<Integer> {
         }
         products.add(product);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
