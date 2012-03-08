@@ -16,7 +16,10 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import org.magmax.master.project.persistence.pojo.Email;
 import org.magmax.master.project.persistence.pojo.User;
 

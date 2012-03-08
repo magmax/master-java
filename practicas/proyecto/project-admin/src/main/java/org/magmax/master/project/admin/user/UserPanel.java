@@ -35,6 +35,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public static final String TITLE_UPDATE = "Update User";
     private CrudTable phoneTable;
     private CrudTable emailTable;
+    private EmailCrudModel emailModel;
+    private PhoneCrudModel phoneModel;
 
     /**
      * Creates new form UserUI
@@ -133,6 +135,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public void setCrudObject(UserRow item) {
         nameEntry.setText(item.getEntity().getName());
         isAdmin.setSelected(item.getEntity().isAdmin());
+        phoneModel.setUser(item.getEntity());
+        emailModel.setUser(item.getEntity());
     }
 
     @Override
@@ -151,10 +155,15 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public void clearWidgets() {
         nameEntry.setText("");
         isAdmin.setSelected(false);
+        phoneModel.setUser(null);
+        phoneTable.loadData();
+        emailModel.setUser(null);
+        emailTable.loadData();
     }
 
     private void initPhonePanel() {
-        phoneTable = new CrudTable(new PhoneCrudModel());
+        phoneModel = new PhoneCrudModel();
+        phoneTable = new CrudTable(phoneModel);
         jPanel1.add(phoneTable);
 
         PhoneDialog phoneDialog = new PhoneDialog(null);
@@ -164,7 +173,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     }
 
     private void initEmailPanel() {
-        emailTable = new CrudTable(new EmailCrudModel());
+        emailModel = new EmailCrudModel();
+        emailTable = new CrudTable(emailModel);
         jPanel2.add(emailTable);
 
         EmailDialog emailDialog = new EmailDialog(null);

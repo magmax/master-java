@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 miguel
+ * Copyright (C) 2012 Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,23 @@
 package org.magmax.master.project.admin.phone;
 
 import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
 public class PhoneCrudModel extends DefaultCrudModel {
 
     private static String[] headers = new String[]{"Number"};
+    private User user = null;
 
     public PhoneCrudModel() {
         super();
         setColumnIdentifiers(headers);
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

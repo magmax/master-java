@@ -14,30 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.magmax.master.project.admin.phone;
 
-package org.magmax.master.project.admin.email;
-
-import org.magmax.eswing.crud.CrudObject;
+import org.magmax.eswing.crud.DefaultCrudObject;
+import org.magmax.master.project.persistence.pojo.Phone;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-class Email implements CrudObject {
-    private String address;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+public class PhoneRow extends DefaultCrudObject<Phone> {
+    
+    @Override
+    public Phone getEntity() {
+        Phone phone = super.getEntity();
+        if (phone == null) {
+            phone = new Phone();
+            super.setEntity(phone);
+        }            
+        return phone;
     }
     
+    @Override
     public Object getValueByColumn(int column) {
         switch(column) {
             case 0:
-                return address;
+                return getEntity().getNumber();
             default:
                 return "";
         }

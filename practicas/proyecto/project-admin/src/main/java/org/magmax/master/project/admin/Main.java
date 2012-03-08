@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 miguel
+ * Copyright (C) 2012 Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ package org.magmax.master.project.admin;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
 public class Main {
     public static void main(String[] args) {

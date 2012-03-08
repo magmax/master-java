@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 miguel
+ * Copyright (C) 2012 Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@ import org.magmax.master.project.admin.BaseUI;
 
 /**
  *
- * @author miguel
+ * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
-public class EmailDialog extends BaseUI<Email> {
+public class EmailDialog extends BaseUI<EmailRow> {
 
     public EmailDialog(Frame parent) {
         super(parent, new EmailPanel());

@@ -22,7 +22,7 @@ import org.magmax.master.project.admin.BaseCrudPanel;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class PhonePanel extends BaseCrudPanel<Phone> {
+public class PhonePanel extends BaseCrudPanel<PhoneRow> {
 
     public static final String TITLE_CREATION = "Phone creation";
     public static final String TITLE_DETAILS = "Phone Details";
@@ -86,20 +86,20 @@ public class PhonePanel extends BaseCrudPanel<Phone> {
     }
 
     @Override
-    public Phone getCrudObject() {
-        Phone result = new Phone();
+    public PhoneRow getCrudObject() {
+        PhoneRow result = new PhoneRow();
         updateCrudObject(result);
         return result;
     }
 
     @Override
-    public void setCrudObject(Phone item) {
-        nameEntry.setText(item.getNumber());
+    public void setCrudObject(PhoneRow item) {
+        nameEntry.setText(item.getEntity().getNumber());
     }
 
     @Override
-    public void updateCrudObject(Phone item) {
-        item.setNumber(nameEntry.getText());
+    public void updateCrudObject(PhoneRow item) {
+        item.getEntity().setNumber(nameEntry.getText());
     }
 
     @Override
