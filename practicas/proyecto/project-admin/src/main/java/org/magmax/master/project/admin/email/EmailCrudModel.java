@@ -29,15 +29,15 @@ import org.magmax.master.project.persistence.pojo.User;
  * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
 public class EmailCrudModel extends DefaultCrudModel<EmailRow> {
-    
+
     private static String[] headers = new String[]{"Address"};
     private User user;
-    
+
     public EmailCrudModel() {
         super();
         setColumnIdentifiers(headers);
     }
-    
+
     @Override
     public void add(EmailRow item) {
         item.getEntity().setUser(user);
@@ -50,7 +50,7 @@ public class EmailCrudModel extends DefaultCrudModel<EmailRow> {
         if (user != null) {
             UserDAO userdao = Persistence.getInstance().getUserDAO();
             userdao.refresh(user);
-            for (Email each  : user.getEmails()) {
+            for (Email each : user.getEmails()) {
                 EmailRow row = new EmailRow();
                 row.setEntity(each);
                 super.add(row);
@@ -58,7 +58,7 @@ public class EmailCrudModel extends DefaultCrudModel<EmailRow> {
         }
         super.load();
     }
-    
+
     @Override
     public void remove(List<EmailRow> data) {
         EmailDAO dao = getDAO();
@@ -67,18 +67,18 @@ public class EmailCrudModel extends DefaultCrudModel<EmailRow> {
         }
         super.remove(data);
     }
-    
+
     @Override
     public void update(EmailRow item) {
         item.getEntity().setUser(user);
         getDAO().store(item.getEntity());
         super.update(item);
     }
-    
+
     private EmailDAO getDAO() {
         return Persistence.getInstance().getEmailDAO();
     }
-    
+
     public void setUser(User user) {
         this.user = user;
     }

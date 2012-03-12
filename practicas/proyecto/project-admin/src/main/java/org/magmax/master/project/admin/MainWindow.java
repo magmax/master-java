@@ -34,6 +34,7 @@ public class MainWindow extends javax.swing.JFrame {
     private CrudTable userTable;
     private CrudTable sectionTable;
     private CrudTable productTable;
+    private UserCrudModel userCrudModel;
 
     /**
      * Creates new form MainWindow
@@ -47,9 +48,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void initializeProductPanel() {
-        productTable = new CrudTable(new ProductCrudModel());
+        ProductCrudModel productCrudModel = new ProductCrudModel();
+        productTable = new CrudTable(productCrudModel);
         jPanel3.add(productTable);
-        
+
         ProductDialog productDialog = new ProductDialog(this);
         productTable.setCrudUICreate(productDialog);
         productTable.setCrudUIUpdate(productDialog);
@@ -61,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initializeSectionPanel() {
         sectionTable = new CrudTable(new SectionCrudModel());
         jPanel2.add(sectionTable);
-        
+
         SectionDialog sectionDialog = new SectionDialog((this));
         sectionTable.setCrudUICreate(sectionDialog);
         sectionTable.setCrudUIUpdate(sectionDialog);
@@ -71,7 +73,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void initializeUserPanel() {
-        userTable = new CrudTable(new UserCrudModel());
+        userCrudModel = new UserCrudModel();
+        userTable = new CrudTable(userCrudModel);
         jPanel1.add(userTable);
 
         UserDialog userDialog = new UserDialog(this);

@@ -20,8 +20,10 @@ import org.magmax.eswing.crud.CrudTable;
 import org.magmax.eswing.crud.DefaultCrudUIDelete;
 import org.magmax.master.project.admin.BaseCrudPanel;
 import org.magmax.master.project.admin.email.EmailCrudModel;
+import org.magmax.master.project.admin.email.EmailCrudTable;
 import org.magmax.master.project.admin.email.EmailDialog;
 import org.magmax.master.project.admin.phone.PhoneCrudModel;
+import org.magmax.master.project.admin.phone.PhoneCrudTable;
 import org.magmax.master.project.admin.phone.PhoneDialog;
 
 /**
@@ -33,10 +35,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public static final String TITLE_CREATION = "User creation";
     public static final String TITLE_DETAILS = "User Details";
     public static final String TITLE_UPDATE = "Update User";
-    private CrudTable phoneTable;
-    private CrudTable emailTable;
-    private EmailCrudModel emailModel;
-    private PhoneCrudModel phoneModel;
+    private PhoneCrudTable phoneTable;
+    private EmailCrudTable emailTable;
 
     /**
      * Creates new form UserUI
@@ -135,8 +135,10 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public void setCrudObject(UserRow item) {
         nameEntry.setText(item.getEntity().getName());
         isAdmin.setSelected(item.getEntity().isAdmin());
-        phoneModel.setUser(item.getEntity());
-        emailModel.setUser(item.getEntity());
+        phoneTable.setUser(item.getEntity());
+        phoneTable.loadData();
+        emailTable.setUser(item.getEntity());
+        emailTable.loadData();
     }
 
     @Override
@@ -155,15 +157,14 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public void clearWidgets() {
         nameEntry.setText("");
         isAdmin.setSelected(false);
-        phoneModel.setUser(null);
+        phoneTable.setUser(null);
         phoneTable.loadData();
-        emailModel.setUser(null);
+        emailTable.setUser(null);
         emailTable.loadData();
     }
 
     private void initPhonePanel() {
-        phoneModel = new PhoneCrudModel();
-        phoneTable = new CrudTable(phoneModel);
+        phoneTable = new PhoneCrudTable(new PhoneCrudModel());
         jPanel1.add(phoneTable);
 
         PhoneDialog phoneDialog = new PhoneDialog(null);
@@ -173,8 +174,7 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     }
 
     private void initEmailPanel() {
-        emailModel = new EmailCrudModel();
-        emailTable = new CrudTable(emailModel);
+        emailTable = new EmailCrudTable(new EmailCrudModel());
         jPanel2.add(emailTable);
 
         EmailDialog emailDialog = new EmailDialog(null);

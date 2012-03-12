@@ -58,6 +58,7 @@ public class UserCrudModel extends DefaultCrudModel<UserRow> {
 
     @Override
     public void load() {
+        super.clear();
         for (User each : getDAO().findAll()) {
             UserRow row = new UserRow();
             row.setEntity(each);

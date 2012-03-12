@@ -46,24 +46,31 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
     }
 
     public void store(T object) {
-        entityManager.getTransaction().begin();
-        if (object.getId() == null) {
-            entityManager.persist(object);
-        } else {
-            entityManager.merge(object);
+        try {
+            entityManager.getTransaction().begin();
+            if (object.getId() == null) {
+                entityManager.persist(object);
+            } else {
+                entityManager.refresh(object);
+                entityManager.merge(object);
+            }
+        } finally {
+            entityManager.getTransaction().commit();
         }
-        entityManager.getTransaction().commit();
     }
-    
+
     public void storeAndRefresh(T object) {
         store(object);
-        refresh(object);        
+        refresh(object);
     }
 
     public void delete(T object) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(object);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(object);
+        } finally {
+            entityManager.getTransaction().commit();
+        }
     }
 
     public T findById(I id) {
