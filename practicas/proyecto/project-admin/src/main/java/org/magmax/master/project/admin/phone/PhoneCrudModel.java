@@ -16,14 +16,19 @@
  */
 package org.magmax.master.project.admin.phone;
 
+import java.util.List;
 import org.magmax.eswing.crud.DefaultCrudModel;
+import org.magmax.master.project.admin.Persistence;
+import org.magmax.master.project.persistence.dao.PhoneDAO;
+import org.magmax.master.project.persistence.dao.UserDAO;
+import org.magmax.master.project.persistence.pojo.Phone;
 import org.magmax.master.project.persistence.pojo.User;
 
 /**
  *
  * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
-public class PhoneCrudModel extends DefaultCrudModel {
+public class PhoneCrudModel extends DefaultCrudModel<PhoneRow> {
 
     private static String[] headers = new String[]{"Number"};
     private User user = null;
@@ -35,5 +40,46 @@ public class PhoneCrudModel extends DefaultCrudModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public void add(PhoneRow item) {
+        item.getEntity().setUser(user);
+        getDAO().store(item.getEntity());
+        super.add(item);
+    }
+    
+    @Override
+    public void load() {
+        if (user != null) {
+            UserDAO userdao = Persistence.getInstance().getUserDAO();
+            userdao.refresh(user);
+            for (Phone each : user.getPhones()) {
+                PhoneRow row = new PhoneRow();
+                row.setEntity(each);
+                super.add(row);
+            }
+        }
+        super.load();
+    }
+
+    @Override
+    public void remove(List<PhoneRow> data) {
+        PhoneDAO dao = getDAO();
+        for (PhoneRow each : data) {
+            dao.delete(each.getEntity());
+        }
+        super.remove(data);
+    }
+
+    @Override
+    public void update(PhoneRow item) {
+        item.getEntity().setUser(user);
+        getDAO().store(item.getEntity());
+        super.update(item);
+    }
+
+    private PhoneDAO getDAO() {
+        return Persistence.getInstance().getPhoneDAO();
     }
 }

@@ -24,25 +24,24 @@ import org.magmax.master.project.persistence.pojo.Phone;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class PhoneRow extends DefaultCrudObject<Phone> {
-    
+
     @Override
     public Phone getEntity() {
         Phone phone = super.getEntity();
         if (phone == null) {
             phone = new Phone();
             super.setEntity(phone);
-        }            
+        }
         return phone;
     }
-    
+
     @Override
     public Object getValueByColumn(int column) {
-        switch(column) {
+        switch (column) {
             case 0:
                 return getEntity().getNumber();
             default:
                 return "";
         }
     }
-    
 }

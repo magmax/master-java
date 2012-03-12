@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.magmax.master.project.admin.email;
 
 import org.magmax.eswing.crud.DefaultCrudObject;
@@ -32,18 +31,17 @@ public class EmailRow extends DefaultCrudObject<Email> {
         if (email == null) {
             email = new Email();
             super.setEntity(email);
-        }            
+        }
         return email;
     }
-    
-    
+
+    @Override
     public Object getValueByColumn(int column) {
-        switch(column) {
+        switch (column) {
             case 0:
                 return getEntity().getAddress();
             default:
                 return "";
         }
     }
-    
 }

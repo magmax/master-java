@@ -151,6 +151,8 @@ public class UserPanel extends BaseCrudPanel<UserRow> {
     public void setWidgetsEnabled(boolean enabled) {
         nameEntry.setEnabled(enabled);
         isAdmin.setEnabled(enabled);
+        this.emailTable.setEnabled(enabled);
+        this.phoneTable.setEnabled(enabled);
     }
 
     @Override
