@@ -8,6 +8,24 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <center>
+            <h1>Autenticación de usuarios</h1>
+            
+            <br/>
+            
+            <form>
+                <table>
+                    <tr>
+                        <td>Usuario:</td>
+                        <td><input name="username" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input name="password" type="password"</td>
+                    </tr>
+                </table>
+                <input type="submit" value="Entrar"/>
+            </form>
+        </center>
     </body>
 </html>
