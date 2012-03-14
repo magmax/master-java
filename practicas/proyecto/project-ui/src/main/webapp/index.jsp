@@ -1,31 +1,36 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
 
-<html>
+
+<%@ taglib uri="/META-INF.tld/struts-html.tld" prefix="html" %>
+<!--
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+-->
+<html:html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><bean:message key="Tienda Virtual"/></title>
+        <html:base/>
     </head>
     <body>
-        <center>
-            <h1>Autenticación de usuarios</h1>
-            
-            <br/>
-            
-            <form>
-                <table>
-                    <tr>
-                        <td>Usuario:</td>
-                        <td><input name="username" type="text"/></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input name="password" type="password"</td>
-                    </tr>
-                </table>
-                <input type="submit" value="Entrar"/>
-            </form>
-        </center>
+                
+        <h1>Autenticación de usuarios</h1>
+        <br/>
+    <center>
+    <html:form action="authenticate" method="post">
+        <table>
+            <tr>
+                <td>Usuario:</td>
+                <td><html:text property="name"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><html:password property="password"/></td>
+            </tr>
+        <table>
+    </html:form>
+    </center>
     </body>
-</html>
+</html:html>

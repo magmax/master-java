@@ -26,10 +26,10 @@ import org.apache.struts.action.ActionMessage;
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class Authentication extends org.apache.struts.action.ActionForm {
-    
+public class AuthenticationForm extends org.apache.struts.action.ActionForm {
+
     private String name;
-    private int number;
+    private String password;
 
     /**
      * @return
@@ -45,26 +45,12 @@ public class Authentication extends org.apache.struts.action.ActionForm {
         name = string;
     }
 
-    /**
-     * @return
-     */
-    public int getNumber() {
-        return number;
+    public String getPassword() {
+        return password;
     }
 
-    /**
-     * @param i
-     */
-    public void setNumber(int i) {
-        number = i;
-    }
-
-    /**
-     *
-     */
-    public Authentication() {
-        super();
-        // TODO Auto-generated constructor stub
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -74,6 +60,7 @@ public class Authentication extends org.apache.struts.action.ActionForm {
      * @param request The HTTP Request we are processing.
      * @return
      */
+    @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         if (getName() == null || getName().length() < 1) {
