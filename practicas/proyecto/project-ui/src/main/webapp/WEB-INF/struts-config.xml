@@ -7,8 +7,8 @@
 
 <struts-config>
     <form-beans>
-        <form-bean name="Authentication" type="org.magmax.master.project.ui.authentication.Authentication"/>
-    
+        <form-bean name="RegisterForm" type="org.magmax.master.project.ui.register.RegisterForm"/>
+        <form-bean name="AuthenticateForm" type="org.magmax.master.project.ui.authentication.AuthenticateForm"/>
     </form-beans>
     
     <global-exceptions>
@@ -16,11 +16,15 @@
     </global-exceptions>
 
     <global-forwards>
-        <forward name="welcome"  path="/Welcome.do"/>
+        <forward name="welcome"  path="/index.jsp"/>
     </global-forwards>
 
     <action-mappings>
         <action path="/Welcome" forward="/index.jsp"/>
+        <action input="/" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="false">
+            <forward name="error" path="/register.jsp"/>
+        </action>
+        <action input="/" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="false"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

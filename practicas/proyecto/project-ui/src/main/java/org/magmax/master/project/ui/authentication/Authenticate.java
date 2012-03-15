@@ -17,56 +17,39 @@
 package org.magmax.master.project.ui.authentication;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.action.ActionErrors;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class AuthenticationForm extends org.apache.struts.action.ActionForm {
+public class Authenticate extends org.apache.struts.action.Action {
 
-    private String name;
-    private String password;
-
-    /**
-     * @return
+    /*
+     * forward name="success" path=""
      */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String string) {
-        name = string;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private static final String SUCCESS = "success";
+    private static final String ERROR = "error";
+    
 
     /**
      * This is the action called from the Struts framework.
      *
      * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
      * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     * @throws java.lang.Exception
      * @return
      */
     @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        if (getName() == null || getName().length() < 1) {
-            errors.add("name", new ActionMessage("error.name.required"));
-            // TODO: add 'error.name.required' key to your resources
-        }
-        return errors;
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        System.out.println("********************************Pasa!");
+        return mapping.findForward(ERROR);
     }
 }
