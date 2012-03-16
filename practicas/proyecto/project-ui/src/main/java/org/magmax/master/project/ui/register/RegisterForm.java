@@ -73,4 +73,18 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        if (isEmpty(getUsername())) {
+            errors.add("Username", new ActionMessage("error name required"));
+            // TODO: add 'error.name.required' key to your resources
+        }
+        return errors;
+    }
+    
+    private boolean isEmpty(String value) {
+        return value == null || value.length() < 1;
+    }
 }

@@ -47,9 +47,9 @@
                 <table>
                     <html:submit value="Registrarse"/>
                 </html:form>
-                    <br/>
-                    <br/>
-                    </center>
+                <br/>
+                <br/>
+                </center>
                 <html:link forward="welcome">Volver</html:link>
                 </body>
             </html:html>

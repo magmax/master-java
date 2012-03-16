@@ -16,12 +16,17 @@
  */
 package org.magmax.master.project.ui.authentication;
 
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class AuthenticateForm extends org.apache.struts.action.ActionForm {
-    
+
     private String username;
     private String password;
 
@@ -41,4 +46,21 @@ public class AuthenticateForm extends org.apache.struts.action.ActionForm {
         this.username = username;
     }
 
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        if (isEmpty(getUsername())) {
+            errors.add("username", new ActionMessage("error name required"));
+            // TODO: add 'error.name.required' key to your resources
+        }
+        if (isEmpty(getPassword())) {
+            errors.add("password", new ActionMessage("error password required"));
+            // TODO: add 'error.name.required' key to your resources
+        }
+        return errors;
+    }
+
+    private boolean isEmpty(String value) {
+        return value == null || value.length() < 1;
+    }
 }
