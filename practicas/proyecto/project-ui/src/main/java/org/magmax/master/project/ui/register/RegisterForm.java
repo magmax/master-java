@@ -81,21 +81,23 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         if (isEmpty(getUsername())) {
-            errors.add("username", new ActionMessage("error.name.required"));
+            errors.add("register.username", new ActionMessage("error.name.required"));
         }
+        /*
         if (isEmpty(getPassword())) {
-            errors.add("password", new ActionMessage("error.password.required"));
+            errors.add("register.password", new ActionMessage("error.password.required"));
         }
         if (isEmpty(getEmail())) {
-            errors.add("email", new ActionMessage("error.email.required"));
+            errors.add("register.email", new ActionMessage("error.email.required"));
         } else if (!validEmail()) {
-            errors.add("email", new ActionMessage("error.mail.invalid"));
+            errors.add("register.email", new ActionMessage("error.email.invalid"));
         }
+        */
         return errors;
     }
 
     private boolean isEmpty(String value) {
-        return value == null || value.length() < 1;
+        return value == null || value.length() == 0;
     }
 
     private boolean validEmail() {
@@ -103,4 +105,11 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         Matcher matcher = pattern.matcher(getEmail());
         return matcher.matches();
     }
+
+    @Override
+    public String toString() {
+        return "RegisterForm{" + "username=" + username + ", password=" + password + ", email=" + email + ", address=" + address + ", phone=" + phone + '}';
+    }
+    
+    
 }

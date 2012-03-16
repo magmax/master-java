@@ -23,30 +23,30 @@
                 <tr>
                     <td>Usuario:</td>
                     <td><html:text property="username"/></td>
-                    <td><html:errors property="username"/></td>
+                    <td><html:errors property="register.username"/></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td><html:text property="password"/></td>
-                    <td><html:errors property="password"/></td>
+                    <td><html:errors property="register.password"/></td>
                 </tr>
 
                 <tr>
                     <td>E-mail:</td>
                     <td><html:text property="email"/></td>
-                    <td><html:errors property="email"/></td>
+                    <td><html:errors property="register.email"/></td>
                 </tr>
 
                 <tr>
                     <td>Dirección:</td>
                     <td><html:text property="address"/></td>
-                    <td><html:errors property="address"/></td>
+                    <td><html:errors property="register.address"/></td>
                 </tr>
 
                 <tr>
                     <td>Teléfono:</td>
                     <td><html:text property="phone"/></td>
-                    <td><html:errors property="phone"/></td>
+                    <td><html:errors property="register.phone"/></td>
                 </tr>
             </table>
             <html:submit value="Registrarse"/>
