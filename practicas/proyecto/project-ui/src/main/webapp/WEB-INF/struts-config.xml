@@ -24,7 +24,9 @@
         <action input="/" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
             <forward name="error" path="/register.jsp"/>
         </action>
-        <action input="/" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true"/>
+        <action input="/" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true">
+            <forward name="error" path="/index.jsp"/>
+        </action>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

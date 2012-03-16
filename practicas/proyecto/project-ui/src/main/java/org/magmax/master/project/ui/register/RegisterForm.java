@@ -16,6 +16,8 @@
  */
 package org.magmax.master.project.ui.register;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
@@ -28,6 +30,7 @@ import org.apache.struts.action.ActionMessage;
  */
 public class RegisterForm extends org.apache.struts.action.ActionForm {
 
+    private static final String EMAIL_PATTERN = "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*\\.[A-Za-z]{2,}$";
     private String username;
     private String password;
     private String email;
@@ -78,13 +81,26 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         if (isEmpty(getUsername())) {
-            errors.add("Username", new ActionMessage("error name required"));
-            // TODO: add 'error.name.required' key to your resources
+            errors.add("username", new ActionMessage("error.name.required"));
+        }
+        if (isEmpty(getPassword())) {
+            errors.add("password", new ActionMessage("error.password.required"));
+        }
+        if (isEmpty(getEmail())) {
+            errors.add("email", new ActionMessage("error.email.required"));
+        } else if (!validEmail()) {
+            errors.add("email", new ActionMessage("error.mail.invalid"));
         }
         return errors;
     }
-    
+
     private boolean isEmpty(String value) {
         return value == null || value.length() < 1;
+    }
+
+    private boolean validEmail() {
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(getEmail());
+        return matcher.matches();
     }
 }

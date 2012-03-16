@@ -14,9 +14,9 @@
     <body>
 
     <center>
-        <h1>Registro de usuarios</h1>
+        <h1>Tienda</h1>
         <br/>
-        <p>El usuario no se encontró. Tal vez quiera usted registrarse.</p>
+        <p><b>Sección:</b></p>
 
         <html:form action="register" method="post">
             <table>

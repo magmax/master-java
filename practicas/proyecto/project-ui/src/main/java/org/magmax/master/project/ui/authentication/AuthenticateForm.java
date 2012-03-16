@@ -50,12 +50,10 @@ public class AuthenticateForm extends org.apache.struts.action.ActionForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         if (isEmpty(getUsername())) {
-            errors.add("username", new ActionMessage("error name required"));
-            // TODO: add 'error.name.required' key to your resources
+            errors.add("username", new ActionMessage("error.name.required"));
         }
         if (isEmpty(getPassword())) {
-            errors.add("password", new ActionMessage("error password required"));
-            // TODO: add 'error.name.required' key to your resources
+            errors.add("password", new ActionMessage("error.password.required"));
         }
         return errors;
     }
