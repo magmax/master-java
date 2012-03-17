@@ -32,25 +32,20 @@ public class UserDAO extends GenericDAO<User, Integer> {
     }
 
     public User findByCredentials(String username, String password) {
-        /*
-        EntityManager em = getEntityManager();
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = builder.createQuery(User.class);
-        Root<User> root = criteria.from(User.class);
-        criteria.where(builder.and(
-        builder.equal(root.get(User_.name), username),
-        builder.equal(root.get(User_.password), password)));
-        List<User> list = em.createQuery(criteria).getResultList();
-        if (list == null || list.isEmpty()) {
-        return null;
-        }
-        return list.get(0);
-         */
-
         EntityManager em = getEntityManager();
         Query query = em.createQuery("select user from User as user where user.name = ?1 and user.password = ?2", User.class);
         query.setParameter(1, username);
         query.setParameter(2, password);
+        List<User> result = query.getResultList();
+        if (result.isEmpty())
+            return null;
+        return result.get(0);
+    }
+
+    public User findByName(String username) {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("select user from User as user where user.name = ?1", User.class);
+        query.setParameter(1, username);
         List<User> result = query.getResultList();
         if (result.isEmpty())
             return null;

@@ -50,12 +50,16 @@ public class Authenticate extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        System.out.println("++++++");
+        System.out.println(request.getParameter("username"));
+        System.out.println(request.getParameter("password"));
+        System.out.println("------");
+        
         Persistence persistence = Persistence.getInstance();
         User user = persistence.getUserDAO().findByCredentials(request.getParameter("username"), request.getParameter("password"));
         if (user == null) {
             return mapping.findForward(ERROR);
         }
-        getServlet().getServletContext().setAttribute("user", user);
         return mapping.findForward(SUCCESS);
     }
 }

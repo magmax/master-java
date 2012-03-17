@@ -21,6 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.magmax.master.project.persistence.pojo.Email;
+import org.magmax.master.project.persistence.pojo.Phone;
+import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
@@ -48,7 +52,28 @@ public class Register extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        User user = new User();
+        user.setName(request.getParameter("username"));
+        user.setPassword(request.getParameter("password"));
+        user.setAdmin(Boolean.FALSE);
+
+        Email email = new Email();
+        email.setAddress(request.getParameter("email"));
+        user.addEmail(email);
+
+        if (!isEmpty(request.getParameter("phone"))) {
+            Phone phone = new Phone();
+            phone.setUser(user);
+            phone.setNumber(request.getParameter("phone"));
+            user.addPhone(phone);
+        }
+
+        Persistence.getInstance().getUserDAO().store(user);
         
-        return mapping.findForward(ERROR);
+        return mapping.findForward(SUCCESS);
+    }
+
+    private boolean isEmpty(String value) {
+        return value == null || value.length() == 0;
     }
 }

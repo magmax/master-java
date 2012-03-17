@@ -88,4 +88,13 @@ public class UserDAOTest {
     public void testAuthenticateNoUser() {
         assertNull("Not existing user", sut.findByCredentials("invalid", "invalid"));
     }
+    
+    @Test
+    public void testGetByName() {
+        sut.storeAndRefresh(user);
+        
+        User current = sut.findByName(user.getName());
+        
+        assertEquals (user, current);
+    }
 }

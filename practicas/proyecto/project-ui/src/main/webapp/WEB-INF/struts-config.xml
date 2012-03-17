@@ -4,7 +4,6 @@
           "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 
-
 <struts-config>
     <form-beans>
         <form-bean name="RegisterForm" type="org.magmax.master.project.ui.register.RegisterForm"/>
@@ -21,18 +20,19 @@
 
     <action-mappings>
         <action path="/Welcome" forward="/index.jsp"/>
-        <action input="/" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
+        <action input="/index.jsp" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
             <forward name="error" path="/register.jsp"/>
             <forward name="success" path="/shop.jsp"/>
         </action>
-        <action input="/" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true">
+        <action input="/register.jsp" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true">
             <forward name="error" path="/index.jsp"/>
+            <forward name="success" path="/index.jsp"/>
         </action>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
 
-    <message-resources parameter="org/magmax/master/proyecto/ui/ApplicationResource"/>    
+    <message-resources parameter="org/magmax/master/proyecto/ui/Messages"/>    
     
     <!-- ========================= Tiles plugin ===============================-->
     <!--

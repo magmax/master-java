@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
@@ -82,6 +83,8 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         ActionErrors errors = new ActionErrors();
         if (isEmpty(getUsername())) {
             errors.add("register.username", new ActionMessage("error.name.required"));
+        } else if (userExists(getUsername())){
+            errors.add("register.username", new ActionMessage("error.name.repeated"));
         }
         if (isEmpty(getPassword())) {
             errors.add("register.password", new ActionMessage("error.password.required"));
@@ -102,6 +105,10 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(getEmail());
         return matcher.matches();
+    }
+
+    private boolean userExists(String username) {
+        return Persistence.getInstance().getUserDAO().findByName(username) != null;
     }
 
 }
