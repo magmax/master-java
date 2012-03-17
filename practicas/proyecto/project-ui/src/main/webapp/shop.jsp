@@ -9,6 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>"Tienda Virtual"</title>
+        <link rel="stylesheet" type="text/css" href="style/main.css" />
         <html:base/>
     </head>
     <body>
@@ -16,41 +17,15 @@
     <center>
         <h1>Tienda</h1>
         <br/>
-        <p><b>Sección:</b></p>
+        <p><b>Sección:</b> 
+            <select name="section" size="1">
+                <option value="">-- None --</option>
+                <logic:iterate name="sectionlist" id="each" type="org.magmax.master.project.ui.shop.SectionForm">
+                    <option><bean:write name="each" property="name"/></option>
+                </logic:iterate>
+            </select>
+        </p>
 
-        <html:form action="register" method="post">
-            <table>
-                <tr>
-                    <td>Usuario:</td>
-                    <td><html:text property="username"/></td>
-                    <td><html:errors property="username"/></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><html:text property="password"/></td>
-                    <td><html:errors property="password"/></td>
-                </tr>
-
-                <tr>
-                    <td>E-mail:</td>
-                    <td><html:text property="email"/></td>
-                    <td><html:errors property="email"/></td>
-                </tr>
-
-                <tr>
-                    <td>Dirección:</td>
-                    <td><html:text property="address"/></td>
-                    <td><html:errors property="address"/></td>
-                </tr>
-
-                <tr>
-                    <td>Teléfono:</td>
-                    <td><html:text property="phone"/></td>
-                    <td><html:errors property="phone"/></td>
-                </tr>
-            </table>
-            <html:submit value="Registrarse"/>
-        </html:form>
         <br/>
         <br/>
     </center>

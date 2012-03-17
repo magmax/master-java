@@ -14,35 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.ui.authentication;
+package org.magmax.master.project.ui.shop;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.magmax.master.project.persistence.pojo.Section;
-import org.magmax.master.project.persistence.pojo.User;
-import org.magmax.master.project.ui.persistence.Persistence;
-import org.magmax.master.project.ui.shop.SectionForm;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class Authenticate extends org.apache.struts.action.Action {
+public class Shop extends org.apache.struts.action.Action {
 
-    /*
-     * forward name="success" path=""
-     */
+    /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String ERROR = "error";
 
     /**
      * This is the action called from the Struts framework.
-     *
      * @param mapping The ActionMapping used to select this instance.
      * @param form The optional ActionForm bean for this request.
      * @param request The HTTP Request we are processing.
@@ -54,26 +44,7 @@ public class Authenticate extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Persistence persistence = Persistence.getInstance();
-        User user = persistence.getUserDAO().findByCredentials(request.getParameter("username"), request.getParameter("password"));
-        if (user == null) {
-            return mapping.findForward(ERROR);
-        }
         
-        getServlet().getServletContext().setAttribute("user", user);
-        request.setAttribute("sectionlist", retrieveSections());
         return mapping.findForward(SUCCESS);
-    }
-
-    private List<SectionForm> retrieveSections() {
-        List<SectionForm> result = new ArrayList<SectionForm>();
-        for(Section each :Persistence.getInstance().getSectionDAO().findAll())
-        {
-            SectionForm section = new SectionForm();
-            section.setName(each.getName());
-            section.setId(each.getId());
-            result.add(section);
-        }
-        return result;
     }
 }

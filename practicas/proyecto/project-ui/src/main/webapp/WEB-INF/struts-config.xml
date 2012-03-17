@@ -6,6 +6,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="SectionForm" type="org.magmax.master.project.ui.shop.SectionForm"/>
         <form-bean name="RegisterForm" type="org.magmax.master.project.ui.register.RegisterForm"/>
         <form-bean name="AuthenticateForm" type="org.magmax.master.project.ui.authentication.AuthenticateForm"/>
     </form-beans>
@@ -20,13 +21,15 @@
 
     <action-mappings>
         <action path="/Welcome" forward="/index.jsp"/>
-        <action input="/index.jsp" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
+        <action input="/index.jsp" name="AuthenticateForm" path="/authenticate" scope="request" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
             <forward name="error" path="/register.jsp"/>
             <forward name="success" path="/shop.jsp"/>
         </action>
-        <action input="/register.jsp" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true">
+        <action input="/register.jsp" name="RegisterForm" path="/register" scope="request" type="org.magmax.master.project.ui.register.Register" validate="true">
             <forward name="error" path="/index.jsp"/>
             <forward name="success" path="/index.jsp"/>
+        </action>
+        <action input="/shop.jsp" name="SectionForm" path="/shop" scope="request" type="org.magmax.master.project.ui.shop.Shop" validate="false">
         </action>
     </action-mappings>
     
