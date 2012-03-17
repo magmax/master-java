@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
@@ -33,7 +35,6 @@ public class Authenticate extends org.apache.struts.action.Action {
      */
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
-    
 
     /**
      * This is the action called from the Struts framework.
@@ -49,6 +50,12 @@ public class Authenticate extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        return mapping.findForward(ERROR);
+        Persistence persistence = Persistence.getInstance();
+        User user = persistence.getUserDAO().findByCredentials(request.getParameter("username"), request.getParameter("password"));
+        if (user == null) {
+            return mapping.findForward(ERROR);
+        }
+        getServlet().getServletContext().setAttribute("user", user);
+        return mapping.findForward(SUCCESS);
     }
 }

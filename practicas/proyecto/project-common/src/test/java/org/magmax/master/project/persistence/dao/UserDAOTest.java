@@ -74,4 +74,18 @@ public class UserDAOTest {
         assertEquals(1, current.getPhones().size());
         assertEquals(phone.getNumber(), current.getPhones().get(0).getNumber());
     }
+    
+    @Test
+    public void testAuthenticatedUser() {
+        user.setPassword("valid password");
+        sut.storeAndRefresh(user);
+        
+        assertEquals("Authorized user",user, sut.findByCredentials(user.getName(), user.getPassword()));
+        assertNull("Not authorized user", sut.findByCredentials(user.getName(), "invalid"));
+    }
+    
+    @Test
+    public void testAuthenticateNoUser() {
+        assertNull("Not existing user", sut.findByCredentials("invalid", "invalid"));
+    }
 }

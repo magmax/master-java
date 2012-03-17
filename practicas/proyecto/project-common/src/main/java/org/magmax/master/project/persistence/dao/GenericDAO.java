@@ -19,10 +19,8 @@ package org.magmax.master.project.persistence.dao;
 import org.magmax.master.project.persistence.pojo.GenericEntity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -78,16 +76,11 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
     }
 
     public List<T> findAll() {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object> query = builder.createQuery();
-        Root<T> from = query.from(persistentClass);
-        CriteriaQuery<Object> select = query.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<T> result = new ArrayList<T>();
-        for (Object each : typedQuery.getResultList()) {
-            result.add((T) each);
-        }
-        return result;
+        EntityManager em = getEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(persistentClass);
+        criteria.from( persistentClass );
+        return em.createQuery( criteria ).getResultList();
     }
 
     public void refresh(T object) {

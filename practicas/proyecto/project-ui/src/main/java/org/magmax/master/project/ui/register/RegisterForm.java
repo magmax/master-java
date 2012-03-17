@@ -83,7 +83,6 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         if (isEmpty(getUsername())) {
             errors.add("register.username", new ActionMessage("error.name.required"));
         }
-        /*
         if (isEmpty(getPassword())) {
             errors.add("register.password", new ActionMessage("error.password.required"));
         }
@@ -92,7 +91,6 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         } else if (!validEmail()) {
             errors.add("register.email", new ActionMessage("error.email.invalid"));
         }
-        */
         return errors;
     }
 
@@ -106,10 +104,4 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         return matcher.matches();
     }
 
-    @Override
-    public String toString() {
-        return "RegisterForm{" + "username=" + username + ", password=" + password + ", email=" + email + ", address=" + address + ", phone=" + phone + '}';
-    }
-    
-    
 }

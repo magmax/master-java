@@ -23,6 +23,7 @@
         <action path="/Welcome" forward="/index.jsp"/>
         <action input="/" name="AuthenticateForm" path="/authenticate" scope="session" type="org.magmax.master.project.ui.authentication.Authenticate" validate="true">
             <forward name="error" path="/register.jsp"/>
+            <forward name="success" path="/shop.jsp"/>
         </action>
         <action input="/" name="RegisterForm" path="/register" scope="session" type="org.magmax.master.project.ui.register.Register" validate="true">
             <forward name="error" path="/index.jsp"/>
@@ -67,9 +68,7 @@
     
     <!-- ========================= Validator plugin ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property
-            property="pathnames"
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
     </plug-in>
   
 </struts-config>

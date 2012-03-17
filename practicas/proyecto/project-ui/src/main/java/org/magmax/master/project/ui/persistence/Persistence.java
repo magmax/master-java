@@ -14,31 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.persistence.dao;
+package org.magmax.master.project.ui.persistence;
 
-import javax.persistence.EntityManager;
-import org.magmax.master.project.persistence.pojo.Email;
-import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.persistence.dao.DAOFactory;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class EmailDAO extends GenericDAO<Email, Integer> {
+public class Persistence extends DAOFactory {
 
-    public EmailDAO(EntityManager entityManager) {
-        super(entityManager);
+    private static Persistence instance = null;
+
+    private Persistence() {
+        super("production");
     }
 
-    @Override
-    public void store(Email email) {
-        UserDAO userdao = new UserDAO(getEntityManager());
-        User user = email.getUser();
-        if (user != null) {
-            user.addEmail(email);
-            userdao.store(user);
-            userdao.refresh(user);
+    public static Persistence getInstance() {
+        if (instance == null) {
+            instance = new Persistence();
         }
-        super.store(email);
+        return instance;
+    }
+
+    public void destroy() {
+        if (instance == null)
+            return;
+        super.destroy();
     }
 }

@@ -24,6 +24,7 @@
     <formset>
 
         <!-- An example form -->
+        <!--
         <form name="logonForm">
             <field
                 property="username"
@@ -40,7 +41,7 @@
                     </var>
             </field>
         </form>
-
+    -->
     </formset>
 
     <!-- An example formset for another locale -->
@@ -52,6 +53,7 @@
         </constant>
 
         <!-- An example form -->
+        <!--
         <form name="logonForm">
             <field
                 property="username"
@@ -68,7 +70,7 @@
                     </var>
             </field>
         </form>
-
-   </formset>
+    -->
+    </formset>
 
 </form-validation>

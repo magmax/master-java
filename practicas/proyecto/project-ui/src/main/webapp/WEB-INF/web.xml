@@ -29,18 +29,4 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!--
-    <taglib>
-        <taglib-uri>http://struts.apache.org/tags-html</taglib-uri>
-        <taglib-location>/WEB-INF/tags-html.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>http://struts.apache.org/tags-logic</taglib-uri>
-        <taglib-location>/WEB-INF/tags-logic.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>http://struts.apache.org/tags-bean</taglib-uri>
-        <taglib-location>/WEB-INF/tags-bean.tld</taglib-location>
-    </taglib>
-    -->
 </web-app>
