@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.magmax.master.project.ui.Helper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
@@ -81,24 +82,20 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (isEmpty(getUsername())) {
+        if (Helper.isEmptyString(getUsername())) {
             errors.add("register.username", new ActionMessage("error.name.required"));
-        } else if (userExists(getUsername())){
+        } else if (userExists(getUsername())) {
             errors.add("register.username", new ActionMessage("error.name.repeated"));
         }
-        if (isEmpty(getPassword())) {
+        if (Helper.isEmptyString(getPassword())) {
             errors.add("register.password", new ActionMessage("error.password.required"));
         }
-        if (isEmpty(getEmail())) {
+        if (Helper.isEmptyString(getEmail())) {
             errors.add("register.email", new ActionMessage("error.email.required"));
         } else if (!validEmail()) {
             errors.add("register.email", new ActionMessage("error.email.invalid"));
         }
         return errors;
-    }
-
-    private boolean isEmpty(String value) {
-        return value == null || value.length() == 0;
     }
 
     private boolean validEmail() {
@@ -110,5 +107,4 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     private boolean userExists(String username) {
         return Persistence.getInstance().getUserDAO().findByName(username) != null;
     }
-
 }

@@ -10,10 +10,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>"Tienda Virtual"</title>
         <link rel="stylesheet" type="text/css" href="style/main.css" />
-            
+
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-        
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#section").change(function() {
+                    $.get("productlist.do", {"section":"section1"}, function (data, textStatus, jqXHR) {
+                        $("#pricelist").html(data);
+                    }, "html");
+                });
+            });
+        </script>
+
         <html:base/>
     </head>
     <body>
@@ -22,7 +32,7 @@
         <h1>Tienda</h1>
         <br/>
         <p><b>Sección:</b> 
-            <select name="section" size="1" class="ui-widget">
+            <select id="section" size="1" class="ui-widget">
                 <option value="">-- None --</option>
                 <logic:iterate name="sectionlist" id="each" type="org.magmax.master.project.ui.shop.SectionForm">
                     <option><bean:write name="each" property="name"/></option>

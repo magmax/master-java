@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Email;
 import org.magmax.master.project.persistence.pojo.Phone;
 import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.Helper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
@@ -61,7 +62,7 @@ public class Register extends org.apache.struts.action.Action {
         email.setAddress(request.getParameter("email"));
         user.addEmail(email);
 
-        if (!isEmpty(request.getParameter("phone"))) {
+        if (!Helper.isEmptyString(request.getParameter("phone"))) {
             Phone phone = new Phone();
             phone.setUser(user);
             phone.setNumber(request.getParameter("phone"));
@@ -71,9 +72,5 @@ public class Register extends org.apache.struts.action.Action {
         Persistence.getInstance().getUserDAO().store(user);
         
         return mapping.findForward(SUCCESS);
-    }
-
-    private boolean isEmpty(String value) {
-        return value == null || value.length() == 0;
     }
 }
