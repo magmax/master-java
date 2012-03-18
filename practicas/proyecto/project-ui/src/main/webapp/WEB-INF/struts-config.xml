@@ -6,6 +6,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="ProductForm" type="org.magmax.master.project.ui.shop.ProductForm"/>
         <form-bean name="SectionForm" type="org.magmax.master.project.ui.shop.SectionForm"/>
         <form-bean name="RegisterForm" type="org.magmax.master.project.ui.register.RegisterForm"/>
         <form-bean name="AuthenticateForm" type="org.magmax.master.project.ui.authentication.AuthenticateForm"/>
@@ -31,6 +32,7 @@
         </action>
         <action input="/shop.jsp" name="SectionForm" path="/shop" scope="request" type="org.magmax.master.project.ui.shop.Shop" validate="false">
         </action>
+        <action input="/index.jsp" name="ProductForm" parameter="section" path="/productlist" scope="request" type="org.magmax.master.project.ui.shop.ProductList" validate="false"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
