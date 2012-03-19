@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.magmax.master.project.persistence.pojo.Invoice;
@@ -62,9 +63,9 @@ public class InvoiceDAOTest {
         SoldProduct soldproduct = new SoldProduct();
         soldproduct.setProduct(product);
         invoice.addProduct(soldproduct);
-        
+
         sut.storeAndRefresh(invoice);
-        
+
         Invoice current = sut.findById(invoice.getId());
 
         assertEquals("Invoice must have a product", 1, current.getProducts().size());
@@ -76,10 +77,87 @@ public class InvoiceDAOTest {
         User user = new User();
         user.setName("Max Cavalera");
         invoice.setUser(user);
-        
+
         sut.storeAndRefresh(invoice);
-        
+
         Invoice current = sut.findById(invoice.getId());
         assertEquals(user.getName(), current.getUser().getName());
+    }
+
+    @Test
+    public void testGivenAnUserAndAListOfProductsBuildsTheInvoice() {
+        User user = new User();
+        user.setName("Max Cavalera");
+        invoice.setUser(user);
+
+        Product product = new Product();
+        product.setName("product 1");
+        product.setPrize(200F);
+        factory.getProductDAO().storeAndRefresh(product);
+
+        ArrayList<Product> products = new ArrayList<Product>();
+        products.add(product);
+
+        Invoice invoice = sut.createInvoice(user, products);
+
+        assertNotNull(invoice);
+        assertNotNull(invoice.getId());
+        assertNotNull(invoice.getProducts());
+        assertEquals(1, invoice.getProducts().size());
+        assertEquals(1, sut.findAll().size());
+    }
+
+    @Test
+    public void testGivenAnUserAndAListOfProductsBuildsTheInvoice2() {
+        User user = new User();
+        user.setName("Max Cavalera");
+        invoice.setUser(user);
+
+        Product product = new Product();
+        product.setName("product 1");
+        product.setPrize(200F);
+        factory.getProductDAO().storeAndRefresh(product);
+        
+        Product product2 = new Product();
+        product2.setName("product 2");
+        product2.setPrize(200F);
+        factory.getProductDAO().storeAndRefresh(product2);
+
+
+        ArrayList<Product> products = new ArrayList<Product>();
+        products.add(product);
+        products.add(product2);
+
+        Invoice invoice = sut.createInvoice(user, products);
+
+        assertNotNull(invoice);
+        assertNotNull(invoice.getId());
+        assertNotNull(invoice.getProducts());
+        assertEquals(2, invoice.getProducts().size());
+        assertEquals(1, sut.findAll().size());
+    }
+    
+    @Test
+    public void testGivenAnUserAndAListOfProductsBuildsTheInvoice3() {
+        User user = new User();
+        user.setName("Max Cavalera");
+        invoice.setUser(user);
+
+        Product product = new Product();
+        product.setName("product 1");
+        product.setPrize(200F);
+        factory.getProductDAO().storeAndRefresh(product);
+
+        ArrayList<Product> products = new ArrayList<Product>();
+        products.add(product);
+        products.add(product);
+
+        Invoice invoice = sut.createInvoice(user, products);
+
+        assertNotNull(invoice);
+        assertNotNull(invoice.getId());
+        assertNotNull(invoice.getProducts());
+        assertEquals(2, invoice.getProducts().size());
+        assertEquals(1, sut.findAll().size());
     }
 }

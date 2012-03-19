@@ -58,11 +58,10 @@
                 $.each($("#current_cart td[name='ref']"), function(idx, item) {
                     products.push (item.innerText);
                 });
-                $.post("buy.do", {"products":products}, function (data) {
+                $.post("buy.do", {"products": products.join(',')}, function (data) {
                     $("#current_cart").hide('explode', function(){
-                        $("#formalization").fadeOut();
                         $("#current_cart tbody tr").remove();
-                        $("#current_cart").fadeIn();
+                        window.location="bought.jsp";
                     });
                 });
             }

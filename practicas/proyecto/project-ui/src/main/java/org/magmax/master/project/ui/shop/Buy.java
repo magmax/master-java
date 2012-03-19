@@ -16,11 +16,18 @@
  */
 package org.magmax.master.project.ui.shop;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.magmax.master.project.persistence.pojo.Invoice;
+import org.magmax.master.project.persistence.pojo.Product;
+import org.magmax.master.project.persistence.pojo.SoldProduct;
+import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
@@ -44,7 +51,20 @@ public class Buy extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        System.out.println("Pasa!!!");
+        User user = (User) getServlet().getServletContext().getAttribute("user");
+
+
+        List<Product> products = Persistence.getInstance().getProductDAO().findByIds(retrieveIds(request));
+        Invoice invoice = Persistence.getInstance().getInvoiceDAO().createInvoice(user, products);
+
         return mapping.findForward(SUCCESS);
+    }
+
+    private List<Integer> retrieveIds(HttpServletRequest request) {
+        List<Integer> result = new ArrayList<Integer>();
+        for (String each : request.getParameter("products").split(",")) {
+            result.add(Integer.valueOf(each));
+        }
+        return result;
     }
 }

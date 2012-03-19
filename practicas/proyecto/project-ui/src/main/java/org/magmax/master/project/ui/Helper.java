@@ -16,6 +16,8 @@
  */
 package org.magmax.master.project.ui;
 
+import java.util.Enumeration;
+
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
@@ -23,5 +25,11 @@ package org.magmax.master.project.ui;
 public class Helper {
     public static boolean isEmptyString(String value) {
         return value == null || value.isEmpty();
+    }
+    
+    public static void debugEnumeration(Enumeration list ){
+        while (list.hasMoreElements()) {
+            System.out.println(list.nextElement());
+        }
     }
 }

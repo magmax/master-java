@@ -16,6 +16,8 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.magmax.master.project.persistence.pojo.Product;
@@ -26,6 +28,7 @@ import org.magmax.master.project.persistence.pojo.Section;
  * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
 public class ProductDAOTest {
+
     private ProductDAO sut;
     private Product product;
     private DAOFactory factory;
@@ -42,28 +45,51 @@ public class ProductDAOTest {
     public void testCreation() {
         sut.store(product);
         sut.refresh(product);
-        
+
         assertNotNull(product.getId());
     }
-    
+
     @Test
     public void testCanHaveASection() {
         Section section = new Section();
         section.setName("Heavy Metal");
         product.setSection(section);
-        
+
         sut.storeAndRefresh(product);
-        
+
         Product current = sut.findById(product.getId());
         assertEquals(section.getName(), current.getSection().getName());
     }
-    
+
     @Test
     public void testRetrieveByName() {
         sut.storeAndRefresh(product);
-        
+
         Product current = sut.findByName(product.getName());
-        
+
         assertEquals(product.getId(), current.getId());
+    }
+
+    @Test
+    public void testRetrieveByArrayOfIds() {
+        sut.storeAndRefresh(product);
+
+        List<Product> current = sut.findByIds(new Integer[]{product.getId()});
+    
+        assertEquals(1, current.size());
+        assertEquals(product, current.get(0));
+    }
+    
+    @Test
+    public void testRetrieveByListOfIds() {
+        sut.storeAndRefresh(product);
+        
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(product.getId());
+        
+        List<Product> current = sut.findByIds(ids);
+        
+        assertEquals(1, current.size());
+        assertEquals(product, current.get(0));
     }
 }

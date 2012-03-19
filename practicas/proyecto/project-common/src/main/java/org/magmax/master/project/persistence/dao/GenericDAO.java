@@ -19,6 +19,8 @@ package org.magmax.master.project.persistence.dao;
 import org.magmax.master.project.persistence.pojo.GenericEntity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -85,5 +87,21 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
 
     public void refresh(T object) {
         entityManager.refresh(object);
+    }
+    
+    public List<T> findByIds(I[] idList) {
+        List<T> result = new ArrayList<T>();
+        for (I each : idList) {
+            result.add(findById(each));
+        }
+        return result;
+    }
+    
+    public List<T> findByIds(Collection<I> ids) {
+        List<T> result = new ArrayList<T>();
+        for (I each : ids) {
+            result.add(findById(each));
+        }
+        return result;
     }
 }

@@ -23,5 +23,6 @@
     <center>
         <h1>Su compra se ha registrado</h1>
     </center>
+    <html:link forward="welcome" styleClass="button" >Volver</html:link>
 </body>
 </html:html>
