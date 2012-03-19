@@ -16,6 +16,7 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
+                $( ".button" ).button();
                 $("#pricelist").hide();
                 $("#section").change(function() {
                     $("#pricelist").slideUp(function() {
@@ -53,6 +54,6 @@
         <div id="currentlist">
         </div>
     </center>
-    <html:link forward="welcome">Volver</html:link>
+    <html:link forward="welcome" styleClass="button" >Volver</html:link>
 </body>
 </html:html>

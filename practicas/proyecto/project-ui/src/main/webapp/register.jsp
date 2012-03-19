@@ -11,6 +11,12 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $( ".button" ).button();
+            });
+        </script>
         <html:base/>
     </head>
     <body>
@@ -51,11 +57,11 @@
                     <td class="error"><html:errors property="register.phone"/></td>
                 </tr>
             </table>
-            <html:submit value="Registrarse" styleClass="ui-widget"/>
+            <html:submit value="Registrarse" styleClass="button"/>
         </html:form>
         <br/>
         <br/>
     </center>
-    <html:link forward="welcome">Volver</html:link>
-    </body>
+    <html:link forward="welcome" styleClass="button">Volver</html:link>
+</body>
 </html:html>

@@ -22,7 +22,7 @@
             <tbody>
                 <logic:iterate name="productlist" id="each" type="org.magmax.master.project.ui.shop.ProductForm">
                     <tr>
-                        <td><span class="ui-icon ui-icon-cart" title="Comprar" name="buy"></span></td>
+                        <td><span class="ui-icon ui-icon-cart" title="Comprar" name="buy" onclick="buy()"></span></td>
                         <td><bean:write name="each" property="name"/></td>
                         <td><bean:write name="each" property="price"/></td>
                         <td><bean:write name="each" property="description"/></td>

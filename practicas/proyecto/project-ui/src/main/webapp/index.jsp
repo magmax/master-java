@@ -11,6 +11,11 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $( ".button" ).button();
+            });
+        </script>
         <html:base/>
     </head>
     <body>
@@ -31,7 +36,7 @@
                     <td><html:errors property="auth.password"/></td>
                 </tr>
             </table>
-            <html:submit value="Entrar" styleClass="ui-widget"/>
+            <html:submit value="Entrar" styleClass="button"/>
         </html:form>
     </center>
 </body>
