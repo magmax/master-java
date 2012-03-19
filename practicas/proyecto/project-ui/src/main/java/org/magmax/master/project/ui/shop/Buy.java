@@ -16,54 +16,35 @@
  */
 package org.magmax.master.project.ui.shop;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.magmax.master.project.persistence.pojo.Product;
-import org.magmax.master.project.persistence.pojo.Section;
-import org.magmax.master.project.ui.Helper;
-import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class ProductList extends org.apache.struts.action.Action {
+public class Buy extends org.apache.struts.action.Action {
 
+    /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String ERROR = "error";
 
+    /**
+     * This is the action called from the Struts framework.
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     * @throws java.lang.Exception
+     * @return
+     */
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        if (Helper.isEmptyString((String) request.getParameter("section"))) {
-            return null;
-        }
-
-        request.setAttribute("productlist", retrievePrices(request.getParameter("section")));
-
+        System.out.println("Pasa!!!");
         return mapping.findForward(SUCCESS);
-    }
-
-    private List<ProductForm> retrievePrices(String sectionName) {
-        List<ProductForm> result = new ArrayList<ProductForm>();
-        Section section = Persistence.getInstance().getSectionDAO().findByName(sectionName);
-        if (section == null) {
-            return result;
-        }
-        for (Product each : section.getProducts()) {
-            ProductForm product = new ProductForm();
-            product.setId(each.getId());
-            product.setName(each.getName());
-            product.setDescription(each.getDescription());
-            product.setPrice(each.getPrize());
-            result.add(product);
-        }
-        return result;
     }
 }

@@ -36,6 +36,9 @@
             <forward name="error" path="/index.jsp"/>
             <forward name="success" path="/productlist.jsp"/>            
         </action>
+        <action path="/buy" type="org.magmax.master.project.ui.shop.Buy">
+            <forward name="success" path="/bought.jsp"/>
+        </action>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

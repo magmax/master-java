@@ -18,17 +18,54 @@
             $(document).ready(function() {
                 $( ".button" ).button();
                 $("#pricelist").hide();
+                
                 $("#section").change(function() {
                     $("#pricelist").slideUp(function() {
                         var sectionname = $("#section").val();
                         if (sectionname != "") {
-                            $.get("productlist.do", {"section":sectionname}, function (data) {
+                            $.post("productlist.do", {"section":sectionname}, function (data) {
                                 $("#pricelist").html(data).slideDown();
-                            }, "html");
+                            });
                         }
                     });
                 });
             });
+            
+            function buy(id, name, price, description) {
+                var row = '<td><span class="ui-icon ui-icon-trash" onclick="deleteRow(this)"/></td>';
+                row += '<td name="ref">' + id + "</td>";
+                row += '<td name="product">' + name + "</td>";
+                row += "<td>" + price + "</td>";
+                row += "<td>" + description + "</td>";
+                $("#current_cart tbody").append('<tr style="display:none">' + row + "</tr>");
+                $("#current_cart tbody tr:last").fadeIn(1000); 
+                $("#formalization").show("fade");
+            }
+            
+            function deleteRow(span) {
+                var row = $(span).parent().parent();
+                row.fadeOut(function() {
+                    row.remove();
+                    row = null;
+                    if ($("#current_cart tbody tr").size() == 0) {
+                        $("#formalization").fadeOut();
+                    }
+                });
+            }
+            
+            function formalize() {
+                var products = new Array();
+                $.each($("#current_cart td[name='ref']"), function(idx, item) {
+                    products.push (item.innerText);
+                });
+                $.post("buy.do", {"products":products}, function (data) {
+                    $("#current_cart").hide('explode', function(){
+                        $("#formalization").fadeOut();
+                        $("#current_cart tbody tr").remove();
+                        $("#current_cart").fadeIn();
+                    });
+                });
+            }
         </script>
 
         <html:base/>
@@ -48,10 +85,26 @@
         </p>
 
         <br/>
-        <br/>
         <div id="pricelist">
         </div>
-        <div id="currentlist">
+        <br/>
+        <h2>Compra actual</h2>
+        <div>
+            <table class="ui-widget-content" id="current_cart">
+                <thead >
+                    <tr class="ui-widget-header">
+                        <td></td>
+                        <td>Referencia</td>
+                        <td>Producto</td>
+                        <td>Precio</td>
+                        <td>Descripción</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br/>
+            <a href="javascript:void(formalize())" class="button" style="display:none" id="formalization">Formalizar compra</a>
         </div>
     </center>
     <html:link forward="welcome" styleClass="button" >Volver</html:link>

@@ -14,6 +14,7 @@
             <thead >
                 <tr class="ui-widget-header">
                     <td/></td>
+                    <td>Referencia</td>
                     <td>Producto</td>
                     <td>Precio</td>
                     <td>Descripción</td>
@@ -22,7 +23,11 @@
             <tbody>
                 <logic:iterate name="productlist" id="each" type="org.magmax.master.project.ui.shop.ProductForm">
                     <tr>
-                        <td><span class="ui-icon ui-icon-cart" title="Comprar" name="buy" onclick="buy()"></span></td>
+                        <td><span class="ui-icon ui-icon-cart" title="Comprar" name="buy" 
+                                  onclick="buy('<bean:write name="each" property="id"/>', '<bean:write name="each" property="name"/>', '<bean:write name="each" property="price"/>', '<bean:write name="each" property="description"/>')">
+                            </span>
+                        </td>
+                        <td><bean:write name="each" property="id"/></td>
                         <td><bean:write name="each" property="name"/></td>
                         <td><bean:write name="each" property="price"/></td>
                         <td><bean:write name="each" property="description"/></td>
