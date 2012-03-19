@@ -52,10 +52,18 @@ public class ProductDAOTest {
         section.setName("Heavy Metal");
         product.setSection(section);
         
-        sut.store(product);
-        sut.refresh(product);
+        sut.storeAndRefresh(product);
         
         Product current = sut.findById(product.getId());
         assertEquals(section.getName(), current.getSection().getName());
+    }
+    
+    @Test
+    public void testRetrieveByName() {
+        sut.storeAndRefresh(product);
+        
+        Product current = sut.findByName(product.getName());
+        
+        assertEquals(product.getId(), current.getId());
     }
 }

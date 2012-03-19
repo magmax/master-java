@@ -17,6 +17,7 @@
 package org.magmax.master.project.ui.shop;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Product;
+import org.magmax.master.project.persistence.pojo.Section;
 import org.magmax.master.project.ui.Helper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
@@ -40,21 +42,22 @@ public class ProductList extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        /*
-        if (Helper.isEmptyString((String) request.getAttribute("section")))
+        if (Helper.isEmptyString((String) request.getParameter("section"))) {
             return null;
-         * 
-         */
-        
-        request.setAttribute("pricelist", retrievePrices(request.getAttribute("section")));
-        
+        }
+
+        request.setAttribute("productlist", retrievePrices(request.getParameter("section")));
+
         return mapping.findForward(SUCCESS);
     }
 
-    private List<ProductForm> retrievePrices(Object attribute) {
+    private List<ProductForm> retrievePrices(String sectionName) {
         List<ProductForm> result = new ArrayList<ProductForm>();
-        for(Product each :Persistence.getInstance().getProductDAO().findAll())
-        {
+        Section section = Persistence.getInstance().getSectionDAO().findByName(sectionName);
+        if (section == null) {
+            return result;
+        }
+        for (Product each : section.getProducts()) {
             ProductForm product = new ProductForm();
             product.setId(each.getId());
             product.setName(each.getName());

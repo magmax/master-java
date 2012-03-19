@@ -25,15 +25,17 @@ import javax.persistence.*;
  */
 @Entity
 public class Product implements GenericEntity<Integer> {
+
     @Id
     @GeneratedValue
     private Integer id;
+    @Column(unique = true, nullable = false)
     private String name;
     private String description;
-    @ManyToOne(targetEntity=Section.class)
+    @ManyToOne(targetEntity = Section.class)
     private Section section;
     private Float prize;
-    
+
     public Product() {
     }
 

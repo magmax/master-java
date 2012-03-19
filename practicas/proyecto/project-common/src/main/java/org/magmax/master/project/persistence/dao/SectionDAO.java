@@ -16,7 +16,9 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.magmax.master.project.persistence.pojo.Section;
 
 /**
@@ -27,5 +29,16 @@ public class SectionDAO extends GenericDAO<Section, Integer> {
 
     public SectionDAO(EntityManager entityManager) {
         super(entityManager);
+    }
+
+    public Section findByName(String name) {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("select section from Section as section where section.name = ?1", Section.class);
+        query.setParameter(1, name);
+        List<Section> result = query.getResultList();
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
     }
 }

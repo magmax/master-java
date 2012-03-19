@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>"Tienda Virtual"</title>
         <link rel="stylesheet" type="text/css" href="style/main.css" />
-            
+
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
         <html:base/>
@@ -31,7 +31,7 @@
                     <td><html:errors property="auth.password"/></td>
                 </tr>
             </table>
-            <html:submit value="Entrar"/>
+            <html:submit value="Entrar" styleClass="ui-widget"/>
         </html:form>
     </center>
 </body>

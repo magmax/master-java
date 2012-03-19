@@ -16,7 +16,9 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.magmax.master.project.persistence.pojo.Product;
 import org.magmax.master.project.persistence.pojo.Section;
 
@@ -40,5 +42,16 @@ public class ProductDAO extends GenericDAO<Product, Integer> {
             sectiondao.refresh(section);
         }
         super.store(product);
+    }
+
+    public Product findByName(String name) {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("select product from Product as product where product.name = ?1", Product.class);
+        query.setParameter(1, name);
+        List<Product> result = query.getResultList();
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
     }
 }

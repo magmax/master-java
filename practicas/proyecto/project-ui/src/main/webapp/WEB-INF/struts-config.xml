@@ -34,8 +34,8 @@
         </action>
         <action input="/index.jsp" name="ProductForm" path="/productlist" scope="request" type="org.magmax.master.project.ui.shop.ProductList" validate="false">
             <forward name="error" path="/index.jsp"/>
-            <forward name="success" path="/shoppricelist.jsp"/>            
-        </action>    
+            <forward name="success" path="/productlist.jsp"/>            
+        </action>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

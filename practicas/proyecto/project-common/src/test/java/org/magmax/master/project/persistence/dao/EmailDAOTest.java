@@ -52,6 +52,7 @@ public class EmailDAOTest {
     @Test
     public void testAnEmailIsAssociatedToAnUser() {
         User user = new User();
+        user.setName("fulanito");
         email.setUser(user);
 
         sut.storeAndRefresh(email);

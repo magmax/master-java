@@ -25,6 +25,7 @@ import org.magmax.master.project.persistence.pojo.Section;
  * @author Miguel Angel Garcia<miguelangel.garcia@gmail.com>
  */
 public class SectionDAOTest {
+
     private SectionDAO sut;
     private Section section;
     private DAOFactory factory;
@@ -39,9 +40,17 @@ public class SectionDAOTest {
 
     @Test
     public void testCreation() {
-        sut.store(section);
-        sut.refresh(section);
-        
+        sut.storeAndRefresh(section);
+
         assertNotNull(section.getId());
+    }
+
+    @Test
+    public void testRetrieveByName() {
+        sut.storeAndRefresh(section);
+
+        Section current = sut.findByName(section.getName());
+        
+        assertEquals(section.getId(), current.getId());
     }
 }

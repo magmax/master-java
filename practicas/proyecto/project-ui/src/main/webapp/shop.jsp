@@ -16,10 +16,16 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
+                $("#pricelist").hide();
                 $("#section").change(function() {
-                    $.get("productlist.do", {"section":"section1"}, function (data, textStatus, jqXHR) {
-                        $("#pricelist").html(data);
-                    }, "html");
+                    $("#pricelist").slideUp(function() {
+                        var sectionname = $("#section").val();
+                        if (sectionname != "") {
+                            $.get("productlist.do", {"section":sectionname}, function (data) {
+                                $("#pricelist").html(data).slideDown();
+                            }, "html");
+                        }
+                    });
                 });
             });
         </script>
@@ -48,5 +54,5 @@
         </div>
     </center>
     <html:link forward="welcome">Volver</html:link>
-    </body>
+</body>
 </html:html>

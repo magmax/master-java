@@ -18,6 +18,7 @@ package org.magmax.master.project.persistence.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,6 +36,7 @@ public class User implements GenericEntity<Integer> {
     @Id
     @GeneratedValue
     private Integer id;
+    @Column(unique=true, nullable=false) 
     private String name;
     private String password;
     private Boolean admin;
