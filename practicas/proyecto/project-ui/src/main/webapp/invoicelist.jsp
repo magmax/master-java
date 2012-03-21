@@ -30,8 +30,8 @@
                             <td><bean:write name="each" property="date"/></td>
                             <td><bean:write name="each" property="username"/></td>
                             <td><bean:write name="each" property="productName"/></td>
-                            <td><bean:write name="each" property="price"/></td>
                             <td><bean:write name="each" property="units"/></td>
+                            <td><bean:write name="each" property="price"/></td>
                             <td><bean:write name="each" property="total"/></td>
                         </tr>
                     </logic:iterate>
