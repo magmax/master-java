@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <logic:iterate name="productlist" id="each" type="org.magmax.master.project.ui.shop.ProductForm">
+                <logic:iterate name="product_list" id="each" type="org.magmax.master.project.ui.shop.ProductForm">
                     <tr>
                         <td><span class="ui-icon ui-icon-cart" title="Comprar" name="buy" 
                                   onclick="buy('<bean:write name="each" property="id"/>', '<bean:write name="each" property="name"/>', '<bean:write name="each" property="price"/>', '<bean:write name="each" property="description"/>')">

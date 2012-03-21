@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.admin.product;
 
-import javax.swing.SpinnerNumberModel;
 import org.magmax.master.project.admin.BaseCrudPanel;
 import org.magmax.master.project.admin.Persistence;
 import org.magmax.master.project.persistence.dao.SectionDAO;

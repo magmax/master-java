@@ -39,6 +39,7 @@ public class User implements GenericEntity<Integer> {
     @Column(unique=true, nullable=false) 
     private String name;
     private String password;
+    @Column(name="is_admin")
     private Boolean admin;
     @OneToMany(targetEntity = Email.class, mappedBy = "user")
     private List<Email> emails;
@@ -78,6 +79,10 @@ public class User implements GenericEntity<Integer> {
 
     public void setAdmin(Boolean isAdmin) {
         this.admin = isAdmin;
+    }
+    
+    public Boolean getAdmin() {
+        return admin;
     }
 
     public List<Email> getEmails() {

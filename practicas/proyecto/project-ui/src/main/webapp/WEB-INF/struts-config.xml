@@ -19,6 +19,8 @@
 
     <global-forwards>
         <forward name="welcome"  path="/index.jsp"/>
+        <forward name="about"  path="/about.jsp"/>
+        <forward name="register"  path="/register.jsp"/>
     </global-forwards>
 
     <action-mappings>

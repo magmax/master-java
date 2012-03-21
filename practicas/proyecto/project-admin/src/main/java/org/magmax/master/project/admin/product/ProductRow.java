@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.admin.product;
 
-import org.magmax.eswing.crud.CrudObject;
 import org.magmax.eswing.crud.DefaultCrudObject;
 import org.magmax.master.project.persistence.pojo.Product;
 
@@ -28,10 +27,8 @@ public class ProductRow extends DefaultCrudObject<Product> {
 
     @Override
     public Product getEntity() {
-        Product entity = super.getEntity();
-        if (entity == null) {
-            entity = new Product();
-            super.setEntity(entity);
+        if (null == super.getEntity()) {
+            super.setEntity(new Product());
         }
         return super.getEntity();
     }
@@ -45,8 +42,15 @@ public class ProductRow extends DefaultCrudObject<Product> {
                 return getEntity().getDescription();
             case 2:
                 return getEntity().getPrize();
+            case 3:
+                if (getEntity().getSection() != null) {
+                    return getEntity().getSection().getName();
+                }
+                return "";
             default:
                 return "";
         }
     }
+    
+    
 }

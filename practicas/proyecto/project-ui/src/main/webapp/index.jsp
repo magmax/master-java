@@ -37,7 +37,11 @@
                 </tr>
             </table>
             <html:submit value="Entrar" styleClass="button"/>
+            <html:link forward="register" styleClass="button">Registro</html:link>
         </html:form>
+        
+        <hr width="80%"/>
+        <html:link forward="about">About...</html:link>
     </center>
 </body>
 </html:html>

@@ -25,7 +25,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
@@ -51,7 +50,6 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
             if (object.getId() == null) {
                 entityManager.persist(object);
             } else {
-                entityManager.refresh(object);
                 entityManager.merge(object);
             }
         } finally {

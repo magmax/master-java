@@ -20,9 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.magmax.master.project.persistence.pojo.Section;
 import org.magmax.master.project.persistence.pojo.User;
 import org.magmax.master.project.ui.Helpers.UserHelper;
@@ -58,14 +61,16 @@ public class Authenticate extends org.apache.struts.action.Action {
         Persistence persistence = Persistence.getInstance();
         User user = persistence.getUserDAO().findByCredentials(request.getParameter("username"), request.getParameter("password"));
         if (user == null) {
+            ActionMessages messages = new ActionErrors();
+            messages.add("usernotfound", new ActionMessage("warning.user.notfound"));
+            addMessages(request, messages);
             return mapping.findForward(ERROR);
         }
 
         UserHelper userhelper = new UserHelper(getServlet());
         userhelper.save(user);
 
-        request.setAttribute("sectionlist", retrieveSections());
-        request.setAttribute("isadmin", userhelper.isAdmin());
+        request.setAttribute("section_list", retrieveSections());
 
         return mapping.findForward(SUCCESS);
     }

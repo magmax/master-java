@@ -27,6 +27,7 @@ import org.magmax.eswing.crud.CrudUIUpdate;
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
 public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements CrudUICreate<T>, CrudUIUpdate<T>, CrudUIDetails<T> {
+
     private final BaseCrudPanel panel;
     private boolean save = false;
 
@@ -55,8 +56,9 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
         panel.setCrudObject(item);
         panel.setWidgetsEnabled(true);
         showWindow();
-        if (save)
+        if (save) {
             panel.updateCrudObject(item);
+        }
     }
 
     public void details(T item) {
@@ -146,11 +148,9 @@ public class BaseUI<T extends CrudObject> extends javax.swing.JDialog implements
         save = true;
         close();
     }//GEN-LAST:event_jButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
-
 }

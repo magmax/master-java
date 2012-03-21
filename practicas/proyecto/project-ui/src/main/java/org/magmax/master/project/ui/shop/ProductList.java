@@ -41,18 +41,28 @@ public class ProductList extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        if (CommonHelper.isEmptyString((String) request.getParameter("section"))) {
+
+        System.out.println(request.getParameter("sectionid"));
+
+        if (request.getParameter("sectionid") == null) {
             return null;
         }
 
-        request.setAttribute("productlist", retrievePrices(request.getParameter("section")));
+        request.setAttribute("product_list", retrievePrices(request.getParameter("sectionid")));
 
         return mapping.findForward(SUCCESS);
     }
 
-    private List<ProductForm> retrievePrices(String sectionName) {
+    private List<ProductForm> retrievePrices(String sectionId) {
+        return retrievePrices(Integer.valueOf(sectionId));
+    }
+
+    private List<ProductForm> retrievePrices(Integer sectionId) {
         List<ProductForm> result = new ArrayList<ProductForm>();
-        Section section = Persistence.getInstance().getSectionDAO().findByName(sectionName);
+        Section section = Persistence.getInstance().getSectionDAO().findById(sectionId);
+
+        System.out.println(section);
+
         if (section == null || section.getProducts() == null) {
             return result;
         }
@@ -64,6 +74,9 @@ public class ProductList extends org.apache.struts.action.Action {
             product.setPrice(each.getPrize());
             result.add(product);
         }
+
+        System.out.println(result.size());
+
         return result;
     }
 }

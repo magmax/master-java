@@ -23,15 +23,15 @@ package org.magmax.master.project.ui.register;
 public class UserForm extends org.apache.struts.action.ActionForm {
 
     private String name;
-    private boolean isAdmin = false;
+    private boolean admin = false;
     private Integer id;
 
-    public boolean isIsAdmin() {
-        return isAdmin;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(boolean isAdmin) {
+        this.admin = isAdmin;
     }
 
     public String getName() {

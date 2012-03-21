@@ -28,7 +28,7 @@ import org.magmax.master.project.persistence.pojo.Product;
  */
 public class ProductCrudModel extends DefaultCrudModel<ProductRow> {
 
-    private static String[] headers = new String[]{"Producto", "Descripción", "Precio"};
+    private static String[] headers = new String[]{"Producto", "Descripción", "Precio", "Sección"};
 
     public ProductCrudModel() {
         super();
@@ -37,12 +37,17 @@ public class ProductCrudModel extends DefaultCrudModel<ProductRow> {
 
     @Override
     public void add(ProductRow item) {
-        getDAO().store(item.getEntity());
+        saveItem(item);
         super.add(item);
+    }
+
+    private void saveItem(ProductRow item) {
+        getDAO().store(item.getEntity());
     }
 
     @Override
     public void load() {
+        super.clear();
         for (Product each : getDAO().findAll()) {
             ProductRow row = new ProductRow();
             row.setEntity(each);
@@ -62,8 +67,15 @@ public class ProductCrudModel extends DefaultCrudModel<ProductRow> {
 
     @Override
     public void update(ProductRow item) {
-        getDAO().store(item.getEntity());
+        saveItem(item);
         super.update(item);
+    }
+
+    @Override
+    public Class<?> getColumnClass(int column) {
+        if (column == 2)
+            return Float.class;
+        return String.class;
     }
 
     private ProductDAO getDAO() {

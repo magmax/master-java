@@ -28,7 +28,7 @@ public class UserRow extends DefaultCrudObject<User> {
     @Override
     public User getEntity() {
         if (super.getEntity() == null) {
-            setEntity(new User());
+            super.setEntity(new User());
         }
         return super.getEntity();
     }
@@ -39,7 +39,7 @@ public class UserRow extends DefaultCrudObject<User> {
             case 0:
                 return getEntity().getName();
             case 1:
-                return getEntity().isAdmin().toString();
+                return getEntity().isAdmin();
             default:
                 return "";
         }

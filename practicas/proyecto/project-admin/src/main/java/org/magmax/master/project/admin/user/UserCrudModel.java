@@ -67,9 +67,16 @@ public class UserCrudModel extends DefaultCrudModel<UserRow> {
         super.load();
     }
 
+    @Override
+    public Class<?> getColumnClass(int column) {
+        if (column == 1) {
+            return Boolean.class;
+        }
+        return String.class;
+    }
+
     private void saveItem(UserRow userrow) {
-        UserDAO userdao = getDAO();
-        userdao.store(userrow.getEntity());
+        getDAO().store(userrow.getEntity());
     }
 
     private UserDAO getDAO() {

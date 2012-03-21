@@ -38,7 +38,7 @@ public class UserHelper {
         UserForm userform = new UserForm();
         userform.setId(user.getId());
         userform.setName(user.getName());
-        userform.setIsAdmin(user.isAdmin());
+        userform.setAdmin(user.isAdmin());
         servlet.getServletContext().setAttribute(KEYWORD, userform);
     }
 

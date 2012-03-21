@@ -16,7 +16,6 @@
  */
 package org.magmax.master.project.admin.user;
 
-import org.magmax.eswing.crud.CrudTable;
 import org.magmax.eswing.crud.DefaultCrudUIDelete;
 import org.magmax.master.project.admin.BaseCrudPanel;
 import org.magmax.master.project.admin.email.EmailCrudModel;
