@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.ui.shop;
+package org.magmax.master.project.ui.invoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,55 +23,45 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.magmax.master.project.persistence.pojo.Product;
-import org.magmax.master.project.persistence.pojo.Section;
+import org.magmax.master.project.persistence.pojo.Invoice;
+import org.magmax.master.project.persistence.pojo.SoldProduct;
+import org.magmax.master.project.ui.Helpers.UserHelper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class ProductList extends org.apache.struts.action.Action {
+public class InvoiceList extends org.apache.struts.action.Action {
 
     private static final String SUCCESS = "success";
-    private static final String ERROR = "error";
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        if (request.getParameter("sectionid") == null) {
-            return null;
-        }
-
-        request.setAttribute("product_list", retrievePrices(request.getParameter("sectionid")));
-
+        
+        UserHelper userhelper = new UserHelper(servlet);
+        
+        request.setAttribute("invoice_list", retrieveSoldProducts());
+        
         return mapping.findForward(SUCCESS);
     }
 
-    private List<ProductForm> retrievePrices(String sectionId) {
-        return retrievePrices(Integer.valueOf(sectionId));
-    }
-
-    private List<ProductForm> retrievePrices(Integer sectionId) {
-        List<ProductForm> result = new ArrayList<ProductForm>();
-        Section section = Persistence.getInstance().getSectionDAO().findById(sectionId);
-
-        if (section == null || section.getProducts() == null) {
-            return result;
+    private List<InvoiceForm> retrieveSoldProducts() {
+        List<InvoiceForm> forms = new ArrayList<InvoiceForm>();
+        
+        for (SoldProduct each : Persistence.getInstance().getSoldProductDAO().findAll()) {
+            Invoice invoice = each.getInvoice();
+            InvoiceForm iform = new InvoiceForm();
+            iform.setDate(invoice.getDate());
+            iform.setUsername(invoice.getUser().getName());
+            iform.setProductName(each.getProduct().getName());
+            iform.setPrice(each.getPrizePerUnit());
+            iform.setUnits(each.getUnits());
+            forms.add(iform);
         }
-        for (Product each : section.getProducts()) {
-            ProductForm product = new ProductForm();
-            product.setId(each.getId());
-            product.setName(each.getName());
-            product.setDescription(each.getDescription());
-            product.setPrice(each.getPrize());
-            result.add(product);
-        }
-
-        System.out.println(result.size());
-
-        return result;
+        
+        return forms;
     }
 }

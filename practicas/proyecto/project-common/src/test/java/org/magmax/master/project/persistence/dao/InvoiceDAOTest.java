@@ -157,7 +157,8 @@ public class InvoiceDAOTest {
         assertNotNull(invoice);
         assertNotNull(invoice.getId());
         assertNotNull(invoice.getProducts());
-        assertEquals(2, invoice.getProducts().size());
+        assertEquals(1, invoice.getProducts().size());
+        assertEquals(2, invoice.getProducts().get(0).getUnits().intValue());
         assertEquals(1, sut.findAll().size());
     }
 }

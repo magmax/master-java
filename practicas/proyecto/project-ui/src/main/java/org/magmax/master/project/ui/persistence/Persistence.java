@@ -31,17 +31,16 @@ public class Persistence extends DAOFactory {
     }
 
     public static Persistence getInstance() {
-        if (instance != null) {
-            instance.destroy();
-            
+        if (instance == null) {
+            instance = new Persistence();
         }
-        instance = new Persistence();
         return instance;
     }
 
     public void destroy() {
-        if (instance == null)
+        if (instance == null) {
             return;
+        }
         super.destroy();
     }
 }

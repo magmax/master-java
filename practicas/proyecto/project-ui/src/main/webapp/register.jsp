@@ -71,5 +71,9 @@
         <br/>
     </center>
     <html:link forward="welcome" styleClass="button">Volver</html:link>
-</body>
+    <center>
+        <hr width="80%"/>
+        <html:link forward="about">About...</html:link>
+    </center>
+    </body>
 </html:html>

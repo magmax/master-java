@@ -53,21 +53,36 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
 
     public Invoice createInvoice(User user, Collection<Product> products) {
         SoldProductDAO soldproductdao = new SoldProductDAO(getEntityManager());
+        ProductDAO productDAO = new ProductDAO(getEntityManager());
         Invoice invoice = new Invoice();
 
         invoice.setUser(user);
         invoice.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
         for (Product product : products) {
-            SoldProduct sold = new SoldProduct();
-            sold.setProduct(product);
-            sold.setPrizePerUnit(product.getPrize());
-            sold.setUnits(1);
+            SoldProduct sold = findProduct(invoice, product);
+            if (sold == null) {
+                sold = new SoldProduct();
+                sold.setProduct(product);
+                sold.setPrizePerUnit(product.getPrize());
+                sold.setUnits(1);
+            } else {
+                sold.setUnits(sold.getUnits() + 1);
+            }
             soldproductdao.storeAndRefresh(sold);
             invoice.addProduct(sold);
         }
 
         super.storeAndRefresh(invoice);
-        
+
         return invoice;
+    }
+
+    private SoldProduct findProduct(Invoice invoice, Product product) {
+        for (SoldProduct each : invoice.getProducts()) {
+            if (each.getProduct().getId() == product.getId()) {
+                return each;
+            }
+        }
+        return null;
     }
 }

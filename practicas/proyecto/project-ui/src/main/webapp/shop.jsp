@@ -109,8 +109,11 @@
     <html:link forward="welcome" styleClass="button" >Volver</html:link>
 
     <logic:equal name="user" property="admin" value="true">
-        <html:link forward="welcome" styleClass="button" >Facturación</html:link>
+        <html:link forward="invoices" styleClass="button" >Facturación</html:link>
     </logic:equal>
-    <p style="text-align:right">¡Bienvenido, <bean:write property="name" name="user"/>!</p>
+    <center>
+        <hr width="80%"/>
+        <html:link forward="about">About...</html:link>
+    </center>
 </body>
 </html:html>
