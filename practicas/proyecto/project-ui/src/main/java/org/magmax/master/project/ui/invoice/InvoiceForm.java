@@ -29,6 +29,7 @@ public class InvoiceForm extends org.apache.struts.action.ActionForm {
     private String productName;
     private Float price;
     private Integer units;
+    private Integer id;
 
     public Date getDate() {
         return date;
@@ -72,5 +73,13 @@ public class InvoiceForm extends org.apache.struts.action.ActionForm {
 
     public Float getTotal() {
         return this.units * this.price;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -14,6 +14,7 @@
             <table class="ui-widget-content">
                 <thead >
                     <tr class="ui-widget-header">
+                        <td>#Factura</td>
                         <td>Fecha</td>
                         <td>Usuario</td>
                         <td>Producto</td>
@@ -25,6 +26,7 @@
                 <tbody>
                     <logic:iterate name="invoice_list" id="each" type="org.magmax.master.project.ui.invoice.InvoiceForm">
                         <tr>
+                            <td><bean:write name="each" property="id"/></td>
                             <td><bean:write name="each" property="date"/></td>
                             <td><bean:write name="each" property="username"/></td>
                             <td><bean:write name="each" property="productName"/></td>

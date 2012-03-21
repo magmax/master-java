@@ -16,7 +16,10 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.magmax.master.project.persistence.pojo.Invoice;
@@ -117,7 +120,7 @@ public class InvoiceDAOTest {
         product.setName("product 1");
         product.setPrize(200F);
         factory.getProductDAO().storeAndRefresh(product);
-        
+
         Product product2 = new Product();
         product2.setName("product 2");
         product2.setPrize(200F);
@@ -136,7 +139,7 @@ public class InvoiceDAOTest {
         assertEquals(2, invoice.getProducts().size());
         assertEquals(1, sut.findAll().size());
     }
-    
+
     @Test
     public void testGivenAnUserAndAListOfProductsBuildsTheInvoice3() {
         User user = new User();
@@ -152,7 +155,7 @@ public class InvoiceDAOTest {
         products.add(product);
         products.add(product);
 
-        Invoice invoice = sut.createInvoice(user, products);
+        invoice = sut.createInvoice(user, products);
 
         assertNotNull(invoice);
         assertNotNull(invoice.getId());
@@ -160,5 +163,43 @@ public class InvoiceDAOTest {
         assertEquals(1, invoice.getProducts().size());
         assertEquals(2, invoice.getProducts().get(0).getUnits().intValue());
         assertEquals(1, sut.findAll().size());
+    }
+
+    @Test
+    public void testFindByDates() {
+        sut.storeAndRefresh(invoice);
+
+        List<Invoice> current = sut.findByDates(getDate(1999,1,1), getDate(2150, 1, 1));
+
+        assertEquals(1, current.size());
+        assertEquals(invoice.getId(), current.get(0).getId());
+    }
+    
+    @Test
+    public void testFindByDatesLowPeriod() {
+        sut.storeAndRefresh(invoice);
+
+        List<Invoice> current = sut.findByDates(getDate(1999,1,1), getDate(2000, 1, 1));
+
+        assertEquals(0, current.size());
+    }
+    
+     @Test
+    public void testFindByDatesHighPeriod() {
+        sut.storeAndRefresh(invoice);
+
+        List<Invoice> current = sut.findByDates(getDate(2150,1,1), getDate(2151, 1, 1));
+
+        assertEquals(0, current.size());
+    }
+
+    private Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DATE, day);
+        return cal.getTime();
     }
 }

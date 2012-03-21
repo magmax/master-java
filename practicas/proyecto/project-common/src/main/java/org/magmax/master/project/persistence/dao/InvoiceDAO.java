@@ -16,10 +16,12 @@
  */
 package org.magmax.master.project.persistence.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.magmax.master.project.persistence.pojo.Invoice;
 import org.magmax.master.project.persistence.pojo.Product;
 import org.magmax.master.project.persistence.pojo.SoldProduct;
@@ -53,7 +55,6 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
 
     public Invoice createInvoice(User user, Collection<Product> products) {
         SoldProductDAO soldproductdao = new SoldProductDAO(getEntityManager());
-        ProductDAO productDAO = new ProductDAO(getEntityManager());
         Invoice invoice = new Invoice();
 
         invoice.setUser(user);
@@ -75,6 +76,16 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
         super.storeAndRefresh(invoice);
 
         return invoice;
+    }
+    
+     public List<Invoice> findByDates(Date from, Date to) {
+         System.out.println(from);
+         System.out.println(to);
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("select i from Invoice as i where :from < i.date and :to > i.date", Invoice.class);
+        query.setParameter("from", from);
+        query.setParameter("to",to);
+        return query.getResultList();
     }
 
     private SoldProduct findProduct(Invoice invoice, Product product) {

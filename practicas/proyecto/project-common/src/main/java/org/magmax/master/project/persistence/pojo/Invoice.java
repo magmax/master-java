@@ -16,8 +16,8 @@
  */
 package org.magmax.master.project.persistence.pojo;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -35,6 +35,7 @@ public class Invoice implements GenericEntity<Integer> {
     private User user;
     @OneToMany(targetEntity=SoldProduct.class, mappedBy="invoice")
     private List<SoldProduct> products;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
 
     public Integer getId() {

@@ -16,7 +16,29 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
-                $( ".button" ).button();
+                $(".button").button();
+                
+                var dates = $("#from, #to" ).datepicker({
+                    dateFormat: 'dd-mm-yy', 
+                    firstDay: 1,
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    onSelect: function( selectedDate ) {
+                        var option = this.id == "from" ? "minDate" : "maxDate", 
+                        instance = $( this ).data("datepicker"),
+                        date = $.datepicker.parseDate(instance.settings.dateFormat ||$.datepicker._defaults.dateFormat, selectedDate, instance.settings );
+                        dates.not( this ).datepicker( "option", option, date );
+                    }
+                });
+                
+                $("#filter").click(function(){
+                    $("#invoices").slideUp( function(){
+                        $.post("invoicelist.do", {"from":dates[0].value, "to":dates[1].value}, function (data) {
+                            $("#invoices").html(data).slideDown();
+                        });
+                    });
+                });
+            });
         </script>
         <html:base/>
     </head>
@@ -25,15 +47,18 @@
     <center>
         <h1>Facturación</h1>
         <br/>
-        
+
         <div>
-            <p>
-                Del ... al ... Filtrar
-            </p>  
+            <label for="from">From</label>
+            <input type="text" id="from" name="from"/>
+            <label for="to">to</label>
+            <input type="text" id="to" name="to"/>
+            <br/>
+            <button class="button" id="filter">Buscar</button>
         </div>
-            
+
         <div id="invoices">
-           
+
         </div>
     </center>
     <html:link forward="welcome" styleClass="button" >Volver</html:link>

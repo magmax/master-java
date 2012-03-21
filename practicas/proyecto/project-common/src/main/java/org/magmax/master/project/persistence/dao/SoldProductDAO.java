@@ -33,11 +33,10 @@ public class SoldProductDAO extends GenericDAO<SoldProduct, Integer> {
     @Override
     public void store(SoldProduct soldproduct) {
         Product product = soldproduct.getProduct();
-        if (product != null ) {
-            ProductDAO productdao = new ProductDAO(getEntityManager()) ;
+        if (product != null) {
+            ProductDAO productdao = new ProductDAO(getEntityManager());
             productdao.storeAndRefresh(product);
         }
         super.store(soldproduct);
     }
-
 }

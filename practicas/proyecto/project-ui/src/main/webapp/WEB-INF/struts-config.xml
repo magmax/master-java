@@ -47,6 +47,7 @@
         </action>
         <action input="/Welcome" name="InvoiceForm" path="/invoicelist" scope="request" type="org.magmax.master.project.ui.invoice.InvoiceList" validate="false">
             <forward name="success" path="/invoicelist.jsp"/>
+            <forward name="error" path="/index.jsp"/>
         </action>
     </action-mappings>
     

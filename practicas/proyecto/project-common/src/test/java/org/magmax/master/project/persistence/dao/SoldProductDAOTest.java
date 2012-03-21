@@ -51,6 +51,7 @@ public class SoldProductDAOTest {
         assertNotNull(soldProduct.getId());
     }
     
+    @Test
     public void testSoldProductsHaveProducts() {
         sut.storeAndRefresh(soldProduct);
         
