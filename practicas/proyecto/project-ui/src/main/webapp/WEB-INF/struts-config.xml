@@ -6,6 +6,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="UserForm" type="org.magmax.master.project.ui.register.UserForm"/>
         <form-bean name="ProductForm" type="org.magmax.master.project.ui.shop.ProductForm"/>
         <form-bean name="SectionForm" type="org.magmax.master.project.ui.shop.SectionForm"/>
         <form-bean name="RegisterForm" type="org.magmax.master.project.ui.register.RegisterForm"/>
@@ -38,6 +39,7 @@
         </action>
         <action path="/buy" type="org.magmax.master.project.ui.shop.Buy">
             <forward name="success" path="/bought.jsp"/>
+            <forward name="error" path="/index.jsp"/>
         </action>
     </action-mappings>
     

@@ -25,8 +25,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Invoice;
 import org.magmax.master.project.persistence.pojo.Product;
-import org.magmax.master.project.persistence.pojo.SoldProduct;
 import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.Helpers.UserHelper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
@@ -35,11 +35,15 @@ import org.magmax.master.project.ui.persistence.Persistence;
  */
 public class Buy extends org.apache.struts.action.Action {
 
-    /* forward name="success" path="" */
+    /*
+     * forward name="success" path=""
+     */
     private static final String SUCCESS = "success";
+    private static final String ERROR = "error";
 
     /**
      * This is the action called from the Struts framework.
+     *
      * @param mapping The ActionMapping used to select this instance.
      * @param form The optional ActionForm bean for this request.
      * @param request The HTTP Request we are processing.
@@ -51,8 +55,12 @@ public class Buy extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        User user = (User) getServlet().getServletContext().getAttribute("user");
+        UserHelper userhelper = new UserHelper(servlet);
+        User user = userhelper.retrieve();
 
+        if (!userhelper.isAuthenticated()) {
+            return mapping.findForward(ERROR);
+        }
 
         List<Product> products = Persistence.getInstance().getProductDAO().findByIds(retrieveIds(request));
         Invoice invoice = Persistence.getInstance().getInvoiceDAO().createInvoice(user, products);

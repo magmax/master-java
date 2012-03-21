@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Email;
 import org.magmax.master.project.persistence.pojo.Phone;
 import org.magmax.master.project.persistence.pojo.User;
-import org.magmax.master.project.ui.Helper;
+import org.magmax.master.project.ui.Helpers.CommonHelper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
@@ -53,24 +53,45 @@ public class Register extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        User user = getUser(request);
+        Email email = getEmail(request);
+        user.addEmail(email);
+
+        if (hasPhone(request)) {
+            user.addPhone(getPhone(user, request));
+        }
+
+        store(user);
+        
+        return mapping.findForward(SUCCESS);
+    }
+
+    private void store(User user) {
+        Persistence.getInstance().getUserDAO().store(user);
+    }
+
+    private Phone getPhone(User user, HttpServletRequest request) {
+        Phone phone = new Phone();
+        phone.setUser(user);
+        phone.setNumber(request.getParameter("phone"));
+        return phone;
+    }
+
+    private boolean hasPhone(HttpServletRequest request) {
+        return !CommonHelper.isEmptyString(request.getParameter("phone"));
+    }
+
+    private User getUser(HttpServletRequest request) {
         User user = new User();
         user.setName(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
         user.setAdmin(Boolean.FALSE);
+        return user;
+    }
 
+    private Email getEmail(HttpServletRequest request) {
         Email email = new Email();
         email.setAddress(request.getParameter("email"));
-        user.addEmail(email);
-
-        if (!Helper.isEmptyString(request.getParameter("phone"))) {
-            Phone phone = new Phone();
-            phone.setUser(user);
-            phone.setNumber(request.getParameter("phone"));
-            user.addPhone(phone);
-        }
-
-        Persistence.getInstance().getUserDAO().store(user);
-        
-        return mapping.findForward(SUCCESS);
+        return email;
     }
 }

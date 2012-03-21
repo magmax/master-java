@@ -107,5 +107,8 @@
         </div>
     </center>
     <html:link forward="welcome" styleClass="button" >Volver</html:link>
+
+    <logic:equal scope="session" 
+    
 </body>
 </html:html>

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
-import org.magmax.master.project.ui.Helper;
+import org.magmax.master.project.ui.Helpers.CommonHelper;
 
 /**
  *
@@ -50,10 +50,10 @@ public class AuthenticateForm extends org.apache.struts.action.ActionForm {
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (Helper.isEmptyString(getUsername())) {
+        if (CommonHelper.isEmptyString(getUsername())) {
             errors.add("auth.username", new ActionMessage("error.name.required"));
         }
-        if (Helper.isEmptyString(getPassword())) {
+        if (CommonHelper.isEmptyString(getPassword())) {
             errors.add("auth.password", new ActionMessage("error.password.required"));
         }
         return errors;

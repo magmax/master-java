@@ -25,6 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Section;
 import org.magmax.master.project.persistence.pojo.User;
+import org.magmax.master.project.ui.Helpers.UserHelper;
 import org.magmax.master.project.ui.persistence.Persistence;
 import org.magmax.master.project.ui.shop.SectionForm;
 
@@ -59,16 +60,19 @@ public class Authenticate extends org.apache.struts.action.Action {
         if (user == null) {
             return mapping.findForward(ERROR);
         }
-        
-        getServlet().getServletContext().setAttribute("user", user);
+
+        UserHelper userhelper = new UserHelper(getServlet());
+        userhelper.save(user);
+
         request.setAttribute("sectionlist", retrieveSections());
+        request.setAttribute("isadmin", userhelper.isAdmin());
+
         return mapping.findForward(SUCCESS);
     }
 
     private List<SectionForm> retrieveSections() {
         List<SectionForm> result = new ArrayList<SectionForm>();
-        for(Section each :Persistence.getInstance().getSectionDAO().findAll())
-        {
+        for (Section each : Persistence.getInstance().getSectionDAO().findAll()) {
             SectionForm section = new SectionForm();
             section.setName(each.getName());
             section.setId(each.getId());

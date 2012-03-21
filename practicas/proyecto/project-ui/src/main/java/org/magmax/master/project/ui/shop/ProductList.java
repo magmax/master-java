@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.magmax.master.project.persistence.pojo.Product;
 import org.magmax.master.project.persistence.pojo.Section;
-import org.magmax.master.project.ui.Helper;
+import org.magmax.master.project.ui.Helpers.CommonHelper;
 import org.magmax.master.project.ui.persistence.Persistence;
 
 /**
@@ -41,7 +41,7 @@ public class ProductList extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        if (Helper.isEmptyString((String) request.getParameter("section"))) {
+        if (CommonHelper.isEmptyString((String) request.getParameter("section"))) {
             return null;
         }
 
@@ -53,7 +53,7 @@ public class ProductList extends org.apache.struts.action.Action {
     private List<ProductForm> retrievePrices(String sectionName) {
         List<ProductForm> result = new ArrayList<ProductForm>();
         Section section = Persistence.getInstance().getSectionDAO().findByName(sectionName);
-        if (section == null) {
+        if (section == null || section.getProducts() == null) {
             return result;
         }
         for (Product each : section.getProducts()) {

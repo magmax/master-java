@@ -14,22 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.magmax.master.project.ui;
-
-import java.util.Enumeration;
+package org.magmax.master.project.ui.register;
 
 /**
  *
  * @author Miguel Angel Garcia <miguelangel.garcia@gmail.com>
  */
-public class Helper {
-    public static boolean isEmptyString(String value) {
-        return value == null || value.isEmpty();
+public class UserForm extends org.apache.struts.action.ActionForm {
+
+    private String name;
+    private boolean isAdmin = false;
+    private Integer id;
+
+    public boolean isIsAdmin() {
+        return isAdmin;
     }
-    
-    public static void debugEnumeration(Enumeration list ){
-        while (list.hasMoreElements()) {
-            System.out.println(list.nextElement());
-        }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
