@@ -56,7 +56,7 @@ public class ProductList extends org.apache.struts.action.Action {
 
     private List<ProductForm> retrievePrices(Integer sectionId) {
         List<ProductForm> result = new ArrayList<ProductForm>();
-        Section section = Persistence.getInstance().getSectionDAO().findById(sectionId);
+        Section section = Persistence.getInstance(servlet.getServletContext()).getSectionDAO().findById(sectionId);
 
         if (section == null || section.getProducts() == null) {
             return result;

@@ -58,7 +58,7 @@ public class Authenticate extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Persistence persistence = Persistence.getInstance();
+        Persistence persistence = Persistence.getInstance(servlet.getServletContext());
         User user = persistence.getUserDAO().findByCredentials(request.getParameter("username"), request.getParameter("password"));
         if (user == null) {
             ActionMessages messages = new ActionErrors();
@@ -77,7 +77,7 @@ public class Authenticate extends org.apache.struts.action.Action {
 
     private List<SectionForm> retrieveSections() {
         List<SectionForm> result = new ArrayList<SectionForm>();
-        for (Section each : Persistence.getInstance().getSectionDAO().findAll()) {
+        for (Section each : Persistence.getInstance(servlet.getServletContext()).getSectionDAO().findAll()) {
             SectionForm section = new SectionForm();
             section.setName(each.getName());
             section.setId(each.getId());

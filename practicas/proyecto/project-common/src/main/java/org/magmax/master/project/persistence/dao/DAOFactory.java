@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.persistence.dao;
 
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -37,6 +38,11 @@ public class DAOFactory {
     public DAOFactory(String origin) {
         emFactory = Persistence.createEntityManagerFactory(origin);
         entityManager = emFactory.createEntityManager();
+    }
+    
+    public DAOFactory(String origin, Map properties) {
+        emFactory = Persistence.createEntityManagerFactory(origin);
+        entityManager = emFactory.createEntityManager(properties);
     }
     
     protected void destroy() {

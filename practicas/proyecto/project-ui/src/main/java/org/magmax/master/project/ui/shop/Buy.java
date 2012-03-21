@@ -62,8 +62,9 @@ public class Buy extends org.apache.struts.action.Action {
             return mapping.findForward(ERROR);
         }
 
-        List<Product> products = Persistence.getInstance().getProductDAO().findByIds(retrieveIds(request));
-        Invoice invoice = Persistence.getInstance().getInvoiceDAO().createInvoice(user, products);
+        Persistence persistence = Persistence.getInstance(servlet.getServletContext());
+        List<Product> products = persistence.getProductDAO().findByIds(retrieveIds(request));
+        Invoice invoice = persistence.getInvoiceDAO().createInvoice(user, products);
 
         return mapping.findForward(SUCCESS);
     }

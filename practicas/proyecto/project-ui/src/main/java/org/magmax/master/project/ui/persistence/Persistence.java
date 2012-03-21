@@ -16,6 +16,7 @@
  */
 package org.magmax.master.project.ui.persistence;
 
+import javax.servlet.ServletContext;
 import org.magmax.master.project.persistence.dao.DAOFactory;
 
 /**
@@ -30,7 +31,7 @@ public class Persistence extends DAOFactory {
         super("production");
     }
 
-    public static Persistence getInstance() {
+    public static Persistence getInstance(ServletContext servletContext) {
         if (instance == null) {
             instance = new Persistence();
         }

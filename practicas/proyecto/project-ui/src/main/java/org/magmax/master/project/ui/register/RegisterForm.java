@@ -105,6 +105,6 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
     }
 
     private boolean userExists(String username) {
-        return Persistence.getInstance().getUserDAO().findByName(username) != null;
+        return Persistence.getInstance(servlet.getServletContext()).getUserDAO().findByName(username) != null;
     }
 }

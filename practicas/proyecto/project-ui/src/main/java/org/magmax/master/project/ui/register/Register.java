@@ -67,7 +67,7 @@ public class Register extends org.apache.struts.action.Action {
     }
 
     private void store(User user) {
-        Persistence.getInstance().getUserDAO().store(user);
+        Persistence.getInstance(servlet.getServletContext()).getUserDAO().store(user);
     }
 
     private Phone getPhone(User user, HttpServletRequest request) {

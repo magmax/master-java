@@ -61,7 +61,7 @@ public class InvoiceList extends org.apache.struts.action.Action {
     private List<InvoiceForm> retrieveSoldProducts(Date from, Date to) {
         List<InvoiceForm> forms = new ArrayList<InvoiceForm>();
 
-        for (Invoice invoice : Persistence.getInstance().getInvoiceDAO().findByDates(from, to)) {
+        for (Invoice invoice : Persistence.getInstance(servlet.getServletContext()).getInvoiceDAO().findByDates(from, to)) {
             for (SoldProduct each : invoice.getProducts()) {
                 InvoiceForm iform = new InvoiceForm();
                 iform.setId(invoice.getId());

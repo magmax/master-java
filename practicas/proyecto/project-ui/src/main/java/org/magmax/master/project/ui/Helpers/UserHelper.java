@@ -48,7 +48,7 @@ public class UserHelper {
             return null;
         }
         UserForm userform = (UserForm) object;
-        return Persistence.getInstance().getUserDAO().findById(userform.getId());
+        return Persistence.getInstance(servlet.getServletContext()).getUserDAO().findById(userform.getId());
     }
 
     public boolean isAuthenticated() {

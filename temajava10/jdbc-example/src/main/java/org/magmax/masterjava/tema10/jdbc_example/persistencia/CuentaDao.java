@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CuentaDao extends DerbyDao implements GenericDao<Cuenta, String> {
@@ -115,6 +116,27 @@ public class CuentaDao extends DerbyDao implements GenericDao<Cuenta, String> {
 				result.add(cuenta);
 			}
 			return result;
+		} finally {
+			if (st != null)
+				st.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
+        
+        
+        public void imprimeNombres(Date fecha_alta) throws SQLException {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			st = conn.prepareStatement("select nombre from clientes where fecha_alta > ?");
+                        st.setDate(1, new java.sql.Date (fecha_alta.getTime()));
+			rs = st.executeQuery();
+			while (rs.next()) {
+                            System.out.println(rs.getString(0));
+			}
 		} finally {
 			if (st != null)
 				st.close();
