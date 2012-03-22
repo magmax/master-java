@@ -16,6 +16,8 @@
  */
 package org.magmax.master.project.ui.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import org.magmax.master.project.persistence.dao.DAOFactory;
 
@@ -27,21 +29,44 @@ public class Persistence extends DAOFactory {
 
     private static Persistence instance = null;
 
-    private Persistence() {
-        super("production");
+    private Persistence(Map properties) {
+        super("production", properties);
     }
 
     public static Persistence getInstance(ServletContext servletContext) {
         if (instance == null) {
-            instance = new Persistence();
+            instance = new Persistence(readProperties(servletContext));
         }
         return instance;
     }
 
+    @Override
     public void destroy() {
         if (instance == null) {
             return;
         }
         super.destroy();
+    }
+
+    private static Map readProperties(ServletContext servletContext) {
+        String[] keys = new String[]{
+            "hibernate.dialect",
+            "hibernate.connection.driver_class",
+            "hibernate.connection.url",
+            "hibernate.connection.username",
+            "hibernate.connection.password",
+            "hibernate.show_sql",
+            "hibernate.hbm2ddl.auto"};
+        HashMap<String, String> result = new HashMap<String, String>();
+        String value;
+        for (String each : keys) {
+            value = servletContext.getInitParameter(each);
+            if (value != null) {
+                result.put(each, value);
+            }
+            System.out.println(each + "-->" + value);
+        }
+
+        return result;
     }
 }

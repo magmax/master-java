@@ -29,4 +29,35 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+
+        <context-param>
+            <param-name>hibernate.dialect</param-name>
+            <param-value>org.hibernate.dialect.DerbyDialect</param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.connection.driver_class</param-name>
+            <param-value>org.apache.derby.jdbc.EmbeddedDriver</param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.connection.url</param-name>
+            <param-value>jdbc:derby:/home/miguel/proyectos/master_java/ejercicios/practicas/proyecto/tests/database;create=true</param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.connection.username</param-name>
+            <param-value></param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.connection.password</param-name>
+            <param-value></param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.show_sql</param-name>
+            <param-value>true</param-value>
+        </context-param>
+        <context-param>
+            <param-name>hibernate.hbm2ddl.auto</param-name>
+            <param-value>verify</param-value>
+        </context-param>
+
 </web-app>
