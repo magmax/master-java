@@ -41,11 +41,7 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
     public void store(Invoice invoice) {
         SoldProductDAO soldproductdao = new SoldProductDAO(getEntityManager());
         invoice.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
-        User user = invoice.getUser();
-        if (user != null) {
-            UserDAO userdao = new UserDAO(getEntityManager());
-            userdao.storeAndRefresh(user);
-        }
+        // it is not necessary to save the user: it must be already saved.
         super.store(invoice);
         for (SoldProduct each : invoice.getProducts()) {
             each.setInvoice(invoice);
@@ -79,8 +75,6 @@ public class InvoiceDAO extends GenericDAO<Invoice, Integer> {
     }
     
      public List<Invoice> findByDates(Date from, Date to) {
-         System.out.println(from);
-         System.out.println(to);
         EntityManager em = getEntityManager();
         Query query = em.createQuery("select i from Invoice as i where :from < i.date and :to > i.date", Invoice.class);
         query.setParameter("from", from);

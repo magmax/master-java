@@ -52,6 +52,8 @@ public class GenericDAO<T extends GenericEntity<I>, I extends Serializable> {
             } else {
                 entityManager.merge(object);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             entityManager.getTransaction().commit();
         }

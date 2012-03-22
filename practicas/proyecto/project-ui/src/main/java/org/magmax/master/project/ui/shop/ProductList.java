@@ -70,8 +70,6 @@ public class ProductList extends org.apache.struts.action.Action {
             result.add(product);
         }
 
-        System.out.println(result.size());
-
         return result;
     }
 }

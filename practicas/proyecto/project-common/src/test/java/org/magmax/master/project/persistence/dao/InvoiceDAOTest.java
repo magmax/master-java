@@ -44,6 +44,14 @@ public class InvoiceDAOTest {
         sut = factory.getInvoiceDAO();
     }
 
+    private User createUser(String name) {
+        User user = new User();
+        user.setName(name);
+        UserDAO userdao = factory.getUserDAO();
+        userdao.storeAndRefresh(user);
+        return user;
+    }
+
     @Test
     public void testCreation() {
         sut.store(invoice);
@@ -77,8 +85,7 @@ public class InvoiceDAOTest {
 
     @Test
     public void testCanHaveAnUser() {
-        User user = new User();
-        user.setName("Max Cavalera");
+        User user = createUser("Max Cavalera");
         invoice.setUser(user);
 
         sut.storeAndRefresh(invoice);
@@ -89,8 +96,7 @@ public class InvoiceDAOTest {
 
     @Test
     public void testGivenAnUserAndAListOfProductsBuildsTheInvoice() {
-        User user = new User();
-        user.setName("Max Cavalera");
+        User user = createUser("Max Cavalera");
         invoice.setUser(user);
 
         Product product = new Product();
@@ -112,8 +118,7 @@ public class InvoiceDAOTest {
 
     @Test
     public void testGivenAnUserAndAListOfProductsBuildsTheInvoice2() {
-        User user = new User();
-        user.setName("Max Cavalera");
+        User user = createUser("Max Cavalera");
         invoice.setUser(user);
 
         Product product = new Product();
@@ -142,8 +147,7 @@ public class InvoiceDAOTest {
 
     @Test
     public void testGivenAnUserAndAListOfProductsBuildsTheInvoice3() {
-        User user = new User();
-        user.setName("Max Cavalera");
+        User user = createUser("Max Cavalera");
         invoice.setUser(user);
 
         Product product = new Product();
@@ -169,26 +173,26 @@ public class InvoiceDAOTest {
     public void testFindByDates() {
         sut.storeAndRefresh(invoice);
 
-        List<Invoice> current = sut.findByDates(getDate(1999,1,1), getDate(2150, 1, 1));
+        List<Invoice> current = sut.findByDates(getDate(1999, 1, 1), getDate(2150, 1, 1));
 
         assertEquals(1, current.size());
         assertEquals(invoice.getId(), current.get(0).getId());
     }
-    
+
     @Test
     public void testFindByDatesLowPeriod() {
         sut.storeAndRefresh(invoice);
 
-        List<Invoice> current = sut.findByDates(getDate(1999,1,1), getDate(2000, 1, 1));
+        List<Invoice> current = sut.findByDates(getDate(1999, 1, 1), getDate(2000, 1, 1));
 
         assertEquals(0, current.size());
     }
-    
-     @Test
+
+    @Test
     public void testFindByDatesHighPeriod() {
         sut.storeAndRefresh(invoice);
 
-        List<Invoice> current = sut.findByDates(getDate(2150,1,1), getDate(2151, 1, 1));
+        List<Invoice> current = sut.findByDates(getDate(2150, 1, 1), getDate(2151, 1, 1));
 
         assertEquals(0, current.size());
     }
