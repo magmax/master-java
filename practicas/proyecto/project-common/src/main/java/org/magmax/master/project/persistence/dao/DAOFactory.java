@@ -39,17 +39,17 @@ public class DAOFactory {
         emFactory = Persistence.createEntityManagerFactory(origin);
         entityManager = emFactory.createEntityManager();
     }
-    
+
     public DAOFactory(String origin, Map properties) {
-        emFactory = Persistence.createEntityManagerFactory(origin);
-        entityManager = emFactory.createEntityManager(properties);
+        emFactory = Persistence.createEntityManagerFactory(origin, properties);
+        entityManager = emFactory.createEntityManager();
     }
-    
+
     protected void destroy() {
         entityManager.close();
         emFactory.close();
     }
-    
+
     public UserDAO getUserDAO() {
         return new UserDAO(entityManager);
     }
@@ -57,20 +57,20 @@ public class DAOFactory {
     public EmailDAO getEmailDAO() {
         return new EmailDAO(entityManager);
     }
-    
+
     public PhoneDAO getPhoneDAO() {
         return new PhoneDAO(entityManager);
     }
-    
-    public SectionDAO getSectionDAO(){
+
+    public SectionDAO getSectionDAO() {
         return new SectionDAO(entityManager);
     }
-    
+
     public ProductDAO getProductDAO() {
         return new ProductDAO(entityManager);
     }
-    
-    public SoldProductDAO getSoldProductDAO(){
+
+    public SoldProductDAO getSoldProductDAO() {
         return new SoldProductDAO(entityManager);
     }
 

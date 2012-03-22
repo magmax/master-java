@@ -16,6 +16,13 @@
  */
 package org.magmax.master.project.admin;
 
+import java.io.*;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.hibernate.exception.GenericJDBCException;
 import org.magmax.master.project.persistence.dao.DAOFactory;
 
 /**
@@ -24,22 +31,45 @@ import org.magmax.master.project.persistence.dao.DAOFactory;
  */
 public class Persistence extends DAOFactory {
 
+    public static final String PROFILE = "production";
+    public static final String CONFIG_FILE = "configuration.cfg";
     private static Persistence instance = null;
 
-    private Persistence() {
-        super("production");
+    private Persistence(Map properties) {
+        super(PROFILE, properties);
     }
 
     public static Persistence getInstance() {
         if (instance == null) {
-            instance = new Persistence();
+            instance = new Persistence(getConnectionConfiguration());
         }
         return instance;
     }
 
     public void destroy() {
-        if (instance == null)
+        if (instance == null) {
             return;
+        }
         super.destroy();
+    }
+
+    private static Map getConnectionConfiguration() {
+        Properties properties = new Properties();
+        InputStream reader = null;
+        try {
+            reader = new FileInputStream(new File(CONFIG_FILE));
+            properties.load(reader);
+            Logger.getAnonymousLogger().log(Level.INFO, "Using configuration file " + CONFIG_FILE);
+        } catch (IOException ex) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Configuration file (" + CONFIG_FILE + ")not found");
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+        return properties;
     }
 }

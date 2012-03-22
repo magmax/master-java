@@ -15,7 +15,6 @@
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="patata"/>
             <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
         </properties>
     </persistence-unit>
     <persistence-unit name="production2" transaction-type="RESOURCE_LOCAL">

@@ -10,6 +10,7 @@
                 <exec.args>-classpath %classpath org.magmax.master.project.admin.Main</exec.args>
                 <exec.executable>java</exec.executable>
                 <exec.classpathScope>runtime</exec.classpathScope>
+                <exec.workingdir>/home/miguel/proyectos/master_java/ejercicios/practicas/proyecto/tests</exec.workingdir>
             </properties>
         </action>
         <action>
@@ -23,6 +24,7 @@
                 <exec.executable>java</exec.executable>
                 <exec.classpathScope>runtime</exec.classpathScope>
                 <jpda.listen>true</jpda.listen>
+                <exec.workingdir>/home/miguel/proyectos/master_java/ejercicios/practicas/proyecto/tests</exec.workingdir>
             </properties>
         </action>
         <action>
@@ -35,6 +37,7 @@
                 <exec.args>${profiler.args} -classpath %classpath org.magmax.master.project.admin.Main</exec.args>
                 <exec.executable>${profiler.java}</exec.executable>
                 <profiler.action>profile</profiler.action>
+                <exec.workingdir>/home/miguel/proyectos/master_java/ejercicios/practicas/proyecto/tests</exec.workingdir>
             </properties>
         </action>
     </actions>

@@ -78,7 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.add(userTable);
 
         UserDialog userDialog = new UserDialog(this);
-        userTable.setCrudUICreate(userDialog);
+//        userTable.setCrudUICreate(userDialog); // deshabilitado, ya que no puede introducir la contraseña
         userTable.setCrudUIUpdate(userDialog);
         userTable.setCrudUIDetails(userDialog);
         userTable.setCrudUIDelete(new DefaultCrudUIDelete());
