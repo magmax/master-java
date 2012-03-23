@@ -13,3 +13,43 @@
 
 \def\subsubsubsection#1{ {\bf #1} }
 \def\subsubsubsubsection#1{ {\underline {#1}} }
+
+
+%% -- listados de código
+\usepackage{listings}
+%\usepackage{tmxlistings}
+\renewcommand{\lstlistlistingname}{Índice de listados}
+\renewcommand{\lstlistingname}{Listado}
+%\lstloadlanguages{Java}
+
+\lstset{% general command to set parameter(s)
+  basicstyle=\footnotesize\ttfamily,
+  % print whole listing small
+  keywordstyle=\color{black}\bfseries\underbar,
+  % underlined bold black keywords
+  identifierstyle=,
+  % nothing happens
+  commentstyle=\color{white}, % white comments
+  stringstyle=\ttfamily,
+  % typewriter type for strings
+  showstringspaces=false
+  % no special string spaces
+}
+
+
+%\lstnewenvironment{listado}[1][Clean]
+%                  { \lstset{%
+%%                      style=miguelCode,
+%                      float=htbp,
+%                      language=#1}%
+%                    \spacing{1.0}%
+%                  }%
+%                  { \endspacing%
+%                  }
+%
+%\let\auxlstinput=\lstinputlisting
+%\newcommand{\inputlistado}[2]{%
+%    \spacing{1.0}%
+%    \auxlstinput[style=miguelCode,language=#1]{#2}%
+%    \endspacing%
+%  }

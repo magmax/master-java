@@ -29,13 +29,86 @@ acceder al sistema.
 
 \section{Introducción}
 
-La herramienta solicitada se dividirá en dos partes: la herramienta de administración, distribuída como un \textit{JAR}, y la aplicación web, distribuída como un \textit{WAR} y que necesitará un gestor de aplicaciones tipo TomCat, GlassFish o similar.
+La herramienta solicitada se dividirá en dos partes: la herramienta de
+administración, distribuída como un \textit{JAR}, y la aplicación web,
+distribuída como un \textit{WAR} y que necesitará un gestor de
+aplicaciones tipo TomCat, GlassFish o similar.
 
-Además, existirán dos componentes adicionales: uno de ellos con toda la lógica de acceso a base de datos, de manera que pueda compartirse entre las dos aplicaciones, y otro con componentes \textit{swing} genéricos.
+Además, existirán dos componentes adicionales: uno de ellos con toda
+la lógica de acceso a base de datos, de manera que pueda compartirse
+entre las dos aplicaciones, y otro con componentes \textit{swing}
+genéricos.
+
+Este documento pretende mostrar la forma de instalar, configurar y
+utilizar estas herramientas. En la parte final, se incluirá también un
+apartado sobre la arquitectura de la misma.
 
 \subsection{Compilación}
 
 Aunque el proyecto se entrega compilado, existe la posibilidad de que
-deseen compilarlo de nuevo. Para ello se ha utilizado la herramienta ``Maven''
+deseen compilarlo de nuevo. Para ello se ha utilizado la herramienta
+``Maven''.  Esta herramienta de gestión permite la utilización de
+\textit{plugins} para realizar distintas acciones, tales como
+compilar, ensamblar, empaquetar, distribuir, realizar pruebas,
+resolver dependencias\..., de manera que gestione todo el ciclo de
+vida de una aplicación.
+
+El archivo de configuración se denomina ``\textbf{pom.xml}'' y se
+encuentra en el directorio raíz del proyecto. \textit{Maven} permite
+saltarse la configuración mediante el uso de convenciones, como la
+estructura de ficheros a utilizar, y por eso este archivo puede
+resultar algo pequeño.  Tan solo se comentará aquí que todo lo
+necesario para realizar la compilación se encuentra bajo el directorio
+``src'', mientras que todo lo generado u obtenido se encontrará bajo
+``target'', resultanto una estructura sencilla.
+
+La orden de ejecución es la siguiente: \textbf{mvn install}
+
+Tenga en cuenta que la primera vez que se ejecute puede tardar
+bastante, ya que necesitará descargarse todas las herramientas
+necesarias para la construcción de las aplicaciones. Requerirá acceso
+a Internet.
+
+Es muy importante el orden de compilación, ya que si no es posible que
+no se encuentren algunos paquetes. Los primeros paquetes a compilar
+deberían ser \textbf{proyect-common} y \textbf{easy-swing}. Tras ellos
+podremos compilar los otros proyectos, \textbf{project-ui} y
+\textbf{project-admin}. No será necesario que vuelva a preocuparse por
+los dos primeros, ya que \textit{maven} gestionará su hubicación y
+distribución. Los segundos se encontrarán en sus respectivas carpetas,
+bajo los directorios ``target'', con los nombres:
+
+\begin{itemize}
+\item master-project-admin-1.0-SNAPSHOT-jar-with-dependencies.jar
+\item project-ui-1.0-SNAPSHOT.war
+\end{itemize}
+
+Ambos son autocontenidos y no requieren de nada externo, salvo
+componentes JavaScript que se encontrarán en la red.
+
+
+\section{Instalación y configuración}
+
+\subsection{Herramienta de administración}
+
+Se recomienda comenzar por la herramienta de administración, ya que la
+primera ejecución de la misma puede utilizarse para generar la base de
+datos. La herramienta tiene unos valores por defecto que posiblemente
+no se ajusten a sus requisitos. Por ello se recomienda crear un
+archivo de configuración en la ruta en la que se encuentre el propio
+\textit{JAR}. El archivo de configuración consistirá en un archivo
+tipo \textit{properties} con la información de la base de datos.
+
+Un ejemplo de archivo, con las propiedades que se pueden establecer, sería:
+
+\begin{lstlisting}[frame=none]
+hibernate.dialect=org.hibernate.dialect.DerbyDialect
+hibernate.connection.driver_class=org.apache.derby.jdbc.EmbeddedDriver
+hibernate.connection.url=jdbc:derby:./database;create=true
+hibernate.connection.username=
+hibernate.connection.password=
+hibernate.show_sql=true
+hibernate.hbm2ddl.auto=verify
+\end{lstlisting}
 
 \end{document}
