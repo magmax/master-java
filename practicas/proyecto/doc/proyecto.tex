@@ -1,0 +1,41 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{bookstyle}
+
+\author{Miguel Ángel García Martínez}
+\title{Master en J2EE}
+
+\makeindex
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{El problema}
+
+El cliente solicita desarrollar una aplicación que tendrá, por una
+parte, una herramienta de escritorio que permita administrar una base
+de datos. Esta base de datos contendrá clientes, secciones y
+productos. Por otra parte, existirá una aplicación web que permita a
+los clientes acceder al sistema para realizar sus compras.
+
+Cada producto pertenecerá a una sección. De los clientes es necesario
+almacenar, al menos, su teléfono, e-mail, nombre y una password para
+acceder al sistema.
+
+\section{Introducción}
+
+La herramienta solicitada se dividirá en dos partes: la herramienta de administración, distribuída como un \textit{JAR}, y la aplicación web, distribuída como un \textit{WAR} y que necesitará un gestor de aplicaciones tipo TomCat, GlassFish o similar.
+
+Además, existirán dos componentes adicionales: uno de ellos con toda la lógica de acceso a base de datos, de manera que pueda compartirse entre las dos aplicaciones, y otro con componentes \textit{swing} genéricos.
+
+\subsection{Compilación}
+
+Aunque el proyecto se entrega compilado, existe la posibilidad de que
+deseen compilarlo de nuevo. Para ello se ha utilizado la herramienta ``Maven''
+
+\end{document}
