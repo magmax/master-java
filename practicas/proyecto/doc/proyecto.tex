@@ -1,6 +1,8 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{bookstyle}
+\hyphenation{create}
+
 
 \author{Miguel Ángel García Martínez}
 \title{Master en J2EE}
@@ -99,16 +101,103 @@ archivo de configuración en la ruta en la que se encuentre el propio
 \textit{JAR}. El archivo de configuración consistirá en un archivo
 tipo \textit{properties} con la información de la base de datos.
 
-Un ejemplo de archivo, con las propiedades que se pueden establecer, sería:
+Un ejemplo de archivo, con las propiedades que se pueden establecer,
+sería:
 
-\begin{lstlisting}[frame=none]
-hibernate.dialect=org.hibernate.dialect.DerbyDialect
-hibernate.connection.driver_class=org.apache.derby.jdbc.EmbeddedDriver
-hibernate.connection.url=jdbc:derby:./database;create=true
-hibernate.connection.username=
-hibernate.connection.password=
+\begin{lstlisting}[frame=single]
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.connection.driver_class=com.mysql.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://localhost/db
+hibernate.connection.username=myuser
+hibernate.connection.password=mypassword
 hibernate.show_sql=true
 hibernate.hbm2ddl.auto=verify
 \end{lstlisting}
+
+En este listado se muestran todas las \textit{keyword}
+disponibles. Éstas se explican a continuación:
+
+\begin{itemize}
+\item \textbf{hibernate.dialect}: Dialecto SQL a
+  utilizar. Probablemente el de MySQL funcione con cualquier base de
+  datos.
+\item \textbf{hibernate.connection.driver}: Driver a utilizar.
+\item \textbf{hibernate.connection.url}: String de conexión que
+  permitirá conectarse con la base de datos. En el caso de MySQL,
+  habrá que sustituir ``localhost'' por el nombre de la máquina que
+  sirve el SGBD, y ``db'' por el nombre de la base de datos. Es
+  importante saber que \textbf{la base de datos debe existir}.
+\item \textbf{hibernate.connection.username}: Nombre del usuario que
+  accederá a la base de datos.
+\item \textbf{hibernate.connection.password}: Password para accceder a
+  la base de datos.
+\item \textbf{hibernate.show\_sql}: Soporta dos posibles valores:
+  ``true'' y ``false''. En caso de valer ``true'', mostrará las
+  sentencias SQL que se vayan ejecutando. Este modo podría limitarse
+  en un caso real, pero se ha permitido por razones de depuración.
+\item \textbf{hibernate.hbm2ddl.auto}: Con esta clave podemos indicar
+  si queremos crear la base de datos, actualizarla, etc. Éste es un
+  valor especial que se comenta más adelante.
+\end{itemize}
+
+
+\subsection{Interfaz Web}
+
+Para instalar la interfaz web, basta con instalar el \textit{WAR}
+desde la ventana de administración de TomCat.
+
+Una vez desplegada la aplicación, será necesario editar algunos
+valores del archivo \textit{web.xml} de la misma con el fin de
+configurarla. Por homogeneidad, estos valores son los mismos que en la
+herramienta de administración, aunque habrá que respetar el formato
+del archivo. Ejemplo:
+
+\begin{lstlisting}[frame=single, language=XML]
+<context-param>
+    <param-name>hibernate.show_sql</param-name>
+    <param-value>true</param-value>
+</context-param>
+\end{lstlisting}
+
+Lo normal será establecer los mismos valores que en de la herramienta
+de administración, salvo para la clave
+\textbf{hibernate.hbm2ddl.auto}, para la que es recomendable
+establecer siempre el valor \textbf{verify}.
+
+
+
+\subsection{Inicialización de la base de datos}
+
+La creación de la base de datos se ha delegado en \textit{Hibernate}. Por ello es importante la \textit{keyword} \textbf{hibernate.hbm2ddl.auto}. Esta clave puede adquirir los siguientes valores:
+\begin{itemize}
+\item \textbf{create}: inicializará la base de datos. Si ésta ya estaba inicializada, la eliminará y volverá a crear.
+\item \textbf{create-update}: supuestamente, inicializa la base de datos o la actualiza si ya existe. En la práctica, depende del controlador que haga su trabajo correctamente. Me ha dado muchos problemas y no recomiendo su uso.
+\item \textbf{update}: tan sólo actualizará la base de datos, creando tablas nuevas. Es algo engañosa, ya que no modificará tablas existentes, aunque sus columnas se hayan modificado.
+\item \textbf{verify}: comprueba que la base de datos es correcta.
+\end{itemize}
+
+Hay que recordar que, para que estas claves funcionen, la base de datos ya debe existir y el resto de los parámetros deben ser correctos.
+
+\subsection{Pasos de configuración}
+
+Una vez vista toda esta teoría, vayamos a la práctica en la aplicación:
+
+\begin{enumerate}
+\item Configurar la herramienta de administración, utilizando el valor ``create'' para la keyword ``hibernate.hbm2ddl.auto''.
+\item Lanzar la herramienta de administración. Esto creará la base de datos.
+\item Volver a configurar la herramienta de administración, utilizando el valor ``verify''.
+\item Utilizar la herramienta de administración para configurar la herramienta.
+\item Instalar y configurar la interfaz web.
+\item Listo para usarse desde la parte web.
+\end{enumerate}
+
+
+
+\section{Manual de usuario}
+
+\subsection{La herramienta de administración}
+
+La herramienta de administración tiene una apariencia similar a la mostrada en la imagen
+
 
 \end{document}
