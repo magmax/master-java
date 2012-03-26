@@ -192,7 +192,7 @@ Una vez vista toda esta teoría, vayamos a la práctica en la aplicación:
 \end{enumerate}
 
 
-
+\newpage
 \section{Manual de usuario}
 
 \subsection{La herramienta de administración}
@@ -204,7 +204,7 @@ ya que no es lógico que el administrador pueda cambiar la contraseña.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/admin-users.png}
+  \includegraphics[width=10cm]{images/admin-users.png}
   \caption{Vista de usuarios}
   \label{fig:adminusers}
 \end{figure}
@@ -216,7 +216,7 @@ botones se encuentran habilitados para permitir la edición.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/admin-users-edit.png}
+  \includegraphics[width=10cm]{images/admin-users-edit.png}
   \caption{Edición de usuarios}
   \label{fig:adminusersedit}
 \end{figure}
@@ -227,7 +227,7 @@ la figura~\ref{fig:adminusersdetail}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/admin-users-detail.png}
+  \includegraphics[width=10cm]{images/admin-users-detail.png}
   \caption{Detalle de usuario}
   \label{fig:adminusersdetail}
 \end{figure}
@@ -244,14 +244,14 @@ y~\ref{fig:adminproducts}, respectivamente.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/admin-sections.png}
+  \includegraphics[width=10cm]{images/admin-sections.png}
   \caption{Vista de secciones}
   \label{fig:adminsections}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/admin-products.png}
+  \includegraphics[width=10cm]{images/admin-products.png}
   \caption{Vista de productos}
   \label{fig:adminproducts}
 \end{figure}
@@ -260,7 +260,7 @@ El funcionamiento de estas ventanas es similar a la de usuarios, ya
 que se ha tratado de buscar cierta homogeneidad en el uso.
 
 
-
+\newpage
 \subsection{La interfaz Web}
 
 La interfaz web comenzará mostrándonos la ventana de inicio de sesión,
@@ -268,7 +268,7 @@ correspondiente con la figura~\ref{fig:weblogin}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-login.png}
+  \includegraphics[width=10cm]{images/web-login.png}
   \caption{Ventana de entrada}
   \label{fig:weblogin}
 \end{figure}
@@ -288,14 +288,14 @@ figura~\ref{fig:webregistry}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-registry.png}
+  \includegraphics[width=10cm]{images/web-registry.png}
   \caption{Ventana de registro}
   \label{fig:webregistry}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-registry-login-fail.png}
+  \includegraphics[width=10cm]{images/web-registry-login-fail.png}
   \caption{Ventana de registro tras autenticación fallida}
   \label{fig:webloginfail}
 \end{figure}
@@ -303,7 +303,7 @@ figura~\ref{fig:webregistry}.
 Si en la ventana de login (Figura~\ref{fig:weblogin}) introducimos
 erróneamente nuestras credenciales, nos llevará a la ventana de
 registro, pero mostrando un mensaje especial tal y como se muestra en
-la figura~\ref{fig:webloginfail}. 
+la figura~\ref{fig:webloginfail}.
 
 Ya sea en la figura~\ref{fig:webregistry} o en la~\ref{fig:webloginfail},
 podemos ver el botón ``Volver'', que nos permitirá regresar a la
@@ -317,7 +317,7 @@ advertencia a su lado cuya leyenda ofrecerá más detalle de la razón
 por la que no es válida (figura~\ref{fig:webregistryfail}).
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-registry-fail.png}
+  \includegraphics[width=10cm]{images/web-registry-fail.png}
   \caption{Ventana de registro con entradas erróneas}
   \label{fig:webregistryfail}
 \end{figure}
@@ -331,7 +331,7 @@ permitirá ver las productos disponibles en esa sección.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-shop.png}
+  \includegraphics[width=10cm]{images/web-shop.png}
   \caption{Ventana de ventas}
   \label{fig:webshop}
 \end{figure}
@@ -343,7 +343,7 @@ papelera situado a la izquierda de los productos.
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-shop-buying.png}
+  \includegraphics[width=10cm]{images/web-shop-buying.png}
   \caption{Ventana de ventas con lista de la compra}
   \label{fig:webshopbuying}
 \end{figure}
@@ -355,14 +355,119 @@ Existe un botón más, llamado ``Facturación'', que sólo se mostrará en
 caso de ser administrador. Este botón permite llegar a la ventana de
 administración, en la que, tras seleccionar unas fechas (como se
 indica en la figura~\ref{fig:webinvoice}), podemos mostar las facturas
-que tuvieron lugar en el periodo de tiempo indicado (figura~\ref{fig:webinvoices}
+que tuvieron lugar en el periodo de tiempo indicado
+(figura~\ref{fig:webinvoices}).
 
 \begin{figure}
   \centering
-  \includegraphics[width=13cm]{images/web-invoice.png}
-  \caption{Ventana de facturación}
+  \includegraphics[width=10cm]{images/web-invoice.png}
+  \caption{Ventana de facturación antes de la búsqueda}
   \label{fig:webinvoice}
 \end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{images/web-invoice-list.png}
+  \caption{Ventana de facturación después de la búsqueda}
+  \label{fig:webinvoices}
+\end{figure}
+
+
+
+\newpage
+\section{Arquitectura}
+
+El proyecto se ha dividido en 4 partes que se desglosarán a
+continuación.
+
+\subsection{Capa de persistencia}
+
+Dado que la capa de persistencia era común a la interfaz
+administrativa y web, se decidió utilizar un \textit{JAR} separado.
+
+Este subproyecto utiliza Hibernate sobre JPA para acceder a la
+persistencia.
+
+Contiene pruebas unitarias; para que se ejecuten rápidamente, se
+utiliza una base de datos de tipo HyperSQL en memoria.
+
+\subsection{Tabla CRUD}
+
+Se identificó un problema común que iba a replicarse numerosas veces:
+la creación de una tabla con las operaciones CRUD (Create, Retrieve,
+Update, Delete). Por ello se decidió crear un proyecto a parte, con el
+fin de utilizarlo posteriormente en futuros proyectos. Éste es un
+proyecto que tengo intención de continuar, aunque es posible que tenga
+que comenzarlo de nuevo.
+
+El uso de genéricos en esta parte es importante. Se trató de crear una
+arquitectura sencilla, pero no fue ése el resultado, complicándose un
+poco cuando se metió la persistencia.
+
+Una tabla CRUD se compone de los siguientes elementos:
+
+\begin{itemize}
+\item {CrudModel} Extiende de \textbf{DefaultTableModel} e implementa
+  \textbf{CrudModel},  siendo el modelo de la tabla.
+\item {CrudTable} Es la vista. Contiene la tabla y cuatro botones,
+  pero éstos solo se dibujarán si se dispone de acciones para ellos.
+\item {Acciones}, divididas en 4: CrudUICreate, CrudUIUpdate,
+  CrudUIDetails y CrudUIDelete. Esta última no suele ser neceario
+  implementarla porque se ofrece una por defecto. Representan el
+  controlador. Pueden implementarse en una única clase o en clases
+  separadas.
+\end{itemize}
+
+La idea es la siguiente: tras crear una tabla utilizando el modelo, se
+le asignan las acciones que serán capaces de realizar. De esta manera,
+la tabla sabe qué elementos tiene que pintar.
+
+Para facilitar las operaciones, se han proporcionado elementos por
+defecto que facilitan la creación de elementos.
+
+Veamos un ejemplo de creación de una tabla sencilla (sacado de la
+herramienta de administración):
+
+\begin{lstlisting}[frame=single]
+private void initializeProductPanel() {
+  ProductCrudModel productCrudModel = new ProductCrudModel();
+  productTable = new CrudTable(productCrudModel);
+  jPanel3.add(productTable);
+
+  ProductDialog productDialog = new ProductDialog(this);
+  productTable.setCrudUICreate(productDialog);
+  productTable.setCrudUIUpdate(productDialog);
+  productTable.setCrudUIDetails(productDialog);
+  productTable.setCrudUIDelete(new DefaultCrudUIDelete());
+  productTable.loadData();
+}
+\end{lstlisting}
+
+Como puede observarse, se crea el modelo, se utiliza para crear la
+tabla y, posteriormente, se añaden las acciones.
+
+Para ver el ejemplo completo, se recomienda ver el código de la
+herramienta de administración. La apariencia es la que se muestra en
+la figura~\ref{fig:crudtable}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{images/crud-table.png}
+  \caption{Vista de ejemplo de tabla CRUD}
+  \label{fig:crudtable}
+\end{figure}
+
+
+\subsection{Herramienta de administración}
+
+Hace uso intensivo de las tablas CRUD. Todo lo demás se ha explicado ya.
+
+\subsection{Parte web}
+
+Las tecnologías utilizadas han sido: \textbf{Struts} para la vista y
+el controlador; \textbf{JQuery} para los efectos visuales y el estilo CSS.
+
+Todo lo demás quedó explicado en el tema del manual de usuario.
 
 
 \end{document}

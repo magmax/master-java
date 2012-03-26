@@ -83,7 +83,6 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!--
                     <packagingIncludes>WEB-INF/lib/*.jar</packagingIncludes>
                     <archive>
                         <manifest>
@@ -95,7 +94,6 @@
                         <manifestEntries>
                         </manifestEntries>
                     </archive>
-                    -->
                 </configuration>
             </plugin>
             <plugin>
