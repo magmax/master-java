@@ -197,7 +197,172 @@ Una vez vista toda esta teoría, vayamos a la práctica en la aplicación:
 
 \subsection{La herramienta de administración}
 
-La herramienta de administración tiene una apariencia similar a la mostrada en la imagen
+La herramienta de administración tiene una apariencia similar a la
+mostrada en la figura~\ref{fig:adminusers}. Desde esta vista se pueden
+gestionar los usuarios, aunque se ha deshabilitado el botón de añadir,
+ya que no es lógico que el administrador pueda cambiar la contraseña.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/admin-users.png}
+  \caption{Vista de usuarios}
+  \label{fig:adminusers}
+\end{figure}
+
+Desde esta pantalla podemos pulsar sobre el botón de edición, que nos
+abrirá una pantalla como la de la
+figura~\ref{fig:adminusersedit}. Como se observa en la imagen, los
+botones se encuentran habilitados para permitir la edición.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/admin-users-edit.png}
+  \caption{Edición de usuarios}
+  \label{fig:adminusersedit}
+\end{figure}
+
+Si hubiéramos pulsado sobre el botón de detalle, se abriría la misma
+ventana pero con los botones deshabilitados, tal y como se muestra en
+la figura~\ref{fig:adminusersdetail}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/admin-users-detail.png}
+  \caption{Detalle de usuario}
+  \label{fig:adminusersdetail}
+\end{figure}
+
+La herramienta permite añadir varios teléfonos y varias direcciones de
+e-mail por cada usuario, ya que se entiende que esta puede ser una
+práctica habitual. Sin embargo, desde la herramienta web sólo se podrá
+acceder a una de ellas.
+
+En las pestañas de la zona izquierda puede seleccionarse el apartado
+de \textit{Secciones} o el de \textit{Productos}, abriendo pantallas
+similares a las mostradas en las figuras~\ref{fig:adminsections}
+y~\ref{fig:adminproducts}, respectivamente.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/admin-sections.png}
+  \caption{Vista de secciones}
+  \label{fig:adminsections}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/admin-products.png}
+  \caption{Vista de productos}
+  \label{fig:adminproducts}
+\end{figure}
+
+El funcionamiento de estas ventanas es similar a la de usuarios, ya
+que se ha tratado de buscar cierta homogeneidad en el uso.
+
+
+
+\subsection{La interfaz Web}
+
+La interfaz web comenzará mostrándonos la ventana de inicio de sesión,
+correspondiente con la figura~\ref{fig:weblogin}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-login.png}
+  \caption{Ventana de entrada}
+  \label{fig:weblogin}
+\end{figure}
+
+Desde esta ventana se pueden realizar tres operaciones. Por una parte,
+se puede seleccionar el enlace a ``About...'', que será común en todas
+las ventanas, llevándonos a una ventana de ayuda.
+
+Por otra parte, podemos pulsar sobre el botón ``Entrar'', que
+intentará autenticarnos. Si alguno de los campos estuviera vacío, se
+mostrará un icono de advertencia cuya leyenda indicará que el campo
+está vacío. Veremos un ejemplo más adelante.
+
+Por último, está la opción de pulsar sobre el botón ``Registro'', que
+nos llevará a la ventana de registro, que es similar a la
+figura~\ref{fig:webregistry}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-registry.png}
+  \caption{Ventana de registro}
+  \label{fig:webregistry}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-registry-login-fail.png}
+  \caption{Ventana de registro tras autenticación fallida}
+  \label{fig:webloginfail}
+\end{figure}
+
+Si en la ventana de login (Figura~\ref{fig:weblogin}) introducimos
+erróneamente nuestras credenciales, nos llevará a la ventana de
+registro, pero mostrando un mensaje especial tal y como se muestra en
+la figura~\ref{fig:webloginfail}. 
+
+Ya sea en la figura~\ref{fig:webregistry} o en la~\ref{fig:webloginfail},
+podemos ver el botón ``Volver'', que nos permitirá regresar a la
+ventana inicial. También podemos ver el enlace ``About...'', del que
+ya hemos hablado antes. Finalmente, tenemos el botón ``Registrarse''
+que permite el registro, siempre y cuando los valores introducidos
+sean válidos.
+
+Si la validación de los mismos no es correcta, se mostrará un icono de
+advertencia a su lado cuya leyenda ofrecerá más detalle de la razón
+por la que no es válida (figura~\ref{fig:webregistryfail}).
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-registry-fail.png}
+  \caption{Ventana de registro con entradas erróneas}
+  \label{fig:webregistryfail}
+\end{figure}
+
+Una vez registrados y autenticados correctamente, accederemos a la
+ventana de ventas (figura~\ref{fig:webshop}). Desde esta ventana
+podremos realizar las compras seleccionando una sección y pulsando el
+icono de la izquierda que representa un carro de la compra. Cada vez
+que se seleccione una sección diferente, una transición suave nos
+permitirá ver las productos disponibles en esa sección.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-shop.png}
+  \caption{Ventana de ventas}
+  \label{fig:webshop}
+\end{figure}
+
+Una vez hayamos realizado nuestra compra, tendremos una ventana
+similar a la figura~\ref{fig:webshopbuying}, podremos ``Formalizar
+compra''. Si nos hemos equivocado, podemos pulsar el icono de una
+papelera situado a la izquierda de los productos.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-shop-buying.png}
+  \caption{Ventana de ventas con lista de la compra}
+  \label{fig:webshopbuying}
+\end{figure}
+
+Cuando formalicemos la compra, iremos a una ventana que nos indicará
+que la compra se ha realizado con éxito.
+
+Existe un botón más, llamado ``Facturación'', que sólo se mostrará en
+caso de ser administrador. Este botón permite llegar a la ventana de
+administración, en la que, tras seleccionar unas fechas (como se
+indica en la figura~\ref{fig:webinvoice}), podemos mostar las facturas
+que tuvieron lugar en el periodo de tiempo indicado (figura~\ref{fig:webinvoices}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=13cm]{images/web-invoice.png}
+  \caption{Ventana de facturación}
+  \label{fig:webinvoice}
+\end{figure}
 
 
 \end{document}
